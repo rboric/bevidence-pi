@@ -10,4 +10,4 @@ Rene Borić - Frontend
 
 [Fakultet informatike u Puli](https://fipu.unipu.hr/)
 
-Kolegij: [Programsko inženjerstvo](https://www.notion.so/fiputreca/Programsko-in-enjerstvo-e353945331df468e8382cdad1e91c4b8i)
+Kolegij: [Programsko inženjerstvo](ntankovic.unipu.hr/pi)
