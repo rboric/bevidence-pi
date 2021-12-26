@@ -5,3 +5,9 @@ Web aplikaciju će koristiti razna poduzeća kako bi si vlasnici olakšali vođe
 # Autori i zaduženja
 
 Rene Borić - Frontend
+
+[Figma prototip](https://www.figma.com/proto/k134wHs0g9SsTeKPH2gB38/PI-PROJEKT?node-id=56%3A399&scaling=min-zoom&page-id=0%3A1&starting-point-node-id=56%3A399)
+
+[Fakultet informatike u Puli](https://fipu.unipu.hr/)
+
+Kolegij: [Programsko inženjerstvo](ntankovic.unipu.hr/pi)
