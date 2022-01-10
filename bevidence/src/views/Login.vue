@@ -9,6 +9,7 @@
               <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input
+                  v-model="email"
                   type="email"
                   class="form-control"
                   id="exampleInputEmail1"
@@ -19,6 +20,7 @@
               <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
                 <input
+                  v-model="password"
                   type="password"
                   class="form-control"
                   id="exampleInputPassword1"
@@ -26,7 +28,9 @@
                 />
               </div>
               <div class="submit-button">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" @click="login" class="btn btn-primary">
+                  Prijava
+                </button>
               </div>
             </div>
           </form>
@@ -38,13 +42,36 @@
 </template>
 
 <script>
+import { firebase } from "@/firebase";
+
+export default {
+  name: "Login",
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    login() {
+      console.log("login..." + this.email + this.password);
+      let that = this;
+
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then((result) => {
+          console.log("Uspješna prijava", result);
+        })
+        .catch(function (e) {
+          console.error("Greška", e);
+        });
+    },
+  },
+};
 </script>
 
-<style >
-.navbar {
-  display: none;
-}
-
+<style>
 .login {
   padding: 25px;
 }

@@ -19,7 +19,11 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div
+          v-if="design.currentUser"
+          class="collapse navbar-collapse"
+          id="navbarNav"
+        >
           <ul class="navbar-nav">
             <!--<li class="nav-item">
               <router-link to="/" class="nav-link">Home</router-link>
@@ -51,11 +55,20 @@
         </div>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item">
+            <li v-if="design.currentUser" class="nav-item">
               <router-link to="/" class="nav-link">Profil</router-link>
             </li>
-            <li class="nav-item">
-              <router-link to="/" class="nav-link">Odjava</router-link>
+            <li v-if="design.currentUser" class="nav-item">
+              <!--<router-link to="/" class="nav-link">Odjava</router-link>-->
+              <a href="#" @click.prevent="logout()" class="nav-link">Odjava</a>
+            </li>
+            <li v-if="!design.currentUser" class="nav-item">
+              <router-link to="/login" class="nav-link">Prijava</router-link>
+            </li>
+            <li v-if="!design.currentUser" class="nav-item">
+              <router-link to="/register" class="nav-link"
+                >Registracija</router-link
+              >
             </li>
           </ul>
         </div>
@@ -66,6 +79,48 @@
 </template>
 
 <script>
+import { firebase } from "@/firebase";
+import design from "@/design";
+import router from "@/router";
+
+firebase.auth().onAuthStateChanged((user) => {
+  const currentRoute = router.currentRoute;
+
+  if (user) {
+    console.log(user.email);
+    design.currentUser = user.email;
+
+    if (!currentRoute.meta.needsUser) {
+      router.push({ name: "Home" });
+    }
+  } else {
+    console.log("No user");
+    design.currentUser = null;
+
+    if (currentRoute.meta.needsUser) {
+      router.push({ name: "Login" });
+    }
+  }
+});
+
+export default {
+  name: "App",
+  data() {
+    return {
+      design,
+    };
+  },
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.push({ name: "Login" });
+        });
+    },
+  },
+};
 </script>
 
 <style>

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import design from "@/design";
 
 Vue.use(VueRouter)
 
@@ -12,27 +13,47 @@ const routes = [
   {
     path: '/poduzeca',
     name: 'Poduzeca',
-    component: () => import('../views/Poduzeca.vue')
+    component: () => import('../views/Poduzeca.vue'),
+    meta: {
+      needsUser: true
+    }
   },
   {
     path: '/radnici',
     name: 'Radnici',
-    component: () => import('../views/Radnici.vue')
+    component: () => import('../views/Radnici.vue'),
+    meta: {
+      needsUser: true
+    }
   },
   {
     path: '/evidencija-radnih-sati',
     name: 'Evidencija_radnih_sati',
-    component: () => import('../views/Evidencija_radnih_sati.vue')
+    component: () => import('../views/Evidencija_radnih_sati.vue'),
+    meta: {
+      needsUser: true
+    }
   },
   {
     path: '/evidencija-slobodnih-dana',
     name: 'Evidencija_slobodnih_dana',
-    component: () => import('../views/Evidencija_slobodnih_dana.vue')
+    component: () => import('../views/Evidencija_slobodnih_dana.vue'),
+    meta: {
+      needsUser: true
+    }
   },
   {
     path: '/izracun-place',
     name: 'Izracun_place',
-    component: () => import('../views/Izracun_place.vue')
+    component: () => import('../views/Izracun_place.vue'),
+    meta: {
+      needsUser: true
+    }
+  },
+  {
+    path: '/novo-poduzece',
+    name: 'Novo-poduzece',
+    component: () => import('../views/Novo_poduzece.vue'),
   },
   {
     path: '/login',
@@ -52,6 +73,19 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach ((to, from, next) => {
+  console.log("stara ruta", from.name, "->", to.name, "korisnik", design.currentUser)
+
+  const noUser = design.currentUser===null;
+
+  if (noUser && to.meta.needsUser) {
+    console.error("Nemate pristup")
+    next("Login")
+  } else {
+    next();
+  }
 })
 
 export default router
