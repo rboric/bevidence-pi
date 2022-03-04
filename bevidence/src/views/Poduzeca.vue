@@ -215,7 +215,7 @@ export default {
             this.cards.push({
               id: data.id,
               Naziv: data.name,
-              Djelatnost: data.buisness,
+              Djelatnost: data.business,
               Vlasnik: data.owner,
               Lokacija: data.city,
               Adresa: {
@@ -238,7 +238,7 @@ export default {
       db.collection("companies")
         .add({
           name: this.companyName,
-          buisness: this.companyBusiness,
+          business: this.companyBusiness,
           owner: this.businessOwner,
           address: this.inputAddress,
           number: this.inputAddressNumber,

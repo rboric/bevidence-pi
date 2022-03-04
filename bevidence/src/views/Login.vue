@@ -55,13 +55,13 @@ export default {
   methods: {
     login() {
       console.log("login..." + this.email + this.password);
-      let that = this;
 
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then((result) => {
           console.log("Uspješna prijava", result);
+          this.$router.replace({ name: "Home" });
         })
         .catch(function (e) {
           console.error("Greška", e);

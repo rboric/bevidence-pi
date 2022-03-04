@@ -94,8 +94,8 @@ firebase.auth().onAuthStateChanged((user) => {
       router.push({ name: "Home" });
     }
   } else {
-    console.log("No user");
     design.currentUser = null;
+    console.log("No user");
 
     if (currentRoute.meta.needsUser) {
       router.push({ name: "Login" });

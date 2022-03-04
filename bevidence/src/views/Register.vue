@@ -6,7 +6,7 @@
         <div class="col-sm-4">
           <form>
             <div class="form-login">
-              <!-- <div class="form-group">
+              <div class="form-group">
                 <label for="exampleInputFirstName">Ime</label>
                 <input
                   v-model="firstname"
@@ -27,7 +27,7 @@
                   aria-describedby="emailHelp"
                   placeholder="Unesi prezime"
                 />
-              </div>-->
+              </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Email adresa</label>
                 <input
@@ -49,17 +49,7 @@
                   placeholder="Unesi lozinku"
                 />
               </div>
-              <!--<div class="form-group">
-                <label for="exampleInputPassword2">Ponovi lozinku</label>
-                <input
-                  v-model="passwordRepeat"
-                  type="password"
-                  class="form-control"
-                  id="exampleInputPassword2"
-                  placeholder="Ponovi lozinku"
-                />
-              </div>-->
-              <!-- <div class="form-group">
+              <div class="form-group">
                 <label for="exampleInputDate">Datum rođenja</label>
                 <input
                   v-model="date"
@@ -67,9 +57,16 @@
                   class="form-control"
                   id="exampleInputDate"
                 />
-              </div>-->
+              </div>
               <div class="submit-button">
-                <button type="button" @click="register" class="btn btn-primary">
+                <button
+                  type="button"
+                  @click="
+                    register();
+                    addNewUser();
+                  "
+                  class="btn btn-primary"
+                >
                   Registriraj se
                 </button>
               </div>
@@ -84,29 +81,24 @@
 
 <script>
 import { firebase } from "@/firebase";
-
+import { db } from "@/firebase";
 export default {
   name: "Register",
   data() {
     return {
-      //  firstname: "",
-      // lastname: "",
+      id: "",
+      firstname: "",
+      lastname: "",
       email: "",
       password: "",
-      // date: "",
+      date: "",
     };
   },
   methods: {
     register() {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(
-          //this.firstname,
-          //this.lastname,
-          this.email,
-          this.password
-          // this.date
-        )
+        .createUserWithEmailAndPassword(this.email, this.password)
         .then(function () {
           console.log("Uspješna registracija");
         })
@@ -114,6 +106,25 @@ export default {
           console.error("Došlo je do greške", error);
         });
       console.log("Nastavak");
+    },
+    addNewUser() {
+      console.log("ok");
+      db.collection("user")
+        .add({
+          ID: this.id,
+          Ime: this.firstname,
+          Prezime: this.lastname,
+          Email: this.email,
+          Datum: this.date,
+        })
+        .then((doc) => {
+          console.log("Uspješno dodano", doc);
+          alert("");
+          location.reload();
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     },
   },
 };

@@ -75,17 +75,5 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach ((to, from, next) => {
-  console.log("stara ruta", from.name, "->", to.name, "korisnik", design.currentUser)
-
-  const noUser = design.currentUser===null;
-
-  if (noUser && to.meta.needsUser) {
-    console.error("Nemate pristup")
-    next("Login")
-  } else {
-    next();
-  }
-})
 
 export default router
