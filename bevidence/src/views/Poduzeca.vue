@@ -242,9 +242,6 @@ export default {
     addCompany() {
       $("#addPoduzece").modal("show");
     },
-    /*test() {
-      console.log("RADI", firebase.auth().currentUser.uid);
-    },*/
     addNewCompany() {
       console.log("ok");
       var user_id = firebase.auth().currentUser.uid;
@@ -271,35 +268,6 @@ export default {
           console.error(e);
         });
     },
-    /*addNewCompany() {
-      console.log("ok");
-
-      firebase
-        .firestore()
-        .collection("companies")
-        .doc(firebase.auth().currentUser.uid)
-        .add({
-          id: this.currentUser.uid,
-          name: this.companyName,
-          business: this.companyBusiness,
-          owner: this.businessOwner,
-          address: this.inputAddress,
-          number: this.inputAddressNumber,
-          city: this.inputCity,
-          state: this.inputState,
-          zip: this.inputZip,
-          employees: this.employeesNumber,
-          useradd: design.currentUser,
-        })
-        .then((doc) => {
-          console.log("Uspješno dodano", doc);
-          alert("Dodano novo poduzeće");
-          location.reload();
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    },*/
   },
   components: {
     PoduzeceCard,
