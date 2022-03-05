@@ -36,24 +36,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <img class="radnici-img" src="@/assets/p_p.png" alt="" />
-                </td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>Zagreb</td>
-                <td><a href="">UREDI</a></td>
-              </tr>
-              <tr>
-                <td>
-                  <img class="radnici-img" src="@/assets/p_p.png" alt="" />
-                </td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>Zagreb</td>
-                <td><a href="">UREDI</a></td>
-              </tr>
+              <radnik />
             </tbody>
           </table>
         </div>
@@ -62,13 +45,79 @@
           <a href=""><img src="@/assets/add-button.svg" alt="" /></a>
         </div>
       </div>
+      <!-- Start modal -->
+      <div>
+        <!-- Button trigger modal -->
+        <button>Launch demo modal</button>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="exampleModalCenter"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">
+                  Modal title
+                </h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">...</div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="button" class="btn btn-primary">
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--  -->
     </div>
   </div>
 </template>
 
 <script>
+import Radnik from "@/components/Radnik.vue";
+import { db } from "@/firebase";
+import design from "@/design";
+
 export default {
   name: "Radnici",
+  data() {
+    return {
+      wName: "",
+      wSurname: "",
+      wCity: "",
+    };
+  },
+  methods: {
+    addWorker() {
+      $("#exampleModalCenter").modal("show");
+    },
+    components: {
+      Radnik,
+    },
+  },
 };
 </script>
 
@@ -82,10 +131,6 @@ export default {
 
 .radnici {
   padding: 25px;
-}
-
-.radnici-card {
-  display: flex;
 }
 
 .radnici-img {
