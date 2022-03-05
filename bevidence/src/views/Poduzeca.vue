@@ -211,7 +211,12 @@ export default {
     };
   },
   mounted() {
-    this.getData();
+    var a = 1;
+    if (a == 1) {
+      this.getData();
+    } else {
+      console.log("");
+    }
   },
   methods: {
     getData() {
@@ -223,7 +228,7 @@ export default {
             const data = companies.data();
 
             this.cards.push({
-              id: data.id,
+              id: data.userid,
               Naziv: data.name,
               Djelatnost: data.business,
               Vlasnik: data.owner,
