@@ -22,6 +22,15 @@
             Dodaj
           </button>
         </div>
+        <!--<div class="col-12 add-div">
+          <button
+            type="button"
+            @click="test()"
+            class="btn btn-primary add-button"
+          >
+            Test
+          </button>
+        </div>-->
       </div>
     </div>
 
@@ -180,6 +189,7 @@
 
 <script>
 import PoduzeceCard from "@/components/Poduzece-Card.vue";
+import { firebase } from "@/firebase";
 import { db } from "@/firebase";
 import design from "@/design";
 
@@ -232,11 +242,15 @@ export default {
     addCompany() {
       $("#addPoduzece").modal("show");
     },
+    /*test() {
+      console.log("RADI", firebase.auth().currentUser.uid);
+    },*/
     addNewCompany() {
       console.log("ok");
-
+      var user_id = firebase.auth().currentUser.uid;
       db.collection("companies")
         .add({
+          userid: user_id,
           name: this.companyName,
           business: this.companyBusiness,
           owner: this.businessOwner,
@@ -251,13 +265,41 @@ export default {
         .then((doc) => {
           console.log("Uspješno dodano", doc);
           alert("Dodano novo poduzeće");
-          /*this.$router.replace({ name: "Poduzeca" });*/
           location.reload();
         })
         .catch((e) => {
           console.error(e);
         });
     },
+    /*addNewCompany() {
+      console.log("ok");
+
+      firebase
+        .firestore()
+        .collection("companies")
+        .doc(firebase.auth().currentUser.uid)
+        .add({
+          id: this.currentUser.uid,
+          name: this.companyName,
+          business: this.companyBusiness,
+          owner: this.businessOwner,
+          address: this.inputAddress,
+          number: this.inputAddressNumber,
+          city: this.inputCity,
+          state: this.inputState,
+          zip: this.inputZip,
+          employees: this.employeesNumber,
+          useradd: design.currentUser,
+        })
+        .then((doc) => {
+          console.log("Uspješno dodano", doc);
+          alert("Dodano novo poduzeće");
+          location.reload();
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    },*/
   },
   components: {
     PoduzeceCard,
