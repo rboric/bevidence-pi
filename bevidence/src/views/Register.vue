@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-          <form>
+          <form @submit.prevent="addNewUser2">
             <div class="form-login">
               <div class="form-group">
                 <label for="exampleInputFirstName">Ime</label>
@@ -59,16 +59,7 @@
                 />
               </div>
               <div class="submit-button">
-                <button
-                  type="button"
-                  @click="
-                    register();
-                    addNewUser();
-                  "
-                  class="btn btn-primary"
-                >
-                  Registriraj se
-                </button>
+                <button class="btn btn-primary">Registriraj se</button>
               </div>
             </div>
           </form>
@@ -82,11 +73,12 @@
 <script>
 import { firebase } from "@/firebase";
 import { db } from "@/firebase";
+
 export default {
   name: "Register",
   data() {
     return {
-      id: "",
+      ID: "",
       firstname: "",
       lastname: "",
       email: "",
@@ -99,11 +91,11 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(function () {
-          console.log("Uspješna registracija");
+        .then((su_reg) => {
+          console.log("Uspješna registracija", su_reg);
         })
-        .catch(function (error) {
-          console.error("Došlo je do greške", error);
+        .catch((error_reg) => {
+          console.error("Došlo je do greške", error_reg);
         });
       console.log("Nastavak");
     },
@@ -111,19 +103,41 @@ export default {
       console.log("ok");
       db.collection("user")
         .add({
-          ID: this.id,
           Ime: this.firstname,
           Prezime: this.lastname,
           Email: this.email,
           Datum: this.date,
         })
-        .then((doc) => {
-          console.log("Uspješno dodano", doc);
-          alert("");
-          location.reload();
+        .firebase.auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then((su_reg_pod) => {
+          console.log("Uspješno dodano", su_reg_pod);
         })
         .catch((e) => {
-          console.error(e);
+          console.error("Greška", e);
+        });
+    },
+    addNewUser2() {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          firebase
+            .firestore()
+            .collection("user")
+            .doc(firebase.auth().currentUser.uid)
+            .set({
+              Ime: this.firstname,
+              Prezime: this.lastname,
+              Email: this.email,
+              Datum: this.date,
+            })
+            .catch((error) => {
+              console.log(
+                "Something went wrong with added user to firestore: ",
+                error
+              );
+            });
         });
     },
   },
