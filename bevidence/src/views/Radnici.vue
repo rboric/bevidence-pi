@@ -233,6 +233,7 @@ export default {
 
 .radnici {
   padding: 25px;
+  overflow-x: auto;
 }
 
 .radnici-img {

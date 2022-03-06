@@ -211,16 +211,22 @@ export default {
     };
   },
   mounted() {
-    var a = 1;
-    if (a == 1) {
-      this.getData();
-    } else {
-      console.log("");
-    }
+    console.log("OK");
+    this.getData();
+    this.userid();
   },
   methods: {
+    userid() {
+      db.collection("user")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            console.log(`${doc.id} => ${doc.data()}`);
+          });
+        });
+    },
     getData() {
-      db.collection("companies")
+      db.collection("user/id/companies")
         .get()
         .then((query) => {
           this.cards = [];
@@ -250,7 +256,7 @@ export default {
     addNewCompany() {
       console.log("ok");
       var user_id = firebase.auth().currentUser.uid;
-      db.collection("companies")
+      db.collection("user/" + firebase.auth().currentUser.uid + "/companies")
         .add({
           userid: user_id,
           name: this.companyName,
