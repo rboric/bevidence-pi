@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-          <form @submit.prevent="addNewUser2">
+          <form @submit.prevent="addNewUser">
             <div class="form-login">
               <div class="form-group">
                 <label for="exampleInputFirstName">Ime</label>
@@ -87,37 +87,7 @@ export default {
     };
   },
   methods: {
-    register() {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then((su_reg) => {
-          console.log("Uspješna registracija", su_reg);
-        })
-        .catch((error_reg) => {
-          console.error("Došlo je do greške", error_reg);
-        });
-      console.log("Nastavak");
-    },
     addNewUser() {
-      console.log("ok");
-      db.collection("user")
-        .add({
-          Ime: this.firstname,
-          Prezime: this.lastname,
-          Email: this.email,
-          Datum: this.date,
-        })
-        .firebase.auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then((su_reg_pod) => {
-          console.log("Uspješno dodano", su_reg_pod);
-        })
-        .catch((e) => {
-          console.error("Greška", e);
-        });
-    },
-    addNewUser2() {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)

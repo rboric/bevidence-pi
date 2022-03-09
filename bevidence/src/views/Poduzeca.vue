@@ -22,15 +22,6 @@
             Dodaj
           </button>
         </div>
-        <!--<div class="col-12 add-div">
-          <button
-            type="button"
-            @click="test()"
-            class="btn btn-primary add-button"
-          >
-            Test
-          </button>
-        </div>-->
       </div>
     </div>
 
@@ -211,54 +202,45 @@ export default {
     };
   },
   mounted() {
-    console.log("OK");
     this.getData();
-    this.userid();
   },
   methods: {
-    userid() {
+    getData() {
       db.collection("user")
         .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            console.log(`${doc.id} => ${doc.data()}`);
-          });
-        });
-    },
-    getData() {
-      db.collection("user/id/companies")
-        .get()
-        .then((query) => {
-          this.cards = [];
-          query.forEach((companies) => {
-            const data = companies.data();
+        .then(() => {
+          db.collection(
+            "user/" + firebase.auth().currentUser.uid + "/companies"
+          )
+            .get()
+            .then((query) => {
+              this.cards = [];
+              query.forEach((companies) => {
+                const data = companies.data();
 
-            this.cards.push({
-              id: data.userid,
-              Naziv: data.name,
-              Djelatnost: data.business,
-              Vlasnik: data.owner,
-              Lokacija: data.city,
-              Adresa: {
-                Ulica: data.address,
-                Broj: data.number,
-                PostanskiBroj: data.zip,
-              },
-              Drzava: data.state,
-              BrojZaposlenih: data.employees,
+                this.cards.push({
+                  Naziv: data.name,
+                  Djelatnost: data.business,
+                  Vlasnik: data.owner,
+                  Lokacija: data.city,
+                  Adresa: {
+                    Ulica: data.address,
+                    Broj: data.number,
+                    PostanskiBroj: data.zip,
+                  },
+                  Drzava: data.state,
+                  BrojZaposlenih: data.employees,
+                });
+              });
             });
-          });
         });
     },
     addCompany() {
       $("#addPoduzece").modal("show");
     },
     addNewCompany() {
-      console.log("ok");
-      var user_id = firebase.auth().currentUser.uid;
       db.collection("user/" + firebase.auth().currentUser.uid + "/companies")
         .add({
-          userid: user_id,
           name: this.companyName,
           business: this.companyBusiness,
           owner: this.businessOwner,
