@@ -262,10 +262,6 @@
 </template>
 
 <script>
-import { db } from "@/firebase";
-
-console.log(db);
-
 export default {
   props: ["poduzece"],
   name: "PoduzeceCard",

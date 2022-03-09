@@ -15,10 +15,11 @@
               Mjesto rada
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="#">Firma 1</a></li>
-              <li><a class="dropdown-item" href="#">Firma 2</a></li>
-              <li><a class="dropdown-item" href="#">Firma 3</a></li>
-              <li><a class="dropdown-item" href="#">Svi radnici</a></li>
+              <lista-poduzece
+                v-for="card in cards"
+                :key="card.id"
+                :listaPoduzece="card"
+              />
             </ul>
           </div>
         </div>
@@ -111,13 +112,18 @@
                           <label for="wJobCity" class="form-label"
                             >Mjesto poslovanja</label
                           >
-                          <input
+
+                          <select
                             v-model="wJobCity"
-                            type="string"
                             class="form-control"
                             id="wJobCity"
-                            placeholder=""
-                          />
+                          >
+                            <lista-poduzece-opcija
+                              v-for="card in cards"
+                              :key="card.id"
+                              :listaPoduzeceOpcija="card"
+                            />
+                          </select>
                         </div>
                         <div class="col-md-4">
                           <label for="wCityOfLiving" class="form-label"
@@ -161,14 +167,17 @@
 </template>
 
 <script>
-import Radnik from "@/components/Radnik.vue";
-import { db } from "@/firebase";
+import { firebase, db } from "@/firebase";
 import design from "@/design";
+import Radnik from "@/components/Radnik.vue";
+import ListaPoduzece from "@/components/Lista-Poduzece.vue";
+import ListaPoduzeceOpcija from "@/components/Lista-Poduzece-Opcija.vue";
 
 export default {
   name: "Radnici",
   data: function () {
     return {
+      cards: [],
       rows: [],
       wName: "",
       wSurname: "",
@@ -179,11 +188,37 @@ export default {
     };
   },
   mounted() {
+    this.getData();
     this.wGetData();
   },
   methods: {
+    getData() {
+      db.collection("user")
+        .get()
+        .then(() => {
+          db.collection(
+            "user/" + firebase.auth().currentUser.uid + "/companies"
+          )
+            .get()
+            .then((query) => {
+              this.cards = [];
+              query.forEach((companies) => {
+                const data = companies.data();
+
+                this.cards.push({
+                  Naziv: data.name,
+                  Lokacija: data.city,
+                });
+              });
+            });
+        });
+    },
     wGetData() {
-      db.collection("workers")
+      db.collection(
+        "user/" +
+          firebase.auth().currentUser.uid +
+          "/companies/x31IgY5LL5hDSh3zPFQt/workers"
+      )
         .get()
         .then((query) => {
           this.rows = [];
@@ -204,7 +239,11 @@ export default {
       $("#addWorker").modal("show");
     },
     addWorker() {
-      db.collection("workers")
+      db.collection(
+        "user/" +
+          firebase.auth().currentUser.uid +
+          "/companies/x31IgY5LL5hDSh3zPFQt/workers"
+      )
         .add({
           name: this.wName,
           surname: this.wSurname,
@@ -219,10 +258,13 @@ export default {
   },
   components: {
     Radnik,
+    ListaPoduzece,
+    ListaPoduzeceOpcija,
   },
 };
 </script>
 
+ListaPoduzece
 <style>
 .add-div {
   padding: 5px;
