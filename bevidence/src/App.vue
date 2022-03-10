@@ -124,8 +124,12 @@ export default {
 </script>
 
 <style>
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
 .navbar {
-  background-image: linear-gradient(to right, #f84545, #faa6a6) !important;
+  background-color: #f84545 !important;
 }
 
 .white-logo {
@@ -134,8 +138,12 @@ export default {
 }
 
 .nav-link {
-  font-weight: bold;
+  font-weight: 400;
   color: white !important;
   padding-left: 20px !important;
+}
+
+.nav-link:hover {
+  color: rgb(214, 214, 214) !important;
 }
 </style>

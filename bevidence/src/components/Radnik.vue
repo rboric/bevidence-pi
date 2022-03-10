@@ -21,3 +21,13 @@ export default {
   },
 };
 </script>
+<style scoped>
+td a {
+  text-decoration: none;
+  color: #f84545;
+}
+
+td a:hover {
+  color: #d71818;
+}
+</style>

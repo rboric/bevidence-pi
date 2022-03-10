@@ -159,17 +159,17 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Odustani
-            </button>
-            <button
-              type="button"
               @click.prevent="addNewCompany"
               class="btn btn-primary"
             >
               Dodaj
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Odustani
             </button>
           </div>
         </div>
