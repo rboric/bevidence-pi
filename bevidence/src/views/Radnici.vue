@@ -170,6 +170,7 @@
 import { firebase, db } from "@/firebase";
 import design from "@/design";
 import Radnik from "@/components/Radnik.vue";
+import { company_id } from "@/components/Lista-Poduzece.vue";
 import ListaPoduzece from "@/components/Lista-Poduzece.vue";
 import ListaPoduzeceOpcija from "@/components/Lista-Poduzece-Opcija.vue";
 
@@ -214,25 +215,31 @@ export default {
         });
     },
     wGetData() {
-      db.collection(
-        "user/" +
-          firebase.auth().currentUser.uid +
-          "/companies/x31IgY5LL5hDSh3zPFQt/workers"
-      )
+      db.collection("user")
         .get()
-        .then((query) => {
-          this.rows = [];
-          query.forEach((workers) => {
-            const data = workers.data();
+        .then(() => {
+          db.collection(
+            "user/" +
+              firebase.auth().currentUser.uid +
+              "/companies/" +
+              company_id +
+              "/workers"
+          )
+            .get()
+            .then((query) => {
+              this.rows = [];
+              query.forEach((workers) => {
+                const data = workers.data();
 
-            this.rows.push({
-              Ime: data.name,
-              Prezime: data.surname,
-              Pozicija: data.job,
-              MjestoPoslovanja: data.cityOfJob,
-              MjestoStanovanja: data.cityOfLiving,
+                this.rows.push({
+                  Ime: data.name,
+                  Prezime: data.surname,
+                  Pozicija: data.job,
+                  MjestoPoslovanja: data.cityOfJob,
+                  MjestoStanovanja: data.cityOfLiving,
+                });
+              });
             });
-          });
         });
     },
     addWorkerModal() {
