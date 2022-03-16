@@ -21,6 +21,14 @@
                 :listaPoduzece="compCard"
               />
             </ul>
+            <button
+              @click="wGetData()"
+              class="btn btn-primary"
+              type="button"
+              aria-expanded="false"
+            >
+              Prikaži radnike
+            </button>
           </div>
         </div>
         <div class="col-sm-1"></div>
@@ -190,7 +198,6 @@ export default {
   },
   mounted() {
     this.compGetData();
-    this.wGetData();
   },
   methods: {
     compGetData() {
