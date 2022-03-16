@@ -26,13 +26,9 @@ export default {
           )
             .where("name", "==", varijabla)
             .get()
-
             .then((querySnapshot) => {
-              var varijabla = this.listaPoduzece.Naziv;
-              console.log(varijabla);
               querySnapshot.forEach((doc) => {
                 company_id = doc.id;
-                console.log(company_id);
               });
             });
         });

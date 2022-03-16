@@ -1,10 +1,26 @@
 <template>
   <div class="home">
-    <img src="@/assets/background-image.png" alt="" />
+    <div v-if="localuser.currentUser">
+      <img src="@/assets/background-image.png" alt="" />
+    </div>
+    <div v-if="!localuser.currentUser">
+      <img src="@/assets/background-image.png" alt="" />
+    </div>
   </div>
 </template>
 
-<script></script>
+<script>
+import localuser from "@/localuser";
+
+export default {
+  name: "Home",
+  data() {
+    return {
+      localuser,
+    };
+  },
+};
+</script>
 
 <style>
 .home img {

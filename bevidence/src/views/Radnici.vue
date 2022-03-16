@@ -16,9 +16,9 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <lista-poduzece
-                v-for="card in cards"
-                :key="card.id"
-                :listaPoduzece="card"
+                v-for="compCard in compCards"
+                :key="compCard.id"
+                :listaPoduzece="compCard"
               />
             </ul>
           </div>
@@ -39,7 +39,7 @@
               </tr>
             </thead>
             <tbody>
-              <radnik v-for="row in rows" :key="row.id" :radnici="row" />
+              <radnik v-for="wRow in wRows" :key="wRow.id" :radnici="wRow" />
             </tbody>
           </table>
         </div>
@@ -59,13 +59,13 @@
         class="modal fade"
         id="addWorker"
         tabindex="-1"
-        aria-labelledby="addPoduzeceLabel"
+        aria-labelledby="addRadnikLabel"
         aria-hidden="true"
       >
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="addPoduzeceLabel">Novo poduzeće</h5>
+              <h5 class="modal-title" id="addRadnikLabel">Novi radnik</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -74,7 +74,7 @@
               ></button>
             </div>
             <div class="modal-body">
-              <div class="novo-poduzece">
+              <div class="novi-radnik">
                 <div class="container">
                   <div class="row">
                     <div class="col-sm-12">
@@ -119,9 +119,9 @@
                             id="wJobCity"
                           >
                             <lista-poduzece-opcija
-                              v-for="card in cards"
-                              :key="card.id"
-                              :listaPoduzeceOpcija="card"
+                              v-for="compCard in compCards"
+                              :key="compCard.id"
+                              :listaPoduzeceOpcija="compCard"
                             />
                           </select>
                         </div>
@@ -178,8 +178,8 @@ export default {
   name: "Radnici",
   data: function () {
     return {
-      cards: [],
-      rows: [],
+      compCards: [],
+      wRows: [],
       wName: "",
       wSurname: "",
       wJob: "",
@@ -189,11 +189,11 @@ export default {
     };
   },
   mounted() {
-    this.getData();
+    this.compGetData();
     this.wGetData();
   },
   methods: {
-    getData() {
+    compGetData() {
       db.collection("user")
         .get()
         .then(() => {
@@ -202,11 +202,11 @@ export default {
           )
             .get()
             .then((query) => {
-              this.cards = [];
+              this.compCards = [];
               query.forEach((companies) => {
                 const data = companies.data();
 
-                this.cards.push({
+                this.compCards.push({
                   Naziv: data.name,
                   Lokacija: data.city,
                 });
@@ -227,11 +227,11 @@ export default {
           )
             .get()
             .then((query) => {
-              this.rows = [];
+              this.wRows = [];
               query.forEach((workers) => {
                 const data = workers.data();
 
-                this.rows.push({
+                this.wRows.push({
                   Ime: data.name,
                   Prezime: data.surname,
                   Pozicija: data.job,
@@ -249,7 +249,9 @@ export default {
       db.collection(
         "user/" +
           firebase.auth().currentUser.uid +
-          "/companies/x31IgY5LL5hDSh3zPFQt/workers"
+          "/companies/" +
+          company_id +
+          "/workers"
       )
         .add({
           name: this.wName,

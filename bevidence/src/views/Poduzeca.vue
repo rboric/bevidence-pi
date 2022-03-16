@@ -6,9 +6,9 @@
         <div class="col-10">
           <div class="row">
             <poduzece-card
-              v-for="card in cards"
-              :key="card.id"
-              :poduzece="card"
+              v-for="compCard in compCards"
+              :key="compCard.id"
+              :poduzece="compCard"
             />
           </div>
         </div>
@@ -16,7 +16,7 @@
         <div class="col-12 add-div">
           <button
             type="button"
-            @click="addCompany()"
+            @click="modalAddCompany()"
             class="btn btn-primary add-button"
           >
             Dodaj
@@ -24,18 +24,17 @@
         </div>
       </div>
     </div>
-
     <div
       class="modal fade"
-      id="addPoduzece"
+      id="addCompany"
       tabindex="-1"
-      aria-labelledby="addPoduzeceLabel"
+      aria-labelledby="addCompanyLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addPoduzeceLabel">Novo poduzeće</h5>
+            <h5 class="modal-title" id="addCompanyLabel">Novo poduzeće</h5>
             <button
               type="button"
               class="btn-close"
@@ -48,105 +47,101 @@
               <div class="container">
                 <div class="row">
                   <div class="col-sm-12">
-                    <form @submit.prevent="addNewCompany" class="row g-3">
+                    <form @submit.prevent="addCompany" class="row g-3">
                       <div class="col-md-4">
-                        <label for="companyName" class="form-label"
-                          >Naziv</label
-                        >
+                        <label for="compName" class="form-label">Naziv</label>
                         <input
-                          v-model="companyName"
+                          v-model="compName"
                           type="text"
                           class="form-control"
-                          id="companyName"
+                          id="compName"
                         />
                       </div>
                       <div class="col-md-4">
-                        <label for="companyBusiness" class="form-label"
+                        <label for="compBusiness" class="form-label"
                           >Djelatnost</label
                         >
                         <input
-                          v-model="companyBusiness"
+                          v-model="compBusiness"
                           type="text"
                           class="form-control"
-                          id="companyBusiness"
+                          id="compBusiness"
                         />
                       </div>
                       <div class="col-md-4">
-                        <label for="businessOwner" class="form-label"
+                        <label for="compBusinessOwner" class="form-label"
                           >Vlasnik</label
                         >
                         <input
-                          v-model="businessOwner"
+                          v-model="compBusinessOwner"
                           type="text"
                           class="form-control"
-                          id="businessOwner"
+                          id="compBusinessOwner"
                         />
                       </div>
                       <div class="col-md-10">
-                        <label for="inputAddress" class="form-label"
+                        <label for="compAddress" class="form-label"
                           >Ulica</label
                         >
                         <input
-                          v-model="inputAddress"
+                          v-model="compAddress"
                           type="string"
                           class="form-control"
-                          id="inputAddress"
+                          id="compAddress"
                           placeholder=""
                         />
                       </div>
                       <div class="col-md-2">
-                        <label for="inputAddressNumber" class="form-label"
+                        <label for="compAddressNumber" class="form-label"
                           >Broj</label
                         >
                         <input
-                          v-model="inputAddressNumber"
+                          v-model="compAddressNumber"
                           type="string"
                           class="form-control"
-                          id="inputAddressNumber"
+                          id="compAddressNumber"
                           placeholder=""
                         />
                       </div>
                       <div class="col-md-4">
-                        <label for="inputCity" class="form-label">Grad</label>
+                        <label for="compCity" class="form-label">Grad</label>
                         <input
-                          v-model="inputCity"
+                          v-model="compCity"
                           type="text"
                           class="form-control"
-                          id="inputCity"
+                          id="compCity"
                         />
                       </div>
                       <div class="col-md-4">
-                        <label for="inputState" class="form-label"
-                          >Država</label
-                        >
+                        <label for="compState" class="form-label">Država</label>
                         <input
-                          v-model="inputState"
+                          v-model="compState"
                           type="text"
                           class="form-control"
-                          id="inputState"
+                          id="compState"
                         />
                       </div>
                       <div class="col-md-4">
-                        <label for="inputZip" class="form-label"
+                        <label for="compZip" class="form-label"
                           >Poštanski broj</label
                         >
                         <input
-                          v-model="inputZip"
+                          v-model="compZip"
                           type="number"
                           class="form-control"
-                          id="inputZip"
+                          id="compZip"
                         />
                       </div>
                       <div class="col-12">
                         <div class="col-md-2">
-                          <label for="employeesNumber" class="form-label"
+                          <label for="compEmployeesNumber" class="form-label"
                             >Broj zaposlenih</label
                           >
                           <input
-                            v-model="employeesNumber"
+                            v-model="compEmployeesNumber"
                             type="number"
                             class="form-control"
-                            id="employeesNumber"
+                            id="compEmployeesNumber"
                           />
                         </div>
                       </div>
@@ -159,7 +154,7 @@
           <div class="modal-footer">
             <button
               type="button"
-              @click.prevent="addNewCompany"
+              @click.prevent="addCompany"
               class="btn btn-primary"
             >
               Dodaj
@@ -188,24 +183,24 @@ export default {
   name: "Poduzeca",
   data: function () {
     return {
-      cards: [],
-      companyName: "",
-      companyBusiness: "",
-      businessOwner: "",
-      inputAddress: "",
-      inputAddressNumber: "",
-      inputCity: "",
-      inputState: "",
-      inputZip: "",
-      employeesNumber: "",
+      compCards: [],
+      compName: "",
+      compBusiness: "",
+      compBusinessOwner: "",
+      compAddress: "",
+      compAddressNumber: "",
+      compCity: "",
+      compState: "",
+      compZip: "",
+      compEmployeesNumber: "",
       localuser,
     };
   },
   mounted() {
-    this.getData();
+    this.compGetData();
   },
   methods: {
-    getData() {
+    compGetData() {
       db.collection("user")
         .get()
         .then(() => {
@@ -214,11 +209,11 @@ export default {
           )
             .get()
             .then((query) => {
-              this.cards = [];
+              this.compCards = [];
               query.forEach((companies) => {
                 const data = companies.data();
 
-                this.cards.push({
+                this.compCards.push({
                   Naziv: data.name,
                   Djelatnost: data.business,
                   Vlasnik: data.owner,
@@ -235,21 +230,21 @@ export default {
             });
         });
     },
-    addCompany() {
-      $("#addPoduzece").modal("show");
+    modalAddCompany() {
+      $("#addCompany").modal("show");
     },
-    addNewCompany() {
+    addCompany() {
       db.collection("user/" + firebase.auth().currentUser.uid + "/companies")
         .add({
-          name: this.companyName,
-          business: this.companyBusiness,
-          owner: this.businessOwner,
-          address: this.inputAddress,
-          number: this.inputAddressNumber,
-          city: this.inputCity,
-          state: this.inputState,
-          zip: this.inputZip,
-          employees: this.employeesNumber,
+          name: this.compName,
+          business: this.compBusiness,
+          owner: this.compBusinessOwner,
+          address: this.compAddress,
+          number: this.compAddressNumber,
+          city: this.compCity,
+          state: this.compState,
+          zip: this.compZip,
+          employees: this.compEmployeesNumber,
           useradd: localuser.currentUser,
         })
         .then((doc) => {
