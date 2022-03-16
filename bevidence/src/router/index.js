@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import design from "@/design";
+import localuser from "@/localuser";
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: () => import('../views/Home.vue')
   },
@@ -26,35 +26,7 @@ const routes = [
       needsUser: true
     }
   },
-  {
-    path: '/evidencija-radnih-sati',
-    name: 'Evidencija_radnih_sati',
-    component: () => import('../views/Evidencija_radnih_sati.vue'),
-    meta: {
-      needsUser: true
-    }
-  },
-  {
-    path: '/evidencija-slobodnih-dana',
-    name: 'Evidencija_slobodnih_dana',
-    component: () => import('../views/Evidencija_slobodnih_dana.vue'),
-    meta: {
-      needsUser: true
-    }
-  },
-  {
-    path: '/izracun-place',
-    name: 'Izracun_place',
-    component: () => import('../views/Izracun_place.vue'),
-    meta: {
-      needsUser: true
-    }
-  },
-  {
-    path: '/novo-poduzece',
-    name: 'Novo-poduzece',
-    component: () => import('../views/Novo_poduzece.vue'),
-  },
+  
   {
     path: '/login',
     name: 'Login',

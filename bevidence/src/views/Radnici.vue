@@ -168,7 +168,7 @@
 
 <script>
 import { firebase, db } from "@/firebase";
-import design from "@/design";
+import localuser from "@/localuser";
 import Radnik from "@/components/Radnik.vue";
 import { company_id } from "@/components/Lista-Poduzece.vue";
 import ListaPoduzece from "@/components/Lista-Poduzece.vue";
@@ -185,7 +185,7 @@ export default {
       wJob: "",
       wJobCity: "",
       wCityOfLiving: "",
-      design,
+      localuser,
     };
   },
   mounted() {

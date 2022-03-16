@@ -65,7 +65,6 @@ export default {
 };
 </script>
 
-
 <style>
 .navbar {
   background-image: linear-gradient(to right, #f84545, #faa6a6) !important;

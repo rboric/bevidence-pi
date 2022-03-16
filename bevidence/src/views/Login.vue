@@ -7,23 +7,23 @@
           <form>
             <div class="form-login">
               <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
+                <label for="exampleInputlEmail">E-mail</label>
                 <input
-                  v-model="email"
+                  v-model="lEmail"
                   type="email"
                   class="form-control"
-                  id="exampleInputEmail1"
+                  id="exampleInputlEmail"
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
                 />
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
+                <label for="exampleInputlPassword">Lozinka</label>
                 <input
-                  v-model="password"
+                  v-model="lPassword"
                   type="password"
                   class="form-control"
-                  id="exampleInputPassword1"
+                  id="exampleInputlPassword"
                   placeholder="Password"
                 />
               </div>
@@ -48,24 +48,19 @@ export default {
   name: "Login",
   data() {
     return {
-      email: "",
-      password: "",
+      lEmail: "",
+      lPassword: "",
     };
   },
   methods: {
     login() {
-      console.log("login..." + this.email + this.password);
-
       firebase
         .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
+        .signInWithEmailAndPassword(this.lEmail, this.lPassword)
         .then((result) => {
-          console.log("Uspješna prijava", result);
           this.$router.replace({ name: "Home" });
         })
-        .catch(function (e) {
-          console.error("Greška", e);
-        });
+        .catch(function (e) {});
     },
   },
 };

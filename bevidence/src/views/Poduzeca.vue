@@ -182,7 +182,7 @@
 import PoduzeceCard from "@/components/Poduzece-Card.vue";
 import { firebase } from "@/firebase";
 import { db } from "@/firebase";
-import design from "@/design";
+import localuser from "@/localuser";
 
 export default {
   name: "Poduzeca",
@@ -198,7 +198,7 @@ export default {
       inputState: "",
       inputZip: "",
       employeesNumber: "",
-      design,
+      localuser,
     };
   },
   mounted() {
@@ -250,7 +250,7 @@ export default {
           state: this.inputState,
           zip: this.inputZip,
           employees: this.employeesNumber,
-          useradd: design.currentUser,
+          useradd: localuser.currentUser,
         })
         .then((doc) => {
           console.log("Uspješno dodano", doc);

@@ -7,57 +7,61 @@
           <form @submit.prevent="addNewUser">
             <div class="form-login">
               <div class="form-group">
-                <label for="exampleInputFirstName">Ime</label>
+                <label for="exampleInputrName">Ime</label>
                 <input
-                  v-model="firstname"
+                  v-model="rName"
                   type="text"
                   class="form-control"
-                  id="exampleInputFirstName"
+                  id="exampleInputrName"
                   aria-describedby="emailHelp"
                   placeholder="Unesi ime"
                 />
               </div>
               <div class="form-group">
-                <label for="exampleInputLastName">Prezime</label>
+                <label for="exampleInputrSurname">Prezime</label>
                 <input
-                  v-model="lastname"
+                  v-model="rSurname"
                   type="text"
                   class="form-control"
-                  id="exampleInputLastName"
+                  id="exampleInputrSurname"
                   aria-describedby="emailHelp"
                   placeholder="Unesi prezime"
                 />
               </div>
               <div class="form-group">
-                <label for="exampleInputEmail1">Email adresa</label>
+                <label for="exampleInputrEmail">Email adresa</label>
                 <input
-                  v-model="email"
+                  v-model="rEmail"
                   type="email"
                   class="form-control"
-                  id="exampleInputEmail1"
+                  id="exampleInputrEmail"
                   aria-describedby="emailHelp"
                   placeholder="Unesi email"
                 />
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Lozinka</label>
+                <label for="exampleInputrPassword">Lozinka</label>
                 <input
-                  v-model="password"
+                  v-model="rPassword"
                   type="password"
                   class="form-control"
-                  id="exampleInputPassword1"
+                  id="exampleInputrPassword"
                   placeholder="Unesi lozinku"
                 />
               </div>
               <div class="form-group">
-                <label for="exampleInputDate">Datum rođenja</label>
+                <label for="exampleInputrRepeatPassword"
+                  >Ponovljena lozinka</label
+                >
                 <input
-                  v-model="date"
-                  type="date"
+                  v-model="rRepeatPassword"
+                  type="password"
                   class="form-control"
-                  id="exampleInputDate"
+                  id="exampleInputrRepeatPassword"
+                  placeholder="Ponovi lozinku"
                 />
               </div>
+
               <div class="submit-button">
                 <button class="btn btn-primary">Registriraj se</button>
               </div>
@@ -72,35 +76,32 @@
 
 <script>
 import { firebase } from "@/firebase";
-import { db } from "@/firebase";
 
 export default {
   name: "Register",
   data() {
     return {
-      ID: "",
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
-      date: "",
+      rName: "",
+      rSurname: "",
+      rEmail: "",
+      rPassword: "",
+      rRepeatPassword: "",
     };
   },
   methods: {
     addNewUser() {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
+        .createUserWithEmailAndPassword(this.rEmail, this.rPassword)
         .then(() => {
           firebase
             .firestore()
             .collection("user")
             .doc(firebase.auth().currentUser.uid)
             .set({
-              Ime: this.firstname,
-              Prezime: this.lastname,
-              Email: this.email,
-              Datum: this.date,
+              Ime: this.rName,
+              Prezime: this.rSurname,
+              Email: this.rEmail,
             })
             .catch((error) => {
               console.log(

@@ -19,53 +19,28 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div
-          v-if="design.currentUser"
-          class="collapse navbar-collapse"
-          id="navbarNav"
-        >
-          <ul class="navbar-nav">
-            <!--<li class="nav-item">
-              <router-link to="/" class="nav-link">Home</router-link>
-            </li>-->
-            <li class="nav-item">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li v-if="localuser.currentUser" class="nav-item">
               <router-link to="/poduzeca" class="nav-link"
                 >Poduzeća</router-link
               >
             </li>
-            <li class="nav-item">
+            <li v-if="localuser.currentUser" class="nav-item">
               <router-link to="/radnici" class="nav-link">Radnici</router-link>
             </li>
-            <li class="nav-item">
-              <router-link to="/evidencija-radnih-sati" class="nav-link"
-                >Radni sati</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link to="/evidencija-slobodnih-dana" class="nav-link"
-                >Slobodni dani</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link to="/izracun-place" class="nav-link"
-                >Plaće</router-link
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li v-if="design.currentUser" class="nav-item">
+            <li v-if="localuser.currentUser" class="nav-item">
               <router-link to="/" class="nav-link">Profil</router-link>
             </li>
-            <li v-if="design.currentUser" class="nav-item">
-              <!--<router-link to="/" class="nav-link">Odjava</router-link>-->
+          </ul>
+          <ul class="nav-item navbar-nav">
+            <li v-if="localuser.currentUser">
               <a href="#" @click.prevent="logout()" class="nav-link">Odjava</a>
             </li>
-            <li v-if="!design.currentUser" class="nav-item">
+            <li v-if="!localuser.currentUser" class="nav-item">
               <router-link to="/login" class="nav-link">Prijava</router-link>
             </li>
-            <li v-if="!design.currentUser" class="nav-item">
+            <li v-if="!localuser.currentUser" class="nav-item">
               <router-link to="/register" class="nav-link"
                 >Registracija</router-link
               >
@@ -80,7 +55,7 @@
 
 <script>
 import { firebase } from "@/firebase";
-import design from "@/design";
+import localuser from "@/localuser";
 import router from "@/router";
 
 firebase.auth().onAuthStateChanged((user) => {
@@ -88,13 +63,13 @@ firebase.auth().onAuthStateChanged((user) => {
 
   if (user) {
     console.log(user.email);
-    design.currentUser = user.email;
+    localuser.currentUser = user.email;
 
     if (!currentRoute.meta.needsUser) {
       router.push({ name: "Home" });
     }
   } else {
-    design.currentUser = null;
+    localuser.currentUser = null;
     console.log("No user");
 
     if (currentRoute.meta.needsUser) {
@@ -107,7 +82,7 @@ export default {
   name: "App",
   data() {
     return {
-      design,
+      localuser,
     };
   },
   methods: {
