@@ -43,7 +43,11 @@
                 <th scope="col">Pozicija</th>
                 <th scope="col">Mjesto poslovanja</th>
                 <th scope="col">Mjesto stanovanja</th>
+                <th scope="col">Radni sati</th>
+                <th scope="col">Plaća po satu</th>
+                <th scope="col">Ukupna plaća</th>
                 <th scope="col">UREDI</th>
+                <button @click="izracun()"></button>
               </tr>
             </thead>
             <tbody>
@@ -145,6 +149,28 @@
                             placeholder=""
                           />
                         </div>
+                        <div class="col-md-6">
+                          <label for="wWorkHours" class="form-label"
+                            >Radni sati</label
+                          >
+                          <input
+                            v-model="wWorkHours"
+                            type="string"
+                            class="form-control"
+                            id="wWorkHours"
+                          />
+                        </div>
+                        <div class="col-md-6">
+                          <label for="wSalary" class="form-label"
+                            >Početna plaća</label
+                          >
+                          <input
+                            v-model="wSalary"
+                            type="string"
+                            class="form-control"
+                            id="wSalary"
+                          />
+                        </div>
                       </form>
                     </div>
                   </div>
@@ -193,6 +219,8 @@ export default {
       wJob: "",
       wJobCity: "",
       wCityOfLiving: "",
+      wWorkHours: "",
+      wSalary: "",
       localuser,
     };
   },
@@ -244,11 +272,14 @@ export default {
                   Pozicija: data.job,
                   MjestoPoslovanja: data.cityOfJob,
                   MjestoStanovanja: data.cityOfLiving,
+                  RadniSati: data.workHours,
+                  Placa: data.salary,
                 });
               });
             });
         });
     },
+
     addWorkerModal() {
       $("#addWorker").modal("show");
     },
@@ -266,10 +297,15 @@ export default {
           job: this.wJob,
           cityOfJob: this.wJobCity,
           cityOfLiving: this.wCityOfLiving,
+          workHours: this.wWorkHours,
+          salary: this.wSalary,
         })
         .then(() => {
           location.reload();
         });
+    },
+    izracun() {
+      console.log(RadniSati, Placa);
     },
   },
   components: {
