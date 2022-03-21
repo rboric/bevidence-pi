@@ -30,27 +30,13 @@
               Prikaži radnike
             </button>
           </div>
+          <div class="row">
+            <radnik v-for="wRow in wRows" :key="wRow.id" :radnici="wRow" />
+          </div>
         </div>
         <div class="col-sm-1"></div>
         <div class="col-sm-1"></div>
-        <div class="col-sm-10">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Slika</th>
-                <th scope="col">Ime</th>
-                <th scope="col">Prezime</th>
-                <th scope="col">Pozicija</th>
-                <th scope="col">Mjesto poslovanja</th>
-                <th scope="col">Mjesto stanovanja</th>
-                <th scope="col">UREDI</th>
-              </tr>
-            </thead>
-            <tbody>
-              <radnik v-for="wRow in wRows" :key="wRow.id" :radnici="wRow" />
-            </tbody>
-          </table>
-        </div>
+        <div class="col-sm-10"></div>
         <div class="col-sm-1"></div>
         <div class="col-12 add-div">
           <a
@@ -280,8 +266,10 @@ export default {
 };
 </script>
 
-ListaPoduzece
 <style>
+.radnici {
+  min-height: 500px;
+}
 .add-div {
   padding: 5px;
   display: flex;
@@ -290,7 +278,7 @@ ListaPoduzece
 }
 
 .radnici {
-  padding: 25px;
+  padding: 5px;
   overflow-x: auto;
 }
 
