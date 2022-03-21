@@ -32,9 +32,6 @@
             <li v-if="localuser.currentUser" class="nav-item">
               <router-link to="/" class="nav-link">Profil</router-link>
             </li>
-            <li v-if="localuser.currentUser" class="nav-item">
-              <router-link to="/placa" class="nav-link">PLAĆA</router-link>
-            </li>
           </ul>
           <ul class="nav-item navbar-nav">
             <li v-if="localuser.currentUser">
