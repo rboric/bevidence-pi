@@ -1,29 +1,30 @@
 <template>
-  <div class="componentRadnik">
-    <tr>
-      <td>
-        <img class="radnici-img" src="@/assets/p_p.png" alt="" />
-      </td>
-      <td>{{ radnici.Ime }}</td>
-      <td>{{ radnici.Prezime }}</td>
-      <td>{{ radnici.Pozicija }}</td>
-      <td>{{ radnici.MjestoPoslovanja }}</td>
-      <td>{{ radnici.MjestoStanovanja }}</td>
-      <td>{{ radnici.RadniSati }}</td>
-      <td>{{ radnici.Placa }}</td>
-      <td>{{ radnici.RadniSati * radnici.Placa }}</td>
-      <td>
-        <button
-          @click="modalEditWorker()"
-          type="button"
-          class="btn btn-primary"
-          data-toggle="modal"
-          data-target="#editWorker"
-        >
-          Launch demo modal
-        </button>
-      </td>
-    </tr>
+  <div class="col-sm-4 card-container">
+    <div class="componentRadnik">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <strong>{{ radnici.Ime }} {{ radnici.Prezime }}</strong>
+          </h5>
+          <p class="card-text">
+            {{ radnici.Pozicija }}
+          </p>
+          <p class="card-text">
+            {{ radnici.MjestoPoslovanja }}
+          </p>
+          <p class="card-text">
+            {{ radnici.MjestoStanovanja }}
+          </p>
+          <button
+            type="button"
+            @click="modalEditWorker"
+            class="btn btn-primary"
+          >
+            Detalji
+          </button>
+        </div>
+      </div>
+    </div>
     <!-- Modal -->
     <div
       class="modal fade"
@@ -93,7 +94,28 @@ export default {
   },
 };
 </script>
+
 <style scoped>
+@media screen and (max-width: 1200px) {
+}
+
+.card {
+  padding: 2px;
+}
+
+.card-container {
+  padding: 10px;
+}
+
+.btn-primary {
+  background: #f84545 !important;
+  border-color: #f84545 !important;
+}
+
+.card p {
+  margin: 0 0 10px !important;
+}
+
 td a {
   text-decoration: none;
   color: #f84545;
