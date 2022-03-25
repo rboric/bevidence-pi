@@ -27,7 +27,7 @@
                 <p class="card-text">Djelatnost: {{ Data.Djelatnost }}</p>
                 <button
                   type="button"
-                  @click="editCompany(Data)"
+                  @click="editCompany()"
                   class="btn btn-primary"
                 >
                   Uredi
@@ -190,7 +190,6 @@
               type="button"
               @click="updateCompany()"
               class="btn btn-primary"
-              v-if="modal == 'edit'"
             >
               Spremi
             </button>
@@ -204,41 +203,28 @@
 <script>
 import { firebase } from "@/firebase";
 import { db } from "@/firebase";
-import { company_id } from "../components/Lista-Poduzece.vue";
 
 export default {
   data() {
     return {
       Data: [],
-      data: {
-        compName: "",
-        compBusiness: "",
-        compBusinessOwner: "",
-        compAddress: "",
-        compAddressNumber: "",
-        compCity: "",
-        compState: "",
-        compZip: "",
-        compEmployeesNumber: "",
-      },
-      modal: "",
+      comp: "",
     };
   },
   props: ["compCards"],
   mounted() {
     this.compURL = this.$route.params.compURL;
     this.Data = this.compCards.find((Data) => Data.Naziv == this.compURL);
+    this.func();
   },
   methods: {
-    editCompany(Data) {
-      this.modal = "edit";
-      this.data = Data;
+    editCompany() {
       $("#editPoduzece").modal("show");
     },
     deleteCompany() {
       $("#showPoduzece").modal("show");
     },
-    updateCompany() {
+    func() {
       db.collection("user/" + firebase.auth().currentUser.uid + "/companies")
         .get()
         .then(() => {
@@ -247,31 +233,29 @@ export default {
           db.collection(
             "user/" + firebase.auth().currentUser.uid + "/companies"
           )
-            .where("Naziv", "==", varijabla)
+            .where("name", "==", varijabla)
             .get()
             .then((querySnapshot) => {
               querySnapshot.forEach((doc) => {
-                company_id = doc.id;
-                console.log(this.company_id);
+                this.comp = doc.id;
+                console.log(this.comp);
               });
-            })
-            .then(() => {
-              db.collection(
-                "user/" + firebase.auth().currentUser.uid + "/companies"
-              )
-                .doc("6ndWqAFsa6te9JFT6cc3")
-                .update({
-                  name: this.Data.Naziv,
-                  business: this.Data.Djelatnost,
-                  owner: this.Data.Vlasnik,
-                  address: this.Data.Ulica,
-                  number: this.Data.Broj,
-                  city: this.Data.Lokacija,
-                  state: this.Data.Drzava,
-                  zip: this.Data.PostanskiBroj,
-                  employees: this.Data.BrojZaposlenih,
-                });
             });
+        });
+    },
+    updateCompany() {
+      db.collection("user/" + firebase.auth().currentUser.uid + "/companies")
+        .doc(this.comp)
+        .update({
+          name: this.Data.Naziv,
+          business: this.Data.Djelatnost,
+          owner: this.Data.Vlasnik,
+          address: this.Data.Ulica,
+          number: this.Data.Broj,
+          city: this.Data.Lokacija,
+          state: this.Data.Drzava,
+          zip: this.Data.PostanskiBroj,
+          employees: this.Data.BrojZaposlenih,
         });
     },
   },
