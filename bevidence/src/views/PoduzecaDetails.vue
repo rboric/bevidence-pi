@@ -34,7 +34,7 @@
                 </button>
                 <button
                   type="button"
-                  @click="deleteCompany"
+                  @click="deleteCompany()"
                   class="btn btn-primary"
                 >
                   Obriši
@@ -213,33 +213,39 @@ export default {
   },
   props: ["compCards"],
   mounted() {
-    this.compURL = this.$route.params.compURL;
-    this.Data = this.compCards.find((Data) => Data.Naziv == this.compURL);
     this.func();
+    this.fu();
   },
   methods: {
     editCompany() {
       $("#editPoduzece").modal("show");
     },
-    deleteCompany() {
-      $("#showPoduzece").modal("show");
+    fu() {
+      this.compURL = this.$route.params.compURL;
+      this.Data = this.compCards.find((Data) => Data.Naziv == this.compURL);
     },
     func() {
-      db.collection("user/" + firebase.auth().currentUser.uid + "/companies")
+      db.collection("user")
         .get()
         .then(() => {
-          var varijabla = this.Data.Naziv;
-          console.log(varijabla);
           db.collection(
             "user/" + firebase.auth().currentUser.uid + "/companies"
           )
-            .where("name", "==", varijabla)
             .get()
-            .then((querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                this.comp = doc.id;
-                console.log(this.comp);
-              });
+            .then(() => {
+              var varijabla = this.Data.Naziv;
+              console.log(varijabla);
+              db.collection(
+                "user/" + firebase.auth().currentUser.uid + "/companies"
+              )
+                .where("name", "==", varijabla)
+                .get()
+                .then((querySnapshot) => {
+                  querySnapshot.forEach((doc) => {
+                    this.comp = doc.id;
+                    console.log(this.comp);
+                  });
+                });
             });
         });
     },
@@ -257,6 +263,11 @@ export default {
           zip: this.Data.PostanskiBroj,
           employees: this.Data.BrojZaposlenih,
         });
+    },
+    deleteCompany() {
+      db.collection("user/" + firebase.auth().currentUser.uid + "/companies")
+        .doc(this.comp)
+        .delete();
     },
   },
 };

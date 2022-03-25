@@ -12,9 +12,7 @@
           }}
         </p>
         <p class="card-text">Broj zaposlenika: {{ compCard.BrojZaposlenih }}</p>
-        <router-link
-          class="btn btn-primary"
-          :to="{ name: 'PoduzecaDetails', params: { compURL: compCard.Naziv } }"
+        <router-link class="btn btn-primary" :to="'/poduzeca/' + compCard.Naziv"
           >Detalji</router-link
         >
       </div>
