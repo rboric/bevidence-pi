@@ -19,6 +19,15 @@ const routes = [
     }
   },
   {
+    path: '/poduzeca/:compURL',
+    name: 'PoduzecaDetails',
+    component: () => import('../views/PoduzecaDetails.vue'),
+    meta: {
+      needsUser: true
+    },
+    props: true
+  },
+  {
     path: '/radnici',
     name: 'Radnici',
     component: () => import('../views/Radnici.vue'),

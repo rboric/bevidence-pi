@@ -49,11 +49,12 @@
         </div>
       </div>
     </nav>
-    <router-view />
+    <router-view :compCards="compCards" />
   </div>
 </template>
 
 <script>
+import { db } from "@/firebase";
 import { firebase } from "@/firebase";
 import localuser from "@/localuser";
 import router from "@/router";
@@ -83,7 +84,11 @@ export default {
   data() {
     return {
       localuser,
+      compCards: [],
     };
+  },
+  mounted() {
+    this.compGetData();
   },
   methods: {
     logout() {
@@ -92,6 +97,34 @@ export default {
         .signOut()
         .then(() => {
           this.$router.push({ name: "Login" });
+        });
+    },
+    compGetData() {
+      db.collection("user")
+        .get()
+        .then(() => {
+          db.collection(
+            "user/" + firebase.auth().currentUser.uid + "/companies"
+          )
+            .get()
+            .then((query) => {
+              this.compCards = [];
+              query.forEach((companies) => {
+                const data = companies.data();
+
+                this.compCards.push({
+                  Naziv: data.name,
+                  Djelatnost: data.business,
+                  Vlasnik: data.owner,
+                  Lokacija: data.city,
+                  Ulica: data.address,
+                  Broj: data.number,
+                  PostanskiBroj: data.zip,
+                  Drzava: data.state,
+                  BrojZaposlenih: data.employees,
+                });
+              });
+            });
         });
     },
   },

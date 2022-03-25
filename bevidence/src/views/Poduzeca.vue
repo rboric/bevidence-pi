@@ -8,8 +8,41 @@
             <poduzece-card
               v-for="compCard in compCards"
               :key="compCard.id"
-              :poduzece="compCard"
+              :compCard="compCard"
             />
+            <!-- <div
+              class="col-sm-6 card-container"
+              v-for="compCard in compCards"
+              :key="compCard.id"
+            >
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    {{ compCard.Naziv }} - {{ compCard.Lokacija }}
+                  </h5>
+                  <p class="card-text">
+                    Adresa:
+                    {{
+                      compCard.Adresa.Ulica +
+                      " " +
+                      compCard.Adresa.Broj +
+                      ", " +
+                      compCard.Adresa.PostanskiBroj
+                    }}
+                  </p>
+                  <p class="card-text">
+                    Broj zaposlenika: {{ compCard.BrojZaposlenih }}
+                  </p>
+                  <button
+                    type="button"
+                    @click="showCompany"
+                    class="btn btn-primary"
+                  >
+                    Detalji
+                  </button>
+                </div>
+              </div>
+            </div>-->
           </div>
         </div>
         <div class="col-1"></div>
@@ -181,9 +214,9 @@ import localuser from "@/localuser";
 
 export default {
   name: "Poduzeca",
+  props: ["compCards"],
   data: function () {
     return {
-      compCards: [],
       compName: "",
       compBusiness: "",
       compBusinessOwner: "",
@@ -196,40 +229,7 @@ export default {
       localuser,
     };
   },
-  mounted() {
-    this.compGetData();
-  },
   methods: {
-    compGetData() {
-      db.collection("user")
-        .get()
-        .then(() => {
-          db.collection(
-            "user/" + firebase.auth().currentUser.uid + "/companies"
-          )
-            .get()
-            .then((query) => {
-              this.compCards = [];
-              query.forEach((companies) => {
-                const data = companies.data();
-
-                this.compCards.push({
-                  Naziv: data.name,
-                  Djelatnost: data.business,
-                  Vlasnik: data.owner,
-                  Lokacija: data.city,
-                  Adresa: {
-                    Ulica: data.address,
-                    Broj: data.number,
-                    PostanskiBroj: data.zip,
-                  },
-                  Drzava: data.state,
-                  BrojZaposlenih: data.employees,
-                });
-              });
-            });
-        });
-    },
     modalAddCompany() {
       $("#addCompany").modal("show");
     },

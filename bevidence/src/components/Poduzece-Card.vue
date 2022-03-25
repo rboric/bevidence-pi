@@ -3,22 +3,20 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">
-          {{ poduzece.Naziv }} - {{ poduzece.Lokacija }}
+          {{ compCard.Naziv }} - {{ compCard.Lokacija }}
         </h5>
         <p class="card-text">
           Adresa:
           {{
-            poduzece.Adresa.Ulica +
-            " " +
-            poduzece.Adresa.Broj +
-            ", " +
-            poduzece.Adresa.PostanskiBroj
+            compCard.Ulica + " " + compCard.Broj + ", " + compCard.PostanskiBroj
           }}
         </p>
-        <p class="card-text">Broj zaposlenika: {{ poduzece.BrojZaposlenih }}</p>
-        <button type="button" @click="showCompany" class="btn btn-primary">
-          Detalji
-        </button>
+        <p class="card-text">Broj zaposlenika: {{ compCard.BrojZaposlenih }}</p>
+        <router-link
+          class="btn btn-primary"
+          :to="{ name: 'PoduzecaDetails', params: { compURL: compCard.Naziv } }"
+          >Detalji</router-link
+        >
       </div>
     </div>
   </div>
@@ -26,19 +24,11 @@
 
 <script>
 export default {
-  props: ["poduzece"],
+  props: ["compCard"],
   name: "PoduzeceCard",
 
   data() {
     return {};
-  },
-  methods: {
-    showCompany() {
-      $("#showPoduzece").modal("show");
-    },
-    editCompany() {
-      $("#editPoduzece").modal("show");
-    },
   },
 };
 </script>
