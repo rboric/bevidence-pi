@@ -49,7 +49,7 @@
         </div>
       </div>
     </nav>
-    <router-view :compCards="compCards" />
+    <router-view :compCards="compCards" :wCards="wCards" />
   </div>
 </template>
 
@@ -58,6 +58,9 @@ import { db } from "@/firebase";
 import { firebase } from "@/firebase";
 import localuser from "@/localuser";
 import router from "@/router";
+import { company_id } from "@/components/Lista-Poduzece.vue";
+import ListaPoduzece from "@/components/Lista-Poduzece.vue";
+import ListaPoduzeceOpcija from "@/components/Lista-Poduzece-Opcija.vue";
 
 firebase.auth().onAuthStateChanged((user) => {
   const currentRoute = router.currentRoute;
@@ -85,10 +88,12 @@ export default {
     return {
       localuser,
       compCards: [],
+      wCards: [],
     };
   },
   mounted() {
     this.compGetData();
+    this.wGetData();
   },
   methods: {
     logout() {
@@ -127,6 +132,40 @@ export default {
             });
         });
     },
+    wGetData() {
+      db.collection("user")
+        .get()
+        .then(() => {
+          db.collection(
+            "user/" +
+              firebase.auth().currentUser.uid +
+              "/companies/" +
+              company_id +
+              "/workers"
+          )
+            .get()
+            .then((query) => {
+              this.wCards = [];
+              query.forEach((workers) => {
+                const data = workers.data();
+
+                this.wCards.push({
+                  Ime: data.name,
+                  Prezime: data.surname,
+                  Pozicija: data.job,
+                  MjestoPoslovanja: data.cityOfJob,
+                  MjestoStanovanja: data.cityOfLiving,
+                  RadniSati: data.workHours,
+                  Placa: data.salary,
+                });
+              });
+            });
+        });
+    },
+  },
+  components: {
+    ListaPoduzece,
+    ListaPoduzeceOpcija,
   },
 };
 </script>

@@ -36,6 +36,15 @@ const routes = [
     }
   },
   {
+    path: '/radnici/:wURL',
+    name: 'RadniciDetails',
+    component: () => import('../views/RadniciDetails.vue'),
+    meta: {
+      needsUser: true
+    },
+    props: true
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login.vue')

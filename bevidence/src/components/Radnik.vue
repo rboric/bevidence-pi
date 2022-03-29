@@ -6,22 +6,11 @@
           <h5 class="card-title">
             <strong>{{ radnici.Ime }} {{ radnici.Prezime }}</strong>
           </h5>
-          <p class="card-text">
-            {{ radnici.Pozicija }}
-          </p>
-          <p class="card-text">
-            {{ radnici.MjestoPoslovanja }}
-          </p>
-          <p class="card-text">
-            {{ radnici.MjestoStanovanja }}
-          </p>
-          <button
-            type="button"
-            @click="modalEditWorker"
-            class="btn btn-primary"
+          <p class="card-text">Pozicija: {{ radnici.Pozicija }}</p>
+          <p class="card-text">Firma: {{ radnici.MjestoPoslovanja }}</p>
+          <router-link class="btn btn-primary" :to="'/radnici/' + radnici.Ime"
+            >Detalji</router-link
           >
-            Detalji
-          </button>
         </div>
       </div>
     </div>
@@ -96,9 +85,6 @@ export default {
 </script>
 
 <style scoped>
-@media screen and (max-width: 1200px) {
-}
-
 .card {
   padding: 2px;
 }

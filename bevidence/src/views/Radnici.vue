@@ -2,8 +2,7 @@
   <div class="radnici">
     <div class="container">
       <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10">
+        <div class="col-sm-12">
           <div class="dropdown">
             <button
               class="btn btn-primary dropdown-toggle"
@@ -31,13 +30,9 @@
             </button>
           </div>
           <div class="row">
-            <radnik v-for="wRow in wRows" :key="wRow.id" :radnici="wRow" />
+            <radnik v-for="wCard in wCards" :key="wCard.id" :radnici="wCard" />
           </div>
         </div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10"></div>
-        <div class="col-sm-1"></div>
         <div class="col-12 add-div">
           <a
             type="button"
@@ -48,7 +43,7 @@
           /></a>
         </div>
       </div>
-      <!-- Start modal -->
+      <!-- MODAL ADD WORKER -->
       <div
         class="modal fade"
         id="addWorker"
@@ -192,10 +187,9 @@ import ListaPoduzeceOpcija from "@/components/Lista-Poduzece-Opcija.vue";
 
 export default {
   name: "Radnici",
+  props: ["compCards", "wCards"],
   data: function () {
     return {
-      compCards: [],
-      wRows: [],
       wName: "",
       wSurname: "",
       wJob: "",
@@ -206,62 +200,8 @@ export default {
       localuser,
     };
   },
-  mounted() {
-    this.compGetData();
-  },
+  mounted() {},
   methods: {
-    compGetData() {
-      db.collection("user")
-        .get()
-        .then(() => {
-          db.collection(
-            "user/" + firebase.auth().currentUser.uid + "/companies"
-          )
-            .get()
-            .then((query) => {
-              this.compCards = [];
-              query.forEach((companies) => {
-                const data = companies.data();
-
-                this.compCards.push({
-                  Naziv: data.name,
-                  Lokacija: data.city,
-                });
-              });
-            });
-        });
-    },
-    wGetData() {
-      db.collection("user")
-        .get()
-        .then(() => {
-          db.collection(
-            "user/" +
-              firebase.auth().currentUser.uid +
-              "/companies/" +
-              company_id +
-              "/workers"
-          )
-            .get()
-            .then((query) => {
-              this.wRows = [];
-              query.forEach((workers) => {
-                const data = workers.data();
-
-                this.wRows.push({
-                  Ime: data.name,
-                  Prezime: data.surname,
-                  Pozicija: data.job,
-                  MjestoPoslovanja: data.cityOfJob,
-                  MjestoStanovanja: data.cityOfLiving,
-                  RadniSati: data.workHours,
-                  Placa: data.salary,
-                });
-              });
-            });
-        });
-    },
-
     addWorkerModal() {
       $("#addWorker").modal("show");
     },
@@ -286,8 +226,35 @@ export default {
           location.reload();
         });
     },
-    izracun() {
-      console.log(RadniSati, Placa);
+    wGetData() {
+      db.collection("user")
+        .get()
+        .then(() => {
+          db.collection(
+            "user/" +
+              firebase.auth().currentUser.uid +
+              "/companies/" +
+              company_id +
+              "/workers"
+          )
+            .get()
+            .then((query) => {
+              this.wCards = [];
+              query.forEach((workers) => {
+                const data = workers.data();
+
+                this.wCards.push({
+                  Ime: data.name,
+                  Prezime: data.surname,
+                  Pozicija: data.job,
+                  MjestoPoslovanja: data.cityOfJob,
+                  MjestoStanovanja: data.cityOfLiving,
+                  RadniSati: data.workHours,
+                  Placa: data.salary,
+                });
+              });
+            });
+        });
     },
   },
   components: {
@@ -349,5 +316,8 @@ export default {
 
 .dropdown {
   padding: 10px;
+}
+.btn {
+  margin: 3px;
 }
 </style>

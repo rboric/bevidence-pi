@@ -10,50 +10,18 @@
               :key="compCard.id"
               :compCard="compCard"
             />
-            <!-- <div
-              class="col-sm-6 card-container"
-              v-for="compCard in compCards"
-              :key="compCard.id"
-            >
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    {{ compCard.Naziv }} - {{ compCard.Lokacija }}
-                  </h5>
-                  <p class="card-text">
-                    Adresa:
-                    {{
-                      compCard.Adresa.Ulica +
-                      " " +
-                      compCard.Adresa.Broj +
-                      ", " +
-                      compCard.Adresa.PostanskiBroj
-                    }}
-                  </p>
-                  <p class="card-text">
-                    Broj zaposlenika: {{ compCard.BrojZaposlenih }}
-                  </p>
-                  <button
-                    type="button"
-                    @click="showCompany"
-                    class="btn btn-primary"
-                  >
-                    Detalji
-                  </button>
-                </div>
-              </div>
-            </div>-->
           </div>
         </div>
         <div class="col-1"></div>
         <div class="col-12 add-div">
-          <button
+          <a
             type="button"
             @click="modalAddCompany()"
-            class="btn btn-primary add-button"
+            data-toggle="modal"
+            data-target="#exampleModalCenter"
           >
-            Dodaj
-          </button>
+            <img src="@/assets/add-button.svg" alt="" />
+          </a>
         </div>
       </div>
     </div>

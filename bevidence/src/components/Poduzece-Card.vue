@@ -11,7 +11,6 @@
             compCard.Ulica + " " + compCard.Broj + ", " + compCard.PostanskiBroj
           }}
         </p>
-        <p class="card-text">Broj zaposlenika: {{ compCard.BrojZaposlenih }}</p>
         <router-link class="btn btn-primary" :to="'/poduzeca/' + compCard.Naziv"
           >Detalji</router-link
         >
