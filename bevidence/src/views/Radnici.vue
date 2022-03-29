@@ -187,9 +187,10 @@ import ListaPoduzeceOpcija from "@/components/Lista-Poduzece-Opcija.vue";
 
 export default {
   name: "Radnici",
-  props: ["compCards", "wCards"],
+  props: ["compCards"],
   data: function () {
     return {
+      wCards: [],
       wName: "",
       wSurname: "",
       wJob: "",

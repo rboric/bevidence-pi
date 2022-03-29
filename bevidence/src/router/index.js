@@ -36,7 +36,7 @@ const routes = [
     }
   },
   {
-    path: '/radnici/:wURL',
+    path: '/poduzeca/:compURL/radnici/:wURL',
     name: 'RadniciDetails',
     component: () => import('../views/RadniciDetails.vue'),
     meta: {

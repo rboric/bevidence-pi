@@ -8,7 +8,9 @@
           </h5>
           <p class="card-text">Pozicija: {{ radnici.Pozicija }}</p>
           <p class="card-text">Firma: {{ radnici.MjestoPoslovanja }}</p>
-          <router-link class="btn btn-primary" :to="'/radnici/' + radnici.Ime"
+          <router-link
+            class="btn btn-primary"
+            :to="'/poduzeca/:compURL/radnici/' + radnici.Ime"
             >Detalji</router-link
           >
         </div>
@@ -68,7 +70,7 @@
 
 <script>
 export default {
-  props: ["radnici"],
+  props: ["radnici", "compCard"],
   name: "Radnik",
   data() {
     return {};

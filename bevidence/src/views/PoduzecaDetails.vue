@@ -197,18 +197,33 @@
         </div>
       </div>
     </div>
+    <div>
+      workers:
+      <radnik v-for="wCard in wCards" :key="wCard.id" :radnici="wCard" />
+    </div>
   </div>
 </template>
 
 <script>
 import { firebase } from "@/firebase";
 import { db } from "@/firebase";
+import Radnik from "@/components/Radnik.vue";
+import localuser from "@/localuser";
 
 export default {
   data() {
     return {
       Data: [],
       comp: "",
+      wCards: [],
+      wName: "",
+      wSurname: "",
+      wJob: "",
+      wJobCity: "",
+      wCityOfLiving: "",
+      wWorkHours: "",
+      wSalary: "",
+      localuser,
     };
   },
   props: ["compCards"],
@@ -234,7 +249,6 @@ export default {
             .get()
             .then(() => {
               var varijabla = this.Data.Naziv;
-              console.log(varijabla);
               db.collection(
                 "user/" + firebase.auth().currentUser.uid + "/companies"
               )
@@ -244,6 +258,34 @@ export default {
                   querySnapshot.forEach((doc) => {
                     this.comp = doc.id;
                     console.log(this.comp);
+                    db.collection("user")
+                      .get()
+                      .then(() => {
+                        db.collection(
+                          "user/" +
+                            firebase.auth().currentUser.uid +
+                            "/companies/" +
+                            this.comp +
+                            "/workers"
+                        )
+                          .get()
+                          .then((query) => {
+                            this.wCards = [];
+                            query.forEach((workers) => {
+                              const data = workers.data();
+
+                              this.wCards.push({
+                                Ime: data.name,
+                                Prezime: data.surname,
+                                Pozicija: data.job,
+                                MjestoPoslovanja: data.cityOfJob,
+                                MjestoStanovanja: data.cityOfLiving,
+                                RadniSati: data.workHours,
+                                Placa: data.salary,
+                              });
+                            });
+                          });
+                      });
                   });
                 });
             });
@@ -269,6 +311,9 @@ export default {
         .doc(this.comp)
         .delete();
     },
+  },
+  components: {
+    Radnik,
   },
 };
 </script>
