@@ -229,15 +229,12 @@ export default {
   props: ["compCards"],
   mounted() {
     this.func();
-    this.fu();
+    this.compURL = this.$route.params.compURL;
+    this.Data = this.compCards.find((Data) => Data.Naziv == this.compURL);
   },
   methods: {
     editCompany() {
       $("#editPoduzece").modal("show");
-    },
-    fu() {
-      this.compURL = this.$route.params.compURL;
-      this.Data = this.compCards.find((Data) => Data.Naziv == this.compURL);
     },
     func() {
       db.collection("user")

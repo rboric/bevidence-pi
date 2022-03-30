@@ -1,65 +1,67 @@
 <template>
   <div>
-    <radnici-detalji />
+    <p>{{ wCards[0].Ime }} {{ wCards[0].Prezime }}</p>
   </div>
 </template>
 
 <script>
-import { firebase } from "@/firebase";
-import { db } from "@/firebase";
-import RadniciDetalji from "@/components/RadniciDetalji.vue";
-import comp from "@/views/RadniciDetails.vue";
+import { firebase, db } from "@/firebase";
 
 export default {
-  props: ["radnici"],
   name: "RadniciDetails",
   data() {
-    return {
-      wCards: [],
-    };
+    return {};
   },
   mounted() {
+    this.getWorkerData();
     this.wURL = this.$route.params.wURL;
-    console.log(this.wURL);
+    console.log(this.wURL + " mounted");
     /* this.Data = this.radnici.find((Data) => Data.Ime == this.wURL); */
-    this.wGetData();
   },
   methods: {
-    wGetData() {
-      db.collection("user")
+    getWorkerData() {
+      db.collection(
+        "user/" +
+          firebase.auth().currentUser.uid +
+          "/companies/" +
+          "WvjqmB5wsDePaZe2uO3e" +
+          "/workers"
+      )
         .get()
         .then(() => {
+          var varijabla = this.$route.params.wURL;
+
           db.collection(
             "user/" +
               firebase.auth().currentUser.uid +
               "/companies/" +
-              comp +
+              "WvjqmB5wsDePaZe2uO3e" +
               "/workers"
           )
+            .where("name", "==", varijabla)
             .get()
             .then((query) => {
               this.wCards = [];
-              query.forEach((workers) => {
-                const data = workers.data();
-
-                this.wCards.push({
-                  Ime: data.name,
-                  Prezime: data.surname,
-                  Pozicija: data.job,
-                  MjestoPoslovanja: data.cityOfJob,
-                  MjestoStanovanja: data.cityOfLiving,
-                  RadniSati: data.workHours,
-                  Placa: data.salary,
-                });
-                console.log(wCards);
+              query.forEach((doc) => {
+                const data = doc.data();
+                this.wCards = [
+                  {
+                    Ime: data.name,
+                    Prezime: data.surname,
+                    Pozicija: data.job,
+                    MjestoPoslovanja: data.cityOfJob,
+                    MjestoStanovanja: data.cityOfLiving,
+                    RadniSati: data.workHours,
+                    Placa: data.salary,
+                  },
+                ];
+                console.log(this.wCards);
               });
             });
         });
     },
   },
-  components: {
-    RadniciDetalji,
-  },
+  components: {},
 };
 </script>
 

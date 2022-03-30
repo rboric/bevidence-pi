@@ -9,6 +9,7 @@
           <p class="card-text">Pozicija: {{ radnici.Pozicija }}</p>
           <p class="card-text">Firma: {{ radnici.MjestoPoslovanja }}</p>
           <router-link
+            @click="func1()"
             class="btn btn-primary"
             :to="'/poduzeca/' + compURL + '/radnici/' + radnici.Ime"
             >Detalji</router-link
