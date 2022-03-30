@@ -4,9 +4,9 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">
-            <strong>{{ Data.Ime }} {{ radnici.Prezime }}</strong>
+            <strong>{{ Data.Ime }} {{ Data.Prezime }}</strong>
           </h5>
-          <p class="card-text">
+          <!--           <p class="card-text">
             {{ radnici.Pozicija }}
           </p>
           <p class="card-text">
@@ -14,7 +14,7 @@
           </p>
           <p class="card-text">
             {{ radnici.MjestoStanovanja }}
-          </p>
+          </p> -->
         </div>
       </div>
     </div>
@@ -26,12 +26,14 @@ export default {
   props: ["radnici"],
   name: "RadniciDetalji",
   data() {
-    return {};
+    return {
+      Data: [],
+    };
   },
   mounted() {
     this.wURL = this.$route.params.wURL;
     console.log(this.wURL);
-    /*  this.Data = this.wCards.find((Data) => Data.Ime == this.wURL); */
+    this.Data = this.radnici.find((Data) => Data.Ime == this.wURL);
     console.log(this.wGetData);
   },
 };

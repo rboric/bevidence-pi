@@ -10,7 +10,7 @@
           <p class="card-text">Firma: {{ radnici.MjestoPoslovanja }}</p>
           <router-link
             class="btn btn-primary"
-            :to="'/poduzeca/:compURL/radnici/' + radnici.Ime"
+            :to="'/poduzeca/' + compURL + '/radnici/' + radnici.Ime"
             >Detalji</router-link
           >
         </div>
@@ -73,7 +73,12 @@ export default {
   props: ["radnici", "compCard"],
   name: "Radnik",
   data() {
-    return {};
+    return {
+      compURL: "",
+    };
+  },
+  mounted() {
+    this.compURL = this.$route.params.compURL;
   },
   methods: {
     modalEditWorker() {

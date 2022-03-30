@@ -316,6 +316,7 @@ export default {
     Radnik,
   },
 };
+export var comp;
 </script>
 
 <style>
