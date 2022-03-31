@@ -15,6 +15,7 @@
         <div class="col-1"></div>
         <div class="col-12 add-div">
           <a
+            class="addCompanyButton"
             type="button"
             @click="modalAddCompany()"
             data-toggle="modal"
@@ -243,6 +244,14 @@ export default {
   align-items: center;
 }
 
+.addCompanyButton {
+  transition: 0.3s;
+}
+
+.addCompanyButton:hover {
+  opacity: 0.8;
+  transition: 0.3s;
+}
 .card {
   padding: 5px;
 }

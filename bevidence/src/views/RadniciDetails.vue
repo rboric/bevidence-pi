@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>12334 {{ wCards[0].Ime }} {{ wCards[0].Prezime }}</p>
+    <p>1234{{ wCards[0].Ime }} {{ wCards[0].Prezime }}</p>
   </div>
 </template>
 
@@ -13,50 +13,71 @@ export default {
     return {};
   },
   mounted() {
-    this.getWorkerData();
+    this.compURL = this.$route.params.compURL;
     this.wURL = this.$route.params.wURL;
-    console.log(this.wURL + " mounted");
+    this.getWorkerData();
     /* this.Data = this.radnici.find((Data) => Data.Ime == this.wURL); */
   },
   methods: {
     getWorkerData() {
-      db.collection(
-        "user/" +
-          firebase.auth().currentUser.uid +
-          "/companies/" +
-          "WvjqmB5wsDePaZe2uO3e" +
-          "/workers"
-      )
+      db.collection("user")
         .get()
         .then(() => {
-          var varijabla = this.$route.params.wURL;
-
           db.collection(
-            "user/" +
-              firebase.auth().currentUser.uid +
-              "/companies/" +
-              "WvjqmB5wsDePaZe2uO3e" +
-              "/workers"
+            "user/" + firebase.auth().currentUser.uid + "/companies"
           )
-            .where("name", "==", varijabla)
             .get()
-            .then((query) => {
-              this.wCards = [];
-              query.forEach((doc) => {
-                const data = doc.data();
-                this.wCards = [
-                  {
-                    Ime: data.name,
-                    Prezime: data.surname,
-                    Pozicija: data.job,
-                    MjestoPoslovanja: data.cityOfJob,
-                    MjestoStanovanja: data.cityOfLiving,
-                    RadniSati: data.workHours,
-                    Placa: data.salary,
-                  },
-                ];
-                console.log(this.wCards);
-              });
+            .then(() => {
+              var varijabla = this.compURL;
+              db.collection(
+                "user/" + firebase.auth().currentUser.uid + "/companies"
+              )
+                .where("name", "==", varijabla)
+                .get()
+                .then((querySnapshot) => {
+                  querySnapshot.forEach((doc) => {
+                    this.comp = doc.id;
+                    db.collection(
+                      "user/" +
+                        firebase.auth().currentUser.uid +
+                        "/companies/" +
+                        this.comp +
+                        "/workers"
+                    )
+                      .get()
+                      .then(() => {
+                        var varijabla = this.$route.params.wURL;
+
+                        db.collection(
+                          "user/" +
+                            firebase.auth().currentUser.uid +
+                            "/companies/" +
+                            this.comp +
+                            "/workers"
+                        )
+                          .where("name", "==", varijabla)
+                          .get()
+                          .then((query) => {
+                            this.wCards = [];
+                            query.forEach((doc) => {
+                              const data = doc.data();
+                              this.wCards = [
+                                {
+                                  Ime: data.name,
+                                  Prezime: data.surname,
+                                  Pozicija: data.job,
+                                  MjestoPoslovanja: data.cityOfJob,
+                                  MjestoStanovanja: data.cityOfLiving,
+                                  RadniSati: data.workHours,
+                                  Placa: data.salary,
+                                },
+                              ];
+                              console.log(data);
+                            });
+                          });
+                      });
+                  });
+                });
             });
         });
     },

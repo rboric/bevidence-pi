@@ -370,7 +370,6 @@ export default {
                 .then((querySnapshot) => {
                   querySnapshot.forEach((doc) => {
                     this.comp = doc.id;
-                    console.log(this.comp);
                     db.collection("user")
                       .get()
                       .then(() => {
@@ -462,6 +461,10 @@ export var comp;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.addButton img {
+  transition: 0.3s;
 }
 
 .addButton:hover img {
