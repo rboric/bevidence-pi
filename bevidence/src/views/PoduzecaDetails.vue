@@ -345,7 +345,6 @@ export default {
   props: ["compCards"],
   mounted() {
     this.func();
-    this.compURL = this.$route.params.compURL;
     this.Data = this.compCards.find((Data) => Data.Naziv == this.compURL);
   },
   methods: {
@@ -353,6 +352,7 @@ export default {
       $("#editPoduzece").modal("show");
     },
     func() {
+      this.compURL = this.$route.params.compURL;
       db.collection("user")
         .get()
         .then(() => {
