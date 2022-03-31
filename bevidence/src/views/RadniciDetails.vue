@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>{{ wCards[0].Ime }} {{ wCards[0].Prezime }}</p>
+    <p>12334 {{ wCards[0].Ime }} {{ wCards[0].Prezime }}</p>
   </div>
 </template>
 

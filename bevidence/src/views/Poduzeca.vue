@@ -231,7 +231,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .poduzeca {
   padding: 5px;
 }

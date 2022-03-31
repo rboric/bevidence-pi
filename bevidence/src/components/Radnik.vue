@@ -17,55 +17,6 @@
         </div>
       </div>
     </div>
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="editWorker"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              {{ radnici.Ime }} {{ radnici.Prezime }}
-            </h5>
-            <button
-              @click="modalCloseEditWorker()"
-              type="button"
-              class="btn-close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true"></span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Pozicija: {{ radnici.Pozicija }} <br />
-            Mjesto Poslovanja: {{ radnici.MjestoPoslovanja }} <br />
-            Mjesto Stanovanja: {{ radnici.MjestoStanovanja }}
-          </div>
-          <div class="modal-body">
-            Radni sati: {{ radnici.RadniSati }}<br />
-            Plaća po satu: {{ radnici.Placa }}<br />
-            Ukupna plaća: {{ radnici.RadniSati * radnici.Placa }}
-          </div>
-          <div class="modal-footer">
-            <button
-              @click="modalCloseEditWorker()"
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -102,10 +53,31 @@ export default {
 }
 
 .btn-primary {
-  background: #f84545 !important;
+  color: #fff;
+  background-color: #f84545 !important;
   border-color: #f84545 !important;
+  font-size: 16px;
+  font-weight: 400;
 }
 
+.btn-primary:hover {
+  background-color: #d71818 !important;
+  border-color: #d71818 !important;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #383838 !important;
+  border-color: #383838 !important;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #161616 !important;
+  border-color: #161616 !important;
+}
 .card p {
   margin: 0 0 10px !important;
 }

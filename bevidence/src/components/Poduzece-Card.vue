@@ -52,8 +52,30 @@ export default {
 }
 
 .btn-primary {
-  background: #f84545 !important;
+  color: #fff;
+  background-color: #f84545 !important;
   border-color: #f84545 !important;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.btn-primary:hover {
+  background-color: #d71818 !important;
+  border-color: #d71818 !important;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #383838 !important;
+  border-color: #383838 !important;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #161616 !important;
+  border-color: #161616 !important;
 }
 
 .card p {
