@@ -288,10 +288,13 @@ export default {
                 db.collection(
                   "user/" +
                     firebase.auth().currentUser.uid +
-                    "/companies/WvjqmB5wsDePaZe2uO3e/workers"
+                    "/companies/" +
+                    this.comp +
+                    "/workers"
                 )
                   .doc(this.worker_id)
                   .delete();
+                this.$router.push({ name: "Poduzeca" });
               });
             });
         });

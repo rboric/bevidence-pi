@@ -427,6 +427,7 @@ export default {
       $("#addWorker").modal("show");
     },
     addWorker() {
+      this.compURL = this.$route.params.compURL;
       db.collection(
         "user/" +
           firebase.auth().currentUser.uid +

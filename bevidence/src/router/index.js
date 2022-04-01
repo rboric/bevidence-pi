@@ -28,14 +28,6 @@ const routes = [
     props: true
   },
   {
-    path: '/radnici',
-    name: 'Radnici',
-    component: () => import('../views/Radnici.vue'),
-    meta: {
-      needsUser: true
-    }
-  },
-  {
     path: '/poduzeca/:compURL/radnici/:wURL',
     name: 'RadniciDetails',
     component: () => import('../views/RadniciDetails.vue'),

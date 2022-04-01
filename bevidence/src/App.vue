@@ -27,9 +27,6 @@
               >
             </li>
             <li v-if="localuser.currentUser" class="nav-item">
-              <router-link to="/radnici" class="nav-link">Radnici</router-link>
-            </li>
-            <li v-if="localuser.currentUser" class="nav-item">
               <router-link to="/" class="nav-link">Profil</router-link>
             </li>
           </ul>
