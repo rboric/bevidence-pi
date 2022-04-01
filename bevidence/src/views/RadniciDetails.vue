@@ -122,7 +122,7 @@
                 @click.prevent="updateWorker"
                 class="btn btn-primary"
               >
-                Dodaj
+                Spremi
               </button>
               <button
                 type="button"
@@ -207,7 +207,6 @@ export default {
                                   Placa: data.salary,
                                 },
                               ];
-                              console.log(data);
                             });
                           });
                       });
@@ -227,25 +226,75 @@ export default {
           this.comp +
           "/workers"
       )
-        .doc("Bziw2T49VT65Cp9nuZF5")
-        .update({
-          name: this.wCards.Ime,
-          surname: this.wCards.Prezime,
-          job: this.wCards.Pozicija,
-          cityOfJob: this.wCards.MjestoPoslovanja,
-          cityOfLiving: this.wCards.MjestoStanovanja,
-          workHours: this.wCards.RadniSati,
-          salary: this.wCards.Placa,
+        .get()
+        .then(() => {
+          var varijabla = this.$route.params.wURL;
+          db.collection(
+            "user/" +
+              firebase.auth().currentUser.uid +
+              "/companies/" +
+              this.comp +
+              "/workers"
+          )
+            .where("name", "==", varijabla)
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                this.worker_id = doc.id;
+                db.collection(
+                  "user/" +
+                    firebase.auth().currentUser.uid +
+                    "/companies/" +
+                    this.comp +
+                    "/workers"
+                )
+                  .doc(this.worker_id)
+                  .update({
+                    name: this.wCards[0].Ime,
+                    surname: this.wCards[0].Prezime,
+                    job: this.wCards[0].Pozicija,
+                    cityOfJob: this.wCards[0].MjestoPoslovanja,
+                    cityOfLiving: this.wCards[0].MjestoStanovanja,
+                    workHours: this.wCards[0].RadniSati,
+                    salary: this.wCards[0].Placa,
+                  });
+              });
+            });
         });
     },
     deleteWorker() {
       db.collection(
         "user/" +
           firebase.auth().currentUser.uid +
-          "/companies/WvjqmB5wsDePaZe2uO3e/workers"
+          "/companies/" +
+          this.comp +
+          "/workers"
       )
-        .doc("KIMjXnSETYWSQ0i6erA3")
-        .delete();
+        .get()
+        .then(() => {
+          var varijabla = this.$route.params.wURL;
+          db.collection(
+            "user/" +
+              firebase.auth().currentUser.uid +
+              "/companies/" +
+              this.comp +
+              "/workers"
+          )
+            .where("name", "==", varijabla)
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                this.worker_id = doc.id;
+                db.collection(
+                  "user/" +
+                    firebase.auth().currentUser.uid +
+                    "/companies/WvjqmB5wsDePaZe2uO3e/workers"
+                )
+                  .doc(this.worker_id)
+                  .delete();
+              });
+            });
+        });
     },
   },
   components: {},
