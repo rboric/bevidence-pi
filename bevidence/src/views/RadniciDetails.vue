@@ -1,15 +1,36 @@
 <template>
   <div>
     <div v-for="wCard in wCards" :key="wCard.id">
-      <p>Ime i Prezime: {{ wCard.Ime }} {{ wCard.Prezime }}</p>
-      <p>Pozicija: {{ wCard.Pozicija }}</p>
-      <p>MjestoPoslovanja: {{ wCard.MjestoPoslovanja }}</p>
-      <p>MjestoStanovanja: {{ wCard.MjestoStanovanja }}</p>
-      <p>RadniSati: {{ wCard.RadniSati }}</p>
-      <p>Placa: {{ wCard.Placa }}</p>
+      <div class="info-container row">
+        <div class="col-12">
+          <h3>
+            <b>{{ wCard.Ime }} {{ wCard.Prezime }}</b>
+          </h3>
+        </div>
+        <div class="information col-6">
+          <p><b>Pozicija:</b></p>
+          <p><b>Mjesto poslovanja:</b></p>
+          <p><b>Mjesto stanovanja:</b></p>
+          <p><b>Radni sati:</b></p>
+          <p><b>Placa:</b></p>
+        </div>
+        <div class="col-6">
+          <p>{{ wCard.Pozicija }}</p>
+          <p>{{ wCard.MjestoPoslovanja }}</p>
+          <p>{{ wCard.MjestoStanovanja }}</p>
+          <p>{{ wCard.RadniSati }}</p>
+          <p>{{ wCard.Placa }}</p>
+        </div>
+      </div>
+      <div class="row button-container">
+        <div class="col-12">
+          <button class="btn btn-primary" @click="editWorker()">Uredi</button>
+          <button class="btn btn-primary" @click="deleteWorker()">
+            Obriši
+          </button>
+        </div>
+      </div>
 
-      <button class="btn btn-primary" @click="editWorker()">Uredi</button>
-      <button class="btn btn-primary" @click="deleteWorker()">Obriši</button>
       <!-- MODAL EDIT WORKER -->
       <div
         class="modal fade"
@@ -305,7 +326,22 @@ export default {
 </script>
 
 <style>
+.info-container {
+  padding: 20px;
+  width: 40%;
+  margin: 20px auto auto auto;
+
+  border: 1px solid #f84545;
+  border-radius: 5px;
+}
+
+.button-container {
+  width: 30%;
+  margin: 20px auto auto auto;
+}
+
 .btn {
+  width: 100px;
   margin: 2px;
 }
 
@@ -338,5 +374,23 @@ export default {
 
 .form-control {
   color: red;
+}
+
+@media screen and (max-width: 1080px) {
+  .info-container {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .info-container {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .info-container {
+    width: 90%;
+  }
 }
 </style>
