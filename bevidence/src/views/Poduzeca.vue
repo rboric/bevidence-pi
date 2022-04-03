@@ -134,19 +134,6 @@
                           id="compZip"
                         />
                       </div>
-                      <div class="col-12">
-                        <div class="col-md-2">
-                          <label for="compEmployeesNumber" class="form-label"
-                            >Broj zaposlenih</label
-                          >
-                          <input
-                            v-model="compEmployeesNumber"
-                            type="number"
-                            class="form-control"
-                            id="compEmployeesNumber"
-                          />
-                        </div>
-                      </div>
                     </form>
                   </div>
                 </div>

@@ -32,10 +32,6 @@ export default {
 </script>
 
 <style>
-.poduzeca {
-  padding: 5px;
-}
-
 .add-div {
   padding: 5px;
   display: flex;
@@ -44,6 +40,7 @@ export default {
 }
 
 .card {
+  border: 1px solid#ff8080;
   padding: 2px;
 }
 

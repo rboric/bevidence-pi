@@ -12,18 +12,20 @@
           <p><b>Mjesto poslovanja:</b></p>
           <p><b>Mjesto stanovanja:</b></p>
           <p><b>Radni sati:</b></p>
-          <p><b>Placa:</b></p>
+          <p><b>Plaća:</b></p>
+          <p><b>Ukupna plaća:</b></p>
         </div>
         <div class="col-6">
           <p>{{ wCard.Pozicija }}</p>
           <p>{{ wCard.MjestoPoslovanja }}</p>
           <p>{{ wCard.MjestoStanovanja }}</p>
           <p>{{ wCard.RadniSati }}</p>
-          <p>{{ wCard.Placa }}</p>
+          <p>{{ wCard.Placa }} kn/h</p>
+          <p>{{ wCard.Placa * wCard.RadniSati }} kn</p>
         </div>
       </div>
       <div class="row button-container">
-        <div class="col-12">
+        <div class="buttons-container col-12">
           <button class="btn btn-primary" @click="editWorker()">Uredi</button>
           <button class="btn btn-primary" @click="deleteWorker()">
             Obriši
@@ -336,8 +338,13 @@ export default {
 }
 
 .button-container {
-  width: 30%;
+  padding: 20px;
+  width: 10%;
   margin: 20px auto auto auto;
+}
+
+.buttons-container button {
+  width: 100%;
 }
 
 .btn {
@@ -372,13 +379,18 @@ export default {
   border-color: #161616 !important;
 }
 
-.form-control {
-  color: red;
+@media screen and (max-width: 1480px) {
+  .button-container {
+    width: 15%;
+  }
 }
 
 @media screen and (max-width: 1080px) {
   .info-container {
     width: 60%;
+  }
+  .button-container {
+    width: 30%;
   }
 }
 

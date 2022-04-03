@@ -25,9 +25,13 @@
           </p>
           <p>
             <b> Broj zaposlenih:</b> <br />
-            {{ Data.BrojZaposlenih }}
+            {{ wCards.length }}
           </p>
-          <button type="button" @click="editCompany()" class="btn btn-primary">
+          <button
+            type="button"
+            @click="modalEditCompany()"
+            class="btn btn-primary"
+          >
             Uredi
           </button>
           <button
@@ -168,19 +172,6 @@
                           id="inputZip"
                         />
                       </div>
-                      <div class="col-12">
-                        <div class="col-md-2">
-                          <label for="employeesNumber" class="form-label"
-                            >Broj zaposlenih</label
-                          >
-                          <input
-                            v-model="Data.BrojZaposlenih"
-                            type="number"
-                            class="form-control"
-                            id="employeesNumber"
-                          />
-                        </div>
-                      </div>
                     </form>
                   </div>
                 </div>
@@ -189,6 +180,7 @@
           </div>
           <div class="modal-footer">
             <button
+              @click="modalCloseEditCompany()"
               type="button"
               class="btn btn-secondary"
               data-dismiss="modal"
@@ -348,8 +340,11 @@ export default {
     this.Data = this.compCards.find((Data) => Data.Naziv == this.compURL);
   },
   methods: {
-    editCompany() {
+    modalEditCompany() {
       $("#editPoduzece").modal("show");
+    },
+    modalCloseEditCompany() {
+      $("#editPoduzece").modal("toggle");
     },
     func() {
       this.compURL = this.$route.params.compURL;
@@ -417,6 +412,7 @@ export default {
           zip: this.Data.PostanskiBroj,
           employees: this.Data.BrojZaposlenih,
         });
+      $("#editPoduzece").modal("toggle");
     },
     deleteCompany() {
       db.collection("user/" + firebase.auth().currentUser.uid + "/companies")
@@ -514,9 +510,5 @@ hr {
   color: #fff;
   background-color: #161616 !important;
   border-color: #161616 !important;
-}
-
-.form-control {
-  color: red;
 }
 </style>
