@@ -7,10 +7,12 @@
             <strong>{{ radnici.Ime }} {{ radnici.Prezime }}</strong>
           </h5>
           <p class="card-text">Pozicija: {{ radnici.Pozicija }}</p>
-          <p class="card-text">Firma: {{ radnici.MjestoPoslovanja }}</p>
+          <p class="card-text">
+            Mjesto stanovanja: {{ radnici.MjestoStanovanja }}
+          </p>
           <router-link
             class="btn btn-primary"
-            :to="'/poduzeca/' + compURL + '/radnici/' + radnici.Ime"
+            :to="'/poduzeca/' + compURL + '/radnici/' + radnici.Username"
             >Detalji</router-link
           >
         </div>

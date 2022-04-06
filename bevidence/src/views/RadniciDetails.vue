@@ -19,8 +19,8 @@
           <p>{{ wCard.Pozicija }}</p>
           <p>{{ wCard.MjestoPoslovanja }}</p>
           <p>{{ wCard.MjestoStanovanja }}</p>
-          <p>{{ wCard.RadniSati }}</p>
-          <p>{{ wCard.Placa }} kn/h</p>
+          <p>{{ wCard.RadniSati }} h</p>
+          <p>{{ wCard.Placa }} kn / h</p>
           <p>{{ wCard.Placa * wCard.RadniSati }} kn</p>
         </div>
       </div>
@@ -104,7 +104,7 @@
                             >Mjesto poslovanja</label
                           >
                           <input
-                            v-model="wCard.MjestoStanovanja"
+                            v-model="wCard.MjestoPoslovanja"
                             type="string"
                             class="form-control"
                             id="wCityOfJob"
@@ -213,7 +213,7 @@ export default {
                             this.comp +
                             "/workers"
                         )
-                          .where("name", "==", varijabla)
+                          .where("username", "==", varijabla)
                           .get()
                           .then((query) => {
                             this.wCards = [];
@@ -242,6 +242,7 @@ export default {
       $("#editRadnik").modal("show");
     },
     updateWorker() {
+      var varijabla = this.$route.params.wURL;
       db.collection(
         "user/" +
           firebase.auth().currentUser.uid +
@@ -249,40 +250,32 @@ export default {
           this.comp +
           "/workers"
       )
+        .where("username", "==", varijabla)
         .get()
-        .then(() => {
-          var varijabla = this.$route.params.wURL;
-          db.collection(
-            "user/" +
-              firebase.auth().currentUser.uid +
-              "/companies/" +
-              this.comp +
-              "/workers"
-          )
-            .where("name", "==", varijabla)
-            .get()
-            .then((querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                this.worker_id = doc.id;
-                db.collection(
-                  "user/" +
-                    firebase.auth().currentUser.uid +
-                    "/companies/" +
-                    this.comp +
-                    "/workers"
-                )
-                  .doc(this.worker_id)
-                  .update({
-                    name: this.wCards[0].Ime,
-                    surname: this.wCards[0].Prezime,
-                    job: this.wCards[0].Pozicija,
-                    cityOfJob: this.wCards[0].MjestoPoslovanja,
-                    cityOfLiving: this.wCards[0].MjestoStanovanja,
-                    workHours: this.wCards[0].RadniSati,
-                    salary: this.wCards[0].Placa,
-                  });
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            this.worker_id = doc.id;
+            db.collection(
+              "user/" +
+                firebase.auth().currentUser.uid +
+                "/companies/" +
+                this.comp +
+                "/workers"
+            )
+              .doc(this.worker_id)
+              .update({
+                name: this.wCards[0].Ime,
+                surname: this.wCards[0].Prezime,
+                job: this.wCards[0].Pozicija,
+                cityOfJob: this.wCards[0].MjestoPoslovanja,
+                cityOfLiving: this.wCards[0].MjestoStanovanja,
+                workHours: this.wCards[0].RadniSati,
+                salary: this.wCards[0].Placa,
+              })
+              .then(() => {
+                location.reload();
               });
-            });
+          });
         });
     },
     deleteWorker() {
@@ -303,7 +296,7 @@ export default {
               this.comp +
               "/workers"
           )
-            .where("name", "==", varijabla)
+            .where("username", "==", varijabla)
             .get()
             .then((querySnapshot) => {
               querySnapshot.forEach((doc) => {

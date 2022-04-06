@@ -119,6 +119,7 @@ export default {
                   PostanskiBroj: data.zip,
                   Drzava: data.state,
                   BrojZaposlenih: data.employees,
+                  Company_Name: data.company_name,
                 });
               });
             });

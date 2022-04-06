@@ -262,6 +262,18 @@
                           placeholder=""
                         />
                       </div>
+                      <div class="col-md-6">
+                        <label for="wJobCity" class="form-label"
+                          >Mjesto poslovanja</label
+                        >
+                        <input
+                          v-model="wJobCity"
+                          type="string"
+                          class="form-control"
+                          id="wJobCity"
+                          placeholder=""
+                        />
+                      </div>
                       <div class="col-md-3">
                         <label for="wWorkHours" class="form-label"
                           >Radni sati</label
@@ -389,6 +401,7 @@ export default {
                                 MjestoStanovanja: data.cityOfLiving,
                                 RadniSati: data.workHours,
                                 Placa: data.salary,
+                                Username: data.username,
                               });
                             });
                           });
@@ -439,6 +452,13 @@ export default {
           cityOfLiving: this.wCityOfLiving,
           workHours: this.wWorkHours,
           salary: this.wSalary,
+          username:
+            this.wName.toLowerCase() +
+            "." +
+            this.wSurname.toLowerCase() +
+            "." +
+            Math.floor(Math.random() * 100) +
+            1,
         })
         .then(() => {
           location.reload();

@@ -201,6 +201,11 @@ export default {
           state: this.compState,
           zip: this.compZip,
           employees: this.compEmployeesNumber,
+          company_name:
+            this.compName.toLowerCase() +
+            "." +
+            Math.floor(Math.random() * 100) +
+            1,
           useradd: localuser.currentUser,
         })
         .then((doc) => {
