@@ -1,27 +1,27 @@
 <template>
   <div class="PoduzecaDetails">
-    <div class="container">
+    <div class="container" v-for="compCard in compCards" :key="compCard.id">
       <div class="row">
         <div class="col-12">
           <h5 class="h5margin">
-            <Strong>{{ Data.Naziv }} - {{ Data.Lokacija }}</Strong>
+            <Strong>{{ compCard.Naziv }} - {{ compCard.Lokacija }}</Strong>
           </h5>
           <p>
             <b> Adresa:</b> <br />
             {{
-              Data.Ulica +
+              compCard.Ulica +
               " " +
-              Data.Broj +
+              compCard.Broj +
               ", " +
-              Data.PostanskiBroj +
+              compCard.PostanskiBroj +
               " - " +
-              Data.Drzava
+              compCard.Drzava
             }}
           </p>
-          <p><b> Vlasnik:</b> <br />{{ Data.Vlasnik }}</p>
+          <p><b> Vlasnik:</b> <br />{{ compCard.Vlasnik }}</p>
           <p>
             <b> Djelatnost:</b> <br />
-            {{ Data.Djelatnost }}
+            {{ compCard.Djelatnost }}
           </p>
           <p>
             <b> Broj zaposlenih:</b> <br />
@@ -58,142 +58,142 @@
           /></a>
         </div>
       </div>
-    </div>
-    <!-- MODAL EDIT COMPANY -->
-    <div
-      class="modal fade"
-      id="editPoduzece"
-      tabindex="-1"
-      aria-labelledby="editPoduzeceLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editPoduzeceLabel">Uredi poduzeće</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="novo-poduzece">
-              <div class="container">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <form @submit.prevent="addNewCompany" class="row g-3">
-                      <div class="col-md-4">
-                        <label for="companyName" class="form-label">
-                          Naziv
-                        </label>
-                        <input
-                          v-model="Data.Naziv"
-                          type="text"
-                          class="form-control"
-                          id="companyName"
-                        />
-                      </div>
-                      <div class="col-md-4">
-                        <label for="companyBusiness" class="form-label"
-                          >Djelatnost</label
-                        >
-                        <input
-                          v-model="Data.Djelatnost"
-                          type="text"
-                          class="form-control"
-                          id="companyBusiness"
-                        />
-                      </div>
-                      <div class="col-md-4">
-                        <label for="businessOwner" class="form-label"
-                          >Vlasnik</label
-                        >
-                        <input
-                          v-model="Data.Vlasnik"
-                          type="text"
-                          class="form-control"
-                          id="businessOwner"
-                        />
-                      </div>
-                      <div class="col-md-10">
-                        <label for="inputAddress" class="form-label"
-                          >Ulica</label
-                        >
-                        <input
-                          v-model="Data.Ulica"
-                          type="string"
-                          class="form-control"
-                          id="inputAddress"
-                          placeholder=""
-                        />
-                      </div>
-                      <div class="col-md-2">
-                        <label for="inputAddressNumber" class="form-label"
-                          >Broj</label
-                        >
-                        <input
-                          v-model="Data.Broj"
-                          type="string"
-                          class="form-control"
-                          id="inputAddressNumber"
-                          placeholder=""
-                        />
-                      </div>
-                      <div class="col-md-4">
-                        <label for="inputCity" class="form-label">Grad</label>
-                        <input
-                          v-model="Data.Lokacija"
-                          type="text"
-                          class="form-control"
-                          id="inputCity"
-                        />
-                      </div>
-                      <div class="col-md-4">
-                        <label for="inputState" class="form-label"
-                          >Država</label
-                        >
-                        <input
-                          v-model="Data.Drzava"
-                          type="text"
-                          class="form-control"
-                          id="inputState"
-                        />
-                      </div>
-                      <div class="col-md-4">
-                        <label for="inputZip" class="form-label"
-                          >Poštanski broj</label
-                        >
-                        <input
-                          v-model="Data.PostanskiBroj"
-                          type="number"
-                          class="form-control"
-                          id="inputZip"
-                        />
-                      </div>
-                    </form>
+      <!-- MODAL EDIT COMPANY -->
+      <div
+        class="modal fade"
+        id="editPoduzece"
+        tabindex="-1"
+        aria-labelledby="editPoduzeceLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editPoduzeceLabel">Uredi poduzeće</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="novo-poduzece">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <form @submit.prevent="addNewCompany" class="row g-3">
+                        <div class="col-md-4">
+                          <label for="companyName" class="form-label">
+                            Naziv
+                          </label>
+                          <input
+                            v-model="compCard.Naziv"
+                            type="text"
+                            class="form-control"
+                            id="companyName"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <label for="companyBusiness" class="form-label"
+                            >Djelatnost</label
+                          >
+                          <input
+                            v-model="compCard.Djelatnost"
+                            type="text"
+                            class="form-control"
+                            id="companyBusiness"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <label for="businessOwner" class="form-label"
+                            >Vlasnik</label
+                          >
+                          <input
+                            v-model="compCard.Vlasnik"
+                            type="text"
+                            class="form-control"
+                            id="businessOwner"
+                          />
+                        </div>
+                        <div class="col-md-10">
+                          <label for="inputAddress" class="form-label"
+                            >Ulica</label
+                          >
+                          <input
+                            v-model="compCard.Ulica"
+                            type="string"
+                            class="form-control"
+                            id="inputAddress"
+                            placeholder=""
+                          />
+                        </div>
+                        <div class="col-md-2">
+                          <label for="inputAddressNumber" class="form-label"
+                            >Broj</label
+                          >
+                          <input
+                            v-model="compCard.Broj"
+                            type="string"
+                            class="form-control"
+                            id="inputAddressNumber"
+                            placeholder=""
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <label for="inputCity" class="form-label">Grad</label>
+                          <input
+                            v-model="compCard.Lokacija"
+                            type="text"
+                            class="form-control"
+                            id="inputCity"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <label for="inputState" class="form-label"
+                            >Država</label
+                          >
+                          <input
+                            v-model="compCard.Drzava"
+                            type="text"
+                            class="form-control"
+                            id="inputState"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <label for="inputZip" class="form-label"
+                            >Poštanski broj</label
+                          >
+                          <input
+                            v-model="compCard.PostanskiBroj"
+                            type="number"
+                            class="form-control"
+                            id="inputZip"
+                          />
+                        </div>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              @click="modalCloseEditCompany()"
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Odustani
-            </button>
-            <button
-              type="button"
-              @click="updateCompany()"
-              class="btn btn-primary"
-            >
-              Spremi
-            </button>
+            <div class="modal-footer">
+              <button
+                @click="modalCloseEditCompany()"
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Odustani
+              </button>
+              <button
+                type="button"
+                @click="updateCompany()"
+                class="btn btn-primary"
+              >
+                Spremi
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -333,7 +333,7 @@ import localuser from "@/localuser";
 export default {
   data() {
     return {
-      Data: [],
+      compCards: [],
       comp: "",
       wCards: [],
       wName: "",
@@ -346,10 +346,9 @@ export default {
       localuser,
     };
   },
-  props: ["compCards"],
   mounted() {
     this.func();
-    this.Data = this.compCards.find((Data) => Data.Naziv == this.compURL);
+    this.compGetData();
   },
   methods: {
     modalEditCompany() {
@@ -357,6 +356,39 @@ export default {
     },
     modalCloseEditCompany() {
       $("#editPoduzece").modal("toggle");
+    },
+    compGetData() {
+      this.compURL = this.$route.params.compURL;
+      db.collection("user")
+        .get()
+        .then(() => {
+          var varijabla = this.compURL;
+          console.log(varijabla);
+          db.collection(
+            "user/" + firebase.auth().currentUser.uid + "/companies"
+          )
+            .where("company_name", "==", varijabla)
+            .get()
+            .then((query) => {
+              this.compCards = [];
+              query.forEach((companies) => {
+                const data = companies.data();
+
+                this.compCards.push({
+                  Naziv: data.name,
+                  Djelatnost: data.business,
+                  Vlasnik: data.owner,
+                  Lokacija: data.city,
+                  Ulica: data.address,
+                  Broj: data.number,
+                  PostanskiBroj: data.zip,
+                  Drzava: data.state,
+                  BrojZaposlenih: data.employees,
+                  Company_Name: data.company_name,
+                });
+              });
+            });
+        });
     },
     func() {
       this.compURL = this.$route.params.compURL;
@@ -368,11 +400,11 @@ export default {
           )
             .get()
             .then(() => {
-              var varijabla = this.Data.Naziv;
+              var varijabla = this.$route.params.compURL;
               db.collection(
                 "user/" + firebase.auth().currentUser.uid + "/companies"
               )
-                .where("name", "==", varijabla)
+                .where("company_name", "==", varijabla)
                 .get()
                 .then((querySnapshot) => {
                   querySnapshot.forEach((doc) => {
@@ -415,15 +447,15 @@ export default {
       db.collection("user/" + firebase.auth().currentUser.uid + "/companies")
         .doc(this.comp)
         .update({
-          name: this.Data.Naziv,
-          business: this.Data.Djelatnost,
-          owner: this.Data.Vlasnik,
-          address: this.Data.Ulica,
-          number: this.Data.Broj,
-          city: this.Data.Lokacija,
-          state: this.Data.Drzava,
-          zip: this.Data.PostanskiBroj,
-          employees: this.Data.BrojZaposlenih,
+          name: this.compCards[0].Naziv,
+          business: this.compCards[0].Djelatnost,
+          owner: this.compCards[0].Vlasnik,
+          address: this.compCards[0].Ulica,
+          number: this.compCards[0].Broj,
+          city: this.compCards[0].Lokacija,
+          state: this.compCards[0].Drzava,
+          zip: this.compCards[0].PostanskiBroj,
+          employees: this.compCards[0].BrojZaposlenih,
         });
       $("#editPoduzece").modal("toggle");
     },

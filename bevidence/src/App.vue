@@ -2,7 +2,7 @@
   <div class="app">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href=""
+        <a class="navbar-brand" href="/"
           ><img
             src="@/assets/white-logo.svg"
             alt="Bevidence logo"
@@ -93,7 +93,7 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          this.$router.push({ name: "Login" });
+          this.$router.push({ name: "Home" });
         });
     },
     compGetData() {

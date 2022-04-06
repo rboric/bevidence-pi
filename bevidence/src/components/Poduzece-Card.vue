@@ -11,7 +11,9 @@
             compCard.Ulica + " " + compCard.Broj + ", " + compCard.PostanskiBroj
           }}
         </p>
-        <router-link class="btn btn-primary" :to="'/poduzeca/' + compCard.Naziv"
+        <router-link
+          class="btn btn-primary"
+          :to="'/poduzeca/' + compCard.Company_Name"
           >Detalji</router-link
         >
       </div>

@@ -3,7 +3,7 @@
     <div v-for="wCard in wCards" :key="wCard.id">
       <div class="info-container row">
         <div class="col-12">
-          <h3>
+          <h3 style="word-break: break-all">
             <b>{{ wCard.Ime }} {{ wCard.Prezime }}</b>
           </h3>
         </div>
@@ -15,7 +15,7 @@
           <p><b>Plaća:</b></p>
           <p><b>Ukupna plaća:</b></p>
         </div>
-        <div class="col-6">
+        <div class="information col-6">
           <p>{{ wCard.Pozicija }}</p>
           <p>{{ wCard.MjestoPoslovanja }}</p>
           <p>{{ wCard.MjestoStanovanja }}</p>
@@ -30,6 +30,7 @@
           <button class="btn btn-primary" @click="deleteWorker()">
             Obriši
           </button>
+          <button class="btn btn-primary" @click="addSalary()">Plaća</button>
         </div>
       </div>
 
@@ -158,6 +159,80 @@
           </div>
         </div>
       </div>
+      <!-- MODAL NEW WORKER -->
+      <div
+        class="modal fade"
+        id="zabPlaca"
+        tabindex="-1"
+        aria-labelledby="addRadnikLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addRadnikLabel">
+                Novi zapis o plaći
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="novi-radnik">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <form @submit.prevent="addNewSalary" class="row g-3">
+                        <div class="col-md-6">
+                          <label for="wWorkHours" class="form-label"
+                            >Radni sati</label
+                          >
+                          <input
+                            v-model="wCard.RadniSati"
+                            type="string"
+                            class="form-control"
+                            id="wWorkHours"
+                          />
+                        </div>
+                        <div class="col-md-6">
+                          <label for="wSalary" class="form-label"
+                            >Početna plaća</label
+                          >
+                          <input
+                            v-model="wCard.Placa"
+                            type="string"
+                            class="form-control"
+                            id="wSalary"
+                          />
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                @click.prevent="addNewSalary"
+                class="btn btn-primary"
+              >
+                Dodaj
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Odustani
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -191,7 +266,7 @@ export default {
               db.collection(
                 "user/" + firebase.auth().currentUser.uid + "/companies"
               )
-                .where("name", "==", varijabla)
+                .where("company_name", "==", varijabla)
                 .get()
                 .then((querySnapshot) => {
                   querySnapshot.forEach((doc) => {
@@ -240,6 +315,9 @@ export default {
     },
     editWorker() {
       $("#editRadnik").modal("show");
+    },
+    addSalary() {
+      $("#zabPlaca").modal("show");
     },
     updateWorker() {
       var varijabla = this.$route.params.wURL;
@@ -321,6 +399,10 @@ export default {
 </script>
 
 <style>
+.information p {
+  word-break: break-all;
+}
+
 .info-container {
   padding: 20px;
   width: 40%;
@@ -373,17 +455,20 @@ export default {
 }
 
 @media screen and (max-width: 1480px) {
+  .info-container {
+    width: 70%;
+  }
   .button-container {
-    width: 15%;
+    width: 20%;
   }
 }
 
 @media screen and (max-width: 1080px) {
   .info-container {
-    width: 60%;
+    width: 70%;
   }
   .button-container {
-    width: 30%;
+    width: 20%;
   }
 }
 
@@ -391,11 +476,17 @@ export default {
   .info-container {
     width: 70%;
   }
+  .button-container {
+    width: 50%;
+  }
 }
 
 @media screen and (max-width: 600px) {
   .info-container {
     width: 90%;
+  }
+  .button-container {
+    width: 50%;
   }
 }
 </style>
