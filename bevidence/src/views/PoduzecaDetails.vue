@@ -344,6 +344,7 @@ export default {
       wWorkHours: "",
       wSalary: "",
       wTotalSalary: [],
+
       localuser,
     };
   },

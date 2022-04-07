@@ -22,7 +22,6 @@
           <p>{{ wCard.RadniSati }} h</p>
           <p>{{ wCard.Placa }} kn / h</p>
           <p>{{ wCard.Placa * wCard.RadniSati }} kn</p>
-          <p>{{ wCard.TotalSalary }}</p>
         </div>
       </div>
       <div class="row button-container">
@@ -193,7 +192,7 @@
                           >
                           <input
                             v-model="wCard.RadniSati"
-                            type="string"
+                            type="number"
                             class="form-control"
                             id="wWorkHours"
                           />
@@ -204,9 +203,73 @@
                           >
                           <input
                             v-model="wCard.Placa"
-                            type="string"
+                            type="number"
                             class="form-control"
                             id="wSalary"
+                          />
+                        </div>
+                        <div class="col-md-3">
+                          <label for="overtimeHours" class="form-label"
+                            >Prekovremeni Sati</label
+                          >
+                          <input
+                            v-model="overtimeHours"
+                            type="number"
+                            class="form-control"
+                            id="overtimeHours"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <label for="overtimeHoursSalary" class="form-label"
+                            >Plaća za prekovremene sate</label
+                          >
+                          <input
+                            v-model="overtimeHoursSalary"
+                            type="number"
+                            class="form-control"
+                            id="overtimeHoursSalary"
+                          />
+                        </div>
+                        <div class="col-md-3">
+                          <label for="salaryAddition" class="form-label"
+                            >Dodatak na plaću</label
+                          >
+                          <input
+                            v-model="salaryAddition"
+                            type="number"
+                            class="form-control"
+                            id="salaryAddition"
+                          />
+                        </div>
+                        <div class="col-md-2">
+                          <label for="salaryMonth" class="form-label"
+                            >Mjesec</label
+                          >
+                          <input
+                            v-model="salaryMonth"
+                            type="string"
+                            class="form-control"
+                            id="salaryMonth"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <label for="salaryYear" class="form-label"
+                            >Godina</label
+                          >
+                          <input
+                            v-model="salaryYear"
+                            type="string"
+                            class="form-control"
+                            id="salaryYear"
+                          />
+                        </div>
+                        <div class="col-md-8">
+                          <label for="result" class="form-label">Ukupno</label>
+                          <input
+                            v-model="result"
+                            type="number"
+                            class="form-control"
+                            id="result"
                           />
                         </div>
                       </form>
@@ -246,6 +309,11 @@ export default {
   data() {
     return {
       wCards: [],
+      salaryAddition: null,
+      salaryMonth: null,
+      salaryYear: null,
+      overtimeHours: null,
+      overtimeHoursSalary: null,
       total_salary: [],
     };
   },
@@ -325,7 +393,13 @@ export default {
     },
     addNewSalary() {
       var varijabla = this.$route.params.wURL;
-      var izracun = this.wCards[0].RadniSati * this.wCards[0].Placa;
+      var izracun =
+        this.wCards[0].RadniSati * this.wCards[0].Placa +
+        this.salaryAddition +
+        this.overtimeHours * this.overtimeHoursSalary;
+      var mjesec = this.salaryMonth;
+      var godina = this.salaryYear;
+      this.inTotal = izracun;
       db.collection(
         "user/" +
           firebase.auth().currentUser.uid +
@@ -348,11 +422,14 @@ export default {
               .doc(this.worker_id)
               .update({
                 total_salary: firebase.firestore.FieldValue.arrayUnion({
+                  mjesec,
+                  godina,
                   izracun,
                 }),
               });
           });
         });
+      $("#zabPlaca").modal("toggle");
     },
     updateWorker() {
       var varijabla = this.$route.params.wURL;
@@ -430,6 +507,17 @@ export default {
     },
   },
   components: {},
+  computed: {
+    result() {
+      var a =
+        this.wCards[0].RadniSati * this.wCards[0].Placa +
+        this.salaryAddition +
+        this.overtimeHours * this.overtimeHoursSalary;
+      var b = this.salaryAddition;
+      var c = this.overtimeHours * this.overtimeHoursSalary;
+      return a;
+    },
+  },
 };
 </script>
 
