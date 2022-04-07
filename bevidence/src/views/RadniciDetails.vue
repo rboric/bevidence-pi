@@ -22,6 +22,7 @@
           <p>{{ wCard.RadniSati }} h</p>
           <p>{{ wCard.Placa }} kn / h</p>
           <p>{{ wCard.Placa * wCard.RadniSati }} kn</p>
+          <p>{{ wCard.TotalSalary }}</p>
         </div>
       </div>
       <div class="row button-container">
@@ -245,10 +246,12 @@ export default {
   data() {
     return {
       wCards: [],
+      total_salary: [],
     };
   },
   mounted() {
     this.getWorkerData();
+    console.log(this.wCards.total_salary);
   },
   methods: {
     getWorkerData() {
@@ -303,6 +306,7 @@ export default {
                                   MjestoStanovanja: data.cityOfLiving,
                                   RadniSati: data.workHours,
                                   Placa: data.salary,
+                                  TotalSalary: data.total_salary,
                                 },
                               ];
                             });
@@ -318,6 +322,37 @@ export default {
     },
     addSalary() {
       $("#zabPlaca").modal("show");
+    },
+    addNewSalary() {
+      var varijabla = this.$route.params.wURL;
+      var izracun = this.wCards[0].RadniSati * this.wCards[0].Placa;
+      db.collection(
+        "user/" +
+          firebase.auth().currentUser.uid +
+          "/companies/" +
+          this.comp +
+          "/workers"
+      )
+        .where("username", "==", varijabla)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            this.worker_id = doc.id;
+            db.collection(
+              "user/" +
+                firebase.auth().currentUser.uid +
+                "/companies/" +
+                this.comp +
+                "/workers"
+            )
+              .doc(this.worker_id)
+              .update({
+                total_salary: firebase.firestore.FieldValue.arrayUnion({
+                  izracun,
+                }),
+              });
+          });
+        });
     },
     updateWorker() {
       var varijabla = this.$route.params.wURL;

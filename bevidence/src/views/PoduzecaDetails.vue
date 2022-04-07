@@ -343,6 +343,7 @@ export default {
       wCityOfLiving: "",
       wWorkHours: "",
       wSalary: "",
+      wTotalSalary: [],
       localuser,
     };
   },
@@ -491,6 +492,7 @@ export default {
             "." +
             Math.floor(Math.random() * 100) +
             1,
+          total_salary: this.wTotalSalary,
         })
         .then(() => {
           location.reload();
