@@ -15,7 +15,7 @@
           <p><b>Plaća:</b></p>
           <p><b>Ukupna plaća:</b></p>
         </div>
-        <div class="information col-6">
+        <div class="information col-3">
           <p>{{ wCard.Pozicija }}</p>
           <p>{{ wCard.MjestoPoslovanja }}</p>
           <p>{{ wCard.MjestoStanovanja }}</p>
@@ -23,14 +23,29 @@
           <p>{{ wCard.Placa }} kn / h</p>
           <p>{{ wCard.Placa * wCard.RadniSati }} kn</p>
         </div>
-      </div>
-      <div class="row button-container">
-        <div class="buttons-container col-12">
-          <button class="btn btn-primary" @click="editWorker()">Uredi</button>
-          <button class="btn btn-primary" @click="deleteWorker()">
-            Obriši
-          </button>
-          <button class="btn btn-primary" @click="addSalary()">Plaća</button>
+        <div class="information col-3">
+          <div class="buttons-container">
+            <button class="btn btn-primary" @click="editWorker()">Uredi</button>
+            <p></p>
+            <button class="btn btn-primary" @click="deleteWorker()">
+              Obriši
+            </button>
+            <p></p>
+            <button class="btn btn-primary" @click="addSalary()">Plaća</button>
+          </div>
+        </div>
+        <hr />
+        <div class="information col-6">
+          <h3><b>Slobodni dani</b></h3>
+        </div>
+        <hr />
+        <div class="information col-6">
+          <h3><b>Detaljni prikaz plaće</b></h3>
+        </div>
+        <div class="information" v-for="wCard in wCards" :key="wCard.id">
+          <p>
+            {{ wCard.TotalSalary[0].godina }}
+          </p>
         </div>
       </div>
 
@@ -192,7 +207,7 @@
                           >
                           <input
                             v-model="wCard.RadniSati"
-                            type="number"
+                            type="string"
                             class="form-control"
                             id="wWorkHours"
                           />
@@ -203,7 +218,7 @@
                           >
                           <input
                             v-model="wCard.Placa"
-                            type="number"
+                            type="string"
                             class="form-control"
                             id="wSalary"
                           />
@@ -214,7 +229,7 @@
                           >
                           <input
                             v-model="overtimeHours"
-                            type="number"
+                            type="string"
                             class="form-control"
                             id="overtimeHours"
                           />
@@ -225,7 +240,7 @@
                           >
                           <input
                             v-model="overtimeHoursSalary"
-                            type="number"
+                            type="string"
                             class="form-control"
                             id="overtimeHoursSalary"
                           />
@@ -236,7 +251,7 @@
                           >
                           <input
                             v-model="salaryAddition"
-                            type="number"
+                            type="string"
                             class="form-control"
                             id="salaryAddition"
                           />
@@ -245,12 +260,25 @@
                           <label for="salaryMonth" class="form-label"
                             >Mjesec</label
                           >
-                          <input
+                          <select
                             v-model="salaryMonth"
                             type="string"
                             class="form-control"
                             id="salaryMonth"
-                          />
+                          >
+                            <option value="Siječanj">Siječanj</option>
+                            <option value="Veljača">Veljača</option>
+                            <option value="Ožujak">Ožujak</option>
+                            <option value="Travanj">Travanj</option>
+                            <option value="Svibanj">Svibanj</option>
+                            <option value="Lipanj">Lipanj</option>
+                            <option value="Srpanj">Srpanj</option>
+                            <option value="Kolovoz">Kolovoz</option>
+                            <option value="Rujan">Rujan</option>
+                            <option value="Listopad">Listopad</option>
+                            <option value="Studeni">Studeni</option>
+                            <option value="Prosinac">Prosinac</option>
+                          </select>
                         </div>
                         <div class="col-md-4">
                           <label for="salaryYear" class="form-label"
@@ -267,7 +295,7 @@
                           <label for="result" class="form-label">Ukupno</label>
                           <input
                             v-model="result"
-                            type="number"
+                            type="string"
                             class="form-control"
                             id="result"
                           />
@@ -309,17 +337,16 @@ export default {
   data() {
     return {
       wCards: [],
-      salaryAddition: null,
-      salaryMonth: null,
-      salaryYear: null,
-      overtimeHours: null,
-      overtimeHoursSalary: null,
+      salaryAddition: 0,
+      salaryMonth: "",
+      salaryYear: new Date().getFullYear(),
+      overtimeHours: 0,
+      overtimeHoursSalary: 0,
       total_salary: [],
     };
   },
   mounted() {
     this.getWorkerData();
-    console.log(this.wCards.total_salary);
   },
   methods: {
     getWorkerData() {
@@ -393,13 +420,15 @@ export default {
     },
     addNewSalary() {
       var varijabla = this.$route.params.wURL;
-      var izracun =
-        this.wCards[0].RadniSati * this.wCards[0].Placa +
-        this.salaryAddition +
-        this.overtimeHours * this.overtimeHoursSalary;
+      var a = this.wCards[0].RadniSati * this.wCards[0].Placa;
+      var b = this.salaryAddition;
+      var c = this.overtimeHours * this.overtimeHoursSalary;
+      var izracun = parseInt(a) + parseInt(b) + parseInt(c);
       var mjesec = this.salaryMonth;
       var godina = this.salaryYear;
-      this.inTotal = izracun;
+      var dodatak = this.salaryAddition;
+      var prekovremeni = this.overtimeHours * this.overtimeHoursSalary;
+
       db.collection(
         "user/" +
           firebase.auth().currentUser.uid +
@@ -422,6 +451,8 @@ export default {
               .doc(this.worker_id)
               .update({
                 total_salary: firebase.firestore.FieldValue.arrayUnion({
+                  dodatak,
+                  prekovremeni,
                   mjesec,
                   godina,
                   izracun,
@@ -509,13 +540,10 @@ export default {
   components: {},
   computed: {
     result() {
-      var a =
-        this.wCards[0].RadniSati * this.wCards[0].Placa +
-        this.salaryAddition +
-        this.overtimeHours * this.overtimeHoursSalary;
+      var a = this.wCards[0].RadniSati * this.wCards[0].Placa;
       var b = this.salaryAddition;
       var c = this.overtimeHours * this.overtimeHoursSalary;
-      return a;
+      return parseInt(a) + parseInt(b) + parseInt(c);
     },
   },
 };
