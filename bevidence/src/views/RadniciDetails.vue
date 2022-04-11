@@ -335,15 +335,15 @@
       <!-- MODAL NEW WORKER -->
       <div
         class="modal fade"
-        id="zapDasyOff"
+        id="zapDaysOff"
         tabindex="-1"
-        aria-labelledby="zapDasyOffLabel"
+        aria-labelledby="zapDaysOffLabel"
         aria-hidden="true"
       >
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="zapDasyOffLabel">
+              <h5 class="modal-title" id="zapDaysOffLabel">
                 Novi zapis o slobodnim danima
               </h5>
               <button
