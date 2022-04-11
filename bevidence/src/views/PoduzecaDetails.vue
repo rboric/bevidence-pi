@@ -1,5 +1,6 @@
 <template>
   <div class="PoduzecaDetails">
+    <preloader />
     <div class="container" v-for="compCard in compCards" :key="compCard.id">
       <div class="row">
         <div class="col-12">
@@ -329,6 +330,7 @@ import { firebase } from "@/firebase";
 import { db } from "@/firebase";
 import Radnik from "@/components/Radnik.vue";
 import localuser from "@/localuser";
+import Preloader from "../components/Preloader.vue";
 
 export default {
   data() {
@@ -502,6 +504,7 @@ export default {
   },
   components: {
     Radnik,
+    Preloader,
   },
 };
 export var comp;

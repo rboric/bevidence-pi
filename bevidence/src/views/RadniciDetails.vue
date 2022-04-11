@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="RadniciDetails">
+    <preloader />
     <div v-for="wCard in wCards" :key="wCard.id">
       <div class="info-container row">
         <div class="col-12">
@@ -42,11 +43,12 @@
         <div class="information col-6">
           <h3><b>Detaljni prikaz plaće</b></h3>
         </div>
-        <div class="information" v-for="wCard in wCards" :key="wCard.id">
+        <!-- 
+        <div class="information" v-for="tot in TotalSalary" :key="tot.id">
           <p>
-            {{ wCard.TotalSalary[0].godina }}
+            {{ tot.godina }}
           </p>
-        </div>
+        </div> -->
       </div>
 
       <!-- MODAL EDIT WORKER -->
@@ -331,6 +333,7 @@
 
 <script>
 import { firebase, db } from "@/firebase";
+import Preloader from "../components/Preloader.vue";
 
 export default {
   name: "RadniciDetails",
@@ -342,7 +345,7 @@ export default {
       salaryYear: new Date().getFullYear(),
       overtimeHours: 0,
       overtimeHoursSalary: 0,
-      total_salary: [],
+      TotalSalary: [],
     };
   },
   mounted() {
@@ -392,18 +395,16 @@ export default {
                             this.wCards = [];
                             query.forEach((doc) => {
                               const data = doc.data();
-                              this.wCards = [
-                                {
-                                  Ime: data.name,
-                                  Prezime: data.surname,
-                                  Pozicija: data.job,
-                                  MjestoPoslovanja: data.cityOfJob,
-                                  MjestoStanovanja: data.cityOfLiving,
-                                  RadniSati: data.workHours,
-                                  Placa: data.salary,
-                                  TotalSalary: data.total_salary,
-                                },
-                              ];
+                              this.wCards.push({
+                                Ime: data.name,
+                                Prezime: data.surname,
+                                Pozicija: data.job,
+                                MjestoPoslovanja: data.cityOfJob,
+                                MjestoStanovanja: data.cityOfLiving,
+                                RadniSati: data.workHours,
+                                Placa: data.salary,
+                                TotalSalary: data.total_salary,
+                              });
                             });
                           });
                       });
@@ -537,7 +538,7 @@ export default {
         });
     },
   },
-  components: {},
+  components: { Preloader },
   computed: {
     result() {
       var a = this.wCards[0].RadniSati * this.wCards[0].Placa;

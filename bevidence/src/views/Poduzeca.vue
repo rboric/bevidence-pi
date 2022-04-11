@@ -1,5 +1,6 @@
 <template>
   <div class="poduzeca">
+    <preloader />
     <div class="container">
       <div class="row">
         <div class="col-1"></div>
@@ -164,6 +165,7 @@
 
 <script>
 import PoduzeceCard from "@/components/Poduzece-Card.vue";
+import Preloader from "@/components/Preloader.vue";
 import { firebase } from "@/firebase";
 import { db } from "@/firebase";
 import localuser from "@/localuser";
@@ -220,6 +222,7 @@ export default {
   },
   components: {
     PoduzeceCard,
+    Preloader,
   },
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <preloader />
     <div class="container">
       <div class="row">
         <div class="col-sm-4"></div>
@@ -43,6 +44,7 @@
 
 <script>
 import { firebase } from "@/firebase";
+import Preloader from "../components/Preloader.vue";
 
 export default {
   name: "Login",
@@ -58,11 +60,12 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.lEmail, this.lPassword)
         .then(() => {
-          this.$router.replace({ name: "Home" });
+          this.$router.replace({ name: "Poduzeca" });
         })
         .catch();
     },
   },
+  components: { Preloader },
 };
 </script>
 

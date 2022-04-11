@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-    <div v-if="localuser.currentUser">DOBRO JUTROOOOOOOOO</div>
+    <preloader />
+    <div v-if="localuser.currentUser">
+      <img src="@/assets/background-image.png" alt="" />
+    </div>
     <div v-if="!localuser.currentUser">
       <img src="@/assets/background-image.png" alt="" />
     </div>
@@ -9,8 +12,10 @@
 
 <script>
 import localuser from "@/localuser";
+import Preloader from "../components/Preloader.vue";
 
 export default {
+  components: { Preloader },
   name: "Home",
   data() {
     return {
