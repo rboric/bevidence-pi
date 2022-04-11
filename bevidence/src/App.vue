@@ -87,7 +87,6 @@ export default {
   },
   mounted() {
     this.compGetData();
-    this.getUserData();
   },
   methods: {
     logout() {

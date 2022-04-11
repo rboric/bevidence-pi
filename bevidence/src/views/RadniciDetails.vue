@@ -44,8 +44,8 @@
           <h3><b>Detaljni prikaz plaće</b></h3>
         </div>
 
-        <div class="information" v-for="total in totalSalary" :key="total.id">
-          <div>
+        <div class="information">
+          <div v-for="total in totalSalary" :key="total.id">
             <table>
               <th>
                 {{ total.mjesec }}
@@ -532,6 +532,7 @@ export default {
           });
         });
       $("#zabPlaca").modal("toggle");
+      location.reload();
     },
     updateWorker() {
       var varijabla = this.$route.params.wURL;
