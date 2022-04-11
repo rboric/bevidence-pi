@@ -77,6 +77,7 @@
 
 <script>
 import { firebase } from "@/firebase";
+import Preloader from "../components/Preloader.vue";
 
 export default {
   name: "Register",
@@ -113,6 +114,7 @@ export default {
         });
     },
   },
+  components: { Preloader },
 };
 </script>
 
