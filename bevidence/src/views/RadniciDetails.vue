@@ -43,12 +43,30 @@
         <div class="information col-6">
           <h3><b>Detaljni prikaz plaće</b></h3>
         </div>
-        <!-- 
-        <div class="information" v-for="tot in TotalSalary" :key="tot.id">
-          <p>
-            {{ tot.godina }}
-          </p>
-        </div> -->
+
+        <div class="information" v-for="total in totalSalary" :key="total.id">
+          <div>
+            <table>
+              <th>
+                {{ total.mjesec }}
+                -
+                {{ total.godina }}
+              </th>
+              <tr>
+                Izracun:
+                {{
+                  total.izracun
+                }}
+              </tr>
+              <tr>
+                Dodatak:
+                {{
+                  total.dodatak
+                }}
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
 
       <!-- MODAL EDIT WORKER -->
@@ -345,11 +363,12 @@ export default {
       salaryYear: new Date().getFullYear(),
       overtimeHours: 0,
       overtimeHoursSalary: 0,
-      TotalSalary: [],
+      totalSalary: [],
     };
   },
   mounted() {
     this.getWorkerData();
+    this.getWorkerSalaryData();
   },
   methods: {
     getWorkerData() {
@@ -403,8 +422,59 @@ export default {
                                 MjestoStanovanja: data.cityOfLiving,
                                 RadniSati: data.workHours,
                                 Placa: data.salary,
-                                TotalSalary: data.total_salary,
                               });
+                            });
+                          });
+                      });
+                  });
+                });
+            });
+        });
+    },
+    getWorkerSalaryData() {
+      this.compURL = this.$route.params.compURL;
+      this.wURL = this.$route.params.wURL;
+      db.collection("user")
+        .get()
+        .then(() => {
+          db.collection(
+            "user/" + firebase.auth().currentUser.uid + "/companies"
+          )
+            .get()
+            .then(() => {
+              var varijabla = this.compURL;
+              db.collection(
+                "user/" + firebase.auth().currentUser.uid + "/companies"
+              )
+                .where("company_name", "==", varijabla)
+                .get()
+                .then((querySnapshot) => {
+                  querySnapshot.forEach((doc) => {
+                    this.comp = doc.id;
+                    db.collection(
+                      "user/" +
+                        firebase.auth().currentUser.uid +
+                        "/companies/" +
+                        this.comp +
+                        "/workers"
+                    )
+                      .get()
+                      .then(() => {
+                        var varijabla = this.$route.params.wURL;
+                        db.collection(
+                          "user/" +
+                            firebase.auth().currentUser.uid +
+                            "/companies/" +
+                            this.comp +
+                            "/workers"
+                        )
+                          .where("username", "==", varijabla)
+                          .get()
+                          .then((query) => {
+                            query.forEach((doc) => {
+                              const data = doc.data();
+                              this.totalSalary = data.total_salary;
+                              console.log(this.totalSalary);
                             });
                           });
                       });
