@@ -83,7 +83,6 @@ export default {
       localuser,
     };
   },
-  mounted() {},
   methods: {
     logout() {
       firebase
@@ -94,7 +93,6 @@ export default {
         });
     },
   },
-  components: {},
 };
 </script>
 
