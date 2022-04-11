@@ -27,7 +27,7 @@
               >
             </li>
             <li v-if="localuser.currentUser" class="nav-item">
-              <router-link to="/" class="nav-link">Profil</router-link>
+              <router-link to="/profile" class="nav-link">Profil</router-link>
             </li>
           </ul>
           <ul class="nav-item navbar-nav">
@@ -46,7 +46,7 @@
         </div>
       </div>
     </nav>
-    <router-view :compCards="compCards" />
+    <router-view :compCards="compCards" :userDetails="userDetails" />
   </div>
 </template>
 
@@ -55,22 +55,27 @@ import { db } from "@/firebase";
 import { firebase } from "@/firebase";
 import localuser from "@/localuser";
 import router from "@/router";
+
 firebase.auth().onAuthStateChanged((user) => {
   const currentRoute = router.currentRoute;
+
   if (user) {
     console.log(user.email);
     localuser.currentUser = user.email;
+
     if (!currentRoute.meta.needsUser) {
       router.push({ name: "Home" });
     }
   } else {
     localuser.currentUser = null;
     console.log("No user");
+
     if (currentRoute.meta.needsUser) {
       router.push({ name: "Login" });
     }
   }
 });
+
 export default {
   name: "App",
   data() {
@@ -82,6 +87,7 @@ export default {
   },
   mounted() {
     this.compGetData();
+    this.userGetData();
   },
   methods: {
     logout() {
@@ -104,6 +110,7 @@ export default {
               this.compCards = [];
               query.forEach((companies) => {
                 const data = companies.data();
+
                 this.compCards.push({
                   Naziv: data.name,
                   Djelatnost: data.business,
@@ -120,6 +127,28 @@ export default {
             });
         });
     },
+    userGetData() {
+      db.collection("user")
+        .get()
+        .then(() => {
+          db.collection("user")
+            .where("Email", "==", firebase.auth().currentUser.email)
+            .get()
+            .then((query) => {
+              this.userDetails = [];
+              query.forEach((user) => {
+                const data = user.data();
+
+                this.userDetails.push({
+                  Ime: data.Ime,
+                  Prezime: data.Prezime,
+                  Email: data.Email,
+                  Datum: data.Datum,
+                });
+              });
+            });
+        });
+    },
   },
   components: {},
 };
@@ -129,18 +158,22 @@ export default {
 body {
   font-family: "Montserrat", sans-serif;
 }
+
 .navbar {
   background-color: #f84545 !important;
 }
+
 .white-logo {
   width: 150px;
   padding: 5px;
 }
+
 .nav-link {
   font-weight: 400;
   color: white !important;
   padding-left: 20px !important;
 }
+
 .nav-link:hover {
   color: rgb(214, 214, 214) !important;
 }

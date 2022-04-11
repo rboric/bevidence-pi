@@ -2,7 +2,13 @@
   <div class="home">
     <preloader />
     <div v-if="localuser.currentUser">
-      <img src="@/assets/background-image.png" alt="" />
+      <div
+        v-for="userDetail in userDetails"
+        :key="userDetail.id"
+        :userDetails="userDetails"
+      >
+        {{ userDetail.Ime }} {{ userDetail.Prezime }}
+      </div>
     </div>
     <div v-if="!localuser.currentUser">
       <img src="@/assets/background-image.png" alt="" />
@@ -15,13 +21,14 @@ import localuser from "@/localuser";
 import Preloader from "../components/Preloader.vue";
 
 export default {
-  components: { Preloader },
   name: "Home",
+  props: ["userDetails"],
   data() {
     return {
       localuser,
     };
   },
+  components: { Preloader },
 };
 </script>
 
