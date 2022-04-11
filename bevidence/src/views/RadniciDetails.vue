@@ -38,6 +38,10 @@
         <hr />
         <div class="information col-6">
           <h3><b>Slobodni dani</b></h3>
+          <p></p>
+          <button class="btn btn-primary" @click="addDaysOff()">
+            Slobodni dani
+          </button>
         </div>
         <hr />
         <div class="information col-6">
@@ -328,6 +332,69 @@
           </div>
         </div>
       </div>
+      <!-- MODAL NEW WORKER -->
+      <div
+        class="modal fade"
+        id="zapDasyOff"
+        tabindex="-1"
+        aria-labelledby="zapDasyOffLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="zapDasyOffLabel">
+                Novi zapis o slobodnim danima
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="novi-radnik">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <form @submit.prevent="addNewDaysOff" class="row g-3">
+                        <div class="col-md-12">
+                          <label for="doReason" class="form-label"
+                            >Razlog</label
+                          >
+                          <input
+                            v-model="doReason"
+                            type="string"
+                            class="form-control"
+                            id="doReason"
+                          />
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                @click.prevent="addNewDaysOff"
+                class="btn btn-primary"
+              >
+                Dodaj
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Odustani
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -341,6 +408,7 @@ export default {
   data() {
     return {
       wCards: [],
+      doReason: "",
       salaryAddition: 0,
       salaryMonth: "",
       salaryYear: new Date().getFullYear(),
@@ -485,6 +553,9 @@ export default {
     },
     addSalary() {
       $("#zabPlaca").modal("show");
+    },
+    addDaysOff() {
+      $("#zapDasyOff").modal("show");
     },
     addNewSalary() {
       var varijabla = this.$route.params.wURL;

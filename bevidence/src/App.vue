@@ -46,7 +46,7 @@
         </div>
       </div>
     </nav>
-    <router-view :compCards="compCards" :userDetails="userDetails" />
+    <router-view />
   </div>
 </template>
 
@@ -81,14 +81,9 @@ export default {
   data() {
     return {
       localuser,
-      compCards: [],
-      userDetails: [],
     };
   },
-  mounted() {
-    this.compGetData();
-    this.userGetData();
-  },
+  mounted() {},
   methods: {
     logout() {
       firebase
@@ -96,57 +91,6 @@ export default {
         .signOut()
         .then(() => {
           this.$router.push({ name: "Home" });
-        });
-    },
-    compGetData() {
-      db.collection("user")
-        .get()
-        .then(() => {
-          db.collection(
-            "user/" + firebase.auth().currentUser.uid + "/companies"
-          )
-            .get()
-            .then((query) => {
-              this.compCards = [];
-              query.forEach((companies) => {
-                const data = companies.data();
-
-                this.compCards.push({
-                  Naziv: data.name,
-                  Djelatnost: data.business,
-                  Vlasnik: data.owner,
-                  Lokacija: data.city,
-                  Ulica: data.address,
-                  Broj: data.number,
-                  PostanskiBroj: data.zip,
-                  Drzava: data.state,
-                  BrojZaposlenih: data.employees,
-                  Company_Name: data.company_name,
-                });
-              });
-            });
-        });
-    },
-    userGetData() {
-      db.collection("user")
-        .get()
-        .then(() => {
-          db.collection("user")
-            .where("Email", "==", firebase.auth().currentUser.email)
-            .get()
-            .then((query) => {
-              this.userDetails = [];
-              query.forEach((user) => {
-                const data = user.data();
-
-                this.userDetails.push({
-                  Ime: data.Ime,
-                  Prezime: data.Prezime,
-                  Email: data.Email,
-                  Datum: data.Datum,
-                });
-              });
-            });
         });
     },
   },

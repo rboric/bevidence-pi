@@ -1,14 +1,10 @@
 <template>
   <div class="home">
     <div v-if="localuser.currentUser">
-      <div
-        v-for="userDetail in userDetails"
-        :key="userDetail.id"
-        :userDetails="userDetails"
-      >
+      <div v-for="user in userData" :key="user.id" :userData="userData">
         <div class="h1-text">
           <h1>
-            <b>Dobrodošao/la {{ userDetail.Ime }}.</b>
+            <b>Dobrodošao/la {{ user.Ime }}.</b>
           </h1>
         </div>
       </div>
@@ -18,21 +14,44 @@
 </template>
 
 <script>
+import { db } from "@/firebase";
+import { firebase } from "@/firebase";
 import localuser from "@/localuser";
 import Preloader from "../components/Preloader.vue";
 
 export default {
   name: "Home",
-  props: ["userDetails"],
   data() {
     return {
       localuser,
+      userData: [],
     };
   },
   mounted() {
     this.h1textShow();
+    this.userGetData();
   },
   methods: {
+    userGetData() {
+      db.collection("user")
+        .get()
+        .then(() => {
+          db.collection("user")
+            .where("Email", "==", firebase.auth().currentUser.email)
+            .get()
+            .then((query) => {
+              this.userData = [];
+              query.forEach((user) => {
+                const data = user.data();
+
+                this.userData.push({
+                  Ime: data.Ime,
+                });
+                console.log(this.userData);
+              });
+            });
+        });
+    },
     h1textShow() {
       setTimeout(() => {
         $("h1").animate({ top: "43%" }, 702);

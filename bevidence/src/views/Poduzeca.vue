@@ -172,9 +172,9 @@ import localuser from "@/localuser";
 
 export default {
   name: "Poduzeca",
-  props: ["compCards"],
   data: function () {
     return {
+      compCards: [],
       compName: "",
       compBusiness: "",
       compBusinessOwner: "",
@@ -187,9 +187,41 @@ export default {
       localuser,
     };
   },
+  mounted() {
+    this.compGetData();
+  },
   methods: {
     modalAddCompany() {
       $("#addCompany").modal("show");
+    },
+    compGetData() {
+      db.collection("user")
+        .get()
+        .then(() => {
+          db.collection(
+            "user/" + firebase.auth().currentUser.uid + "/companies"
+          )
+            .get()
+            .then((query) => {
+              this.compCards = [];
+              query.forEach((companies) => {
+                const data = companies.data();
+
+                this.compCards.push({
+                  Naziv: data.name,
+                  Djelatnost: data.business,
+                  Vlasnik: data.owner,
+                  Lokacija: data.city,
+                  Ulica: data.address,
+                  Broj: data.number,
+                  PostanskiBroj: data.zip,
+                  Drzava: data.state,
+                  BrojZaposlenih: data.employees,
+                  Company_Name: data.company_name,
+                });
+              });
+            });
+        });
     },
     addCompany() {
       db.collection("user/" + firebase.auth().currentUser.uid + "/companies")
