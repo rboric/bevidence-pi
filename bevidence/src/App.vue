@@ -55,27 +55,22 @@ import { db } from "@/firebase";
 import { firebase } from "@/firebase";
 import localuser from "@/localuser";
 import router from "@/router";
-
 firebase.auth().onAuthStateChanged((user) => {
   const currentRoute = router.currentRoute;
-
   if (user) {
     console.log(user.email);
     localuser.currentUser = user.email;
-
     if (!currentRoute.meta.needsUser) {
       router.push({ name: "Home" });
     }
   } else {
     localuser.currentUser = null;
     console.log("No user");
-
     if (currentRoute.meta.needsUser) {
       router.push({ name: "Login" });
     }
   }
 });
-
 export default {
   name: "App",
   data() {
@@ -109,7 +104,6 @@ export default {
               this.compCards = [];
               query.forEach((companies) => {
                 const data = companies.data();
-
                 this.compCards.push({
                   Naziv: data.name,
                   Djelatnost: data.business,
@@ -135,22 +129,18 @@ export default {
 body {
   font-family: "Montserrat", sans-serif;
 }
-
 .navbar {
   background-color: #f84545 !important;
 }
-
 .white-logo {
   width: 150px;
   padding: 5px;
 }
-
 .nav-link {
   font-weight: 400;
   color: white !important;
   padding-left: 20px !important;
 }
-
 .nav-link:hover {
   color: rgb(214, 214, 214) !important;
 }

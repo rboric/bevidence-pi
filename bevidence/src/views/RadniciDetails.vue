@@ -43,32 +43,16 @@
         <div class="information col-6">
           <h3><b>Detaljni prikaz plaće</b></h3>
         </div>
-
         <div class="information">
-          <div v-for="total in totalSalary" :key="total.id">
-            <table>
-              <th>
-                {{ total.mjesec }}
-                -
-                {{ total.godina }}
-              </th>
-              <tr>
-                Izracun:
-                {{
-                  total.izracun
-                }}
-              </tr>
-              <tr>
-                Dodatak:
-                {{
-                  total.dodatak
-                }}
-              </tr>
-            </table>
-          </div>
+          <v-data-table
+            :headers="headers"
+            :items="totalSalary"
+            :items-per-page="5"
+            class="elevation-1"
+            hide-default-footer
+          ></v-data-table>
         </div>
       </div>
-
       <!-- MODAL EDIT WORKER -->
       <div
         class="modal fade"
@@ -364,6 +348,21 @@ export default {
       overtimeHours: 0,
       overtimeHoursSalary: 0,
       totalSalary: [],
+      headers: [
+        {
+          text: "Mjesec",
+          align: "start",
+          sortable: false,
+          value: "mjesec",
+        },
+        { text: "Godina", value: "godina" },
+        { text: "Plaća", value: "placa" },
+        { text: "Dodatak na plaću", value: "dodatak" },
+        { text: "Prekovremeni sati", value: "prekovremeniSati" },
+        { text: "Prekovremeni satnica", value: "prekovremeniSatnica" },
+        { text: "Prekovremeni ukupno", value: "prekovremeniUkupno" },
+        { text: "Sveukupni izračun", value: "izracun" },
+      ],
     };
   },
   mounted() {
@@ -491,14 +490,16 @@ export default {
     },
     addNewSalary() {
       var varijabla = this.$route.params.wURL;
-      var a = this.wCards[0].RadniSati * this.wCards[0].Placa;
+      var placa = this.wCards[0].RadniSati * this.wCards[0].Placa;
       var b = this.salaryAddition;
       var c = this.overtimeHours * this.overtimeHoursSalary;
-      var izracun = parseInt(a) + parseInt(b) + parseInt(c);
+      var izracun = parseInt(placa) + parseInt(b) + parseInt(c);
       var mjesec = this.salaryMonth;
       var godina = this.salaryYear;
       var dodatak = this.salaryAddition;
-      var prekovremeni = this.overtimeHours * this.overtimeHoursSalary;
+      var prekovremeniSati = this.overtimeHours;
+      var prekovremeniSatnica = this.overtimeHoursSalary;
+      var prekovremeniUkupno = prekovremeniSati * prekovremeniSatnica;
 
       db.collection(
         "user/" +
@@ -522,8 +523,11 @@ export default {
               .doc(this.worker_id)
               .update({
                 total_salary: firebase.firestore.FieldValue.arrayUnion({
+                  placa,
                   dodatak,
-                  prekovremeni,
+                  prekovremeniSati,
+                  prekovremeniSatnica,
+                  prekovremeniUkupno,
                   mjesec,
                   godina,
                   izracun,
@@ -532,7 +536,6 @@ export default {
           });
         });
       $("#zabPlaca").modal("toggle");
-      location.reload();
     },
     updateWorker() {
       var varijabla = this.$route.params.wURL;
@@ -628,7 +631,7 @@ export default {
 
 .info-container {
   padding: 20px;
-  width: 40%;
+  width: 50%;
   margin: 20px auto auto auto;
 
   border: 1px solid #f84545;
@@ -706,10 +709,28 @@ export default {
 
 @media screen and (max-width: 600px) {
   .info-container {
-    width: 90%;
+    width: 100%;
+    padding: 5px;
+    border: none;
   }
   .button-container {
     width: 50%;
+  }
+}
+@media screen and (max-width: 400px) {
+  body {
+    font-size: 14px;
+  }
+  .info-container {
+    width: 100%;
+    padding: 5px;
+    border: none;
+  }
+  .button-container {
+    width: 50%;
+  }
+  .buttons-container button {
+    width: 110%;
   }
 }
 </style>
