@@ -21,7 +21,7 @@ export default {
     showToggle() {
       setTimeout(() => {
         this.show = false;
-      }, 1000);
+      }, 1500);
     },
   },
 };
@@ -48,36 +48,14 @@ p {
   margin-top: 10px;
 }
 
-.circles {
-  display: flex;
-  margin-top: 10px;
-}
-
-.circle {
-  width: 5px;
-  height: 5px;
-  margin: 5px;
-  background-color: tomato;
-  border-radius: 50%;
-  animation-name: scaleIn;
-  animation-duration: 1s;
-  transform: scale(0);
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s;
 }
 
 .logo {
-  animation-name: scaleOut;
-  animation-duration: 1s;
-  transform: scale(0);
-}
-
-p {
-  animation-name: scaleOut;
-  animation-duration: 1s;
+  animation-name: scaleIn;
+  animation-duration: 1.5s;
   transform: scale(0);
 }
 
@@ -86,21 +64,12 @@ p {
   opacity: 0;
 }
 
-@keyframes scaleOut {
-  100% {
-    transform: scale(1);
-  }
-  0% {
-    transform: scale(0);
-  }
-}
-
 @keyframes scaleIn {
-  0% {
-    transform: scale(0);
-  }
   100% {
     transform: scale(1);
+  }
+  0% {
+    transform: scale(0);
   }
 }
 </style>

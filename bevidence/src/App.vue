@@ -82,10 +82,12 @@ export default {
     return {
       localuser,
       compCards: [],
+      userDetails: [],
     };
   },
   mounted() {
     this.compGetData();
+    this.getUserData();
   },
   methods: {
     logout() {
