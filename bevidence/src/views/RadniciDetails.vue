@@ -630,8 +630,7 @@ export default {
 .info-container {
   padding: 20px;
   width: 60%;
-  margin: 20px auto auto auto;
-
+  margin: 20px auto 20px auto;
   border: 1px solid #f84545;
   border-radius: 5px;
 }
