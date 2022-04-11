@@ -155,6 +155,9 @@ export default {
 </script>
 
 <style>
+::-webkit-scrollbar {
+  display: none;
+}
 body {
   font-family: "Montserrat", sans-serif;
 }

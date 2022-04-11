@@ -47,7 +47,6 @@
           <v-data-table
             :headers="headers"
             :items="totalSalary"
-            :items-per-page="5"
             class="elevation-1"
             hide-default-footer
           ></v-data-table>
@@ -473,7 +472,6 @@ export default {
                             query.forEach((doc) => {
                               const data = doc.data();
                               this.totalSalary = data.total_salary;
-                              console.log(this.totalSalary);
                             });
                           });
                       });
@@ -631,7 +629,7 @@ export default {
 
 .info-container {
   padding: 20px;
-  width: 50%;
+  width: 60%;
   margin: 20px auto auto auto;
 
   border: 1px solid #f84545;
