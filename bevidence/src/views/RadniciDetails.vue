@@ -39,7 +39,7 @@
         <div class="information col-6">
           <h3><b>Slobodni dani</b></h3>
           <p></p>
-          <button class="btn btn-primary" @click="addDaysOff()">
+          <button class="btn btn-primary" @click="modalDaysOff()">
             Slobodni dani
           </button>
         </div>
@@ -332,18 +332,18 @@
           </div>
         </div>
       </div>
-      <!-- MODAL NEW WORKER -->
+      <!-- MODAL NEW DAYS OFF -->
       <div
         class="modal fade"
-        id="zapDaysOff"
+        id="addDaysOff"
         tabindex="-1"
-        aria-labelledby="zapDaysOffLabel"
+        aria-labelledby="addDaysOffLabel"
         aria-hidden="true"
       >
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="zapDaysOffLabel">
+              <h5 class="modal-title" id="addDaysOffLabel">
                 Novi zapis o slobodnim danima
               </h5>
               <button
@@ -359,6 +359,26 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <form @submit.prevent="addNewDaysOff" class="row g-3">
+                        <div class="col-md-6">
+                          <label for="doDateBegin" class="form-label"
+                            >Početak</label
+                          >
+                          <input
+                            v-model="doDateBegin"
+                            type="date"
+                            class="form-control"
+                            id="doDateBegin"
+                          />
+                        </div>
+                        <div class="col-md-6">
+                          <label for="doDateEnd" class="form-label">Kraj</label>
+                          <input
+                            v-model="doDateEnd"
+                            type="date"
+                            class="form-control"
+                            id="doDateEnd"
+                          />
+                        </div>
                         <div class="col-md-12">
                           <label for="doReason" class="form-label"
                             >Razlog</label
@@ -409,12 +429,15 @@ export default {
     return {
       wCards: [],
       doReason: "",
+      doDateBegin: "",
+      doDateEnd: "",
       salaryAddition: 0,
       salaryMonth: "",
       salaryYear: new Date().getFullYear(),
       overtimeHours: 0,
       overtimeHoursSalary: 0,
       totalSalary: [],
+      daysOff: [],
       headers: [
         {
           text: "Mjesec",
@@ -554,15 +577,15 @@ export default {
     addSalary() {
       $("#zabPlaca").modal("show");
     },
-    addDaysOff() {
-      $("#zapDasyOff").modal("show");
+    modalDaysOff() {
+      $("#addDaysOff").modal("show");
     },
     addNewSalary() {
       var varijabla = this.$route.params.wURL;
       var placa = this.wCards[0].RadniSati * this.wCards[0].Placa;
       var b = this.salaryAddition;
       var c = this.overtimeHours * this.overtimeHoursSalary;
-      var izracun = parseInt(placa) + parseInt(b) + parseInt(c);
+      var izracun = parseFloat(placa) + parseFloat(b) + parseFloat(c);
       var mjesec = this.salaryMonth;
       var godina = this.salaryYear;
       var dodatak = this.salaryAddition;
@@ -687,7 +710,7 @@ export default {
       var a = this.wCards[0].RadniSati * this.wCards[0].Placa;
       var b = this.salaryAddition;
       var c = this.overtimeHours * this.overtimeHoursSalary;
-      return parseInt(a) + parseInt(b) + parseInt(c);
+      return parseFloat(a) + parseFloat(b) + parseFloat(c);
     },
   },
 };
