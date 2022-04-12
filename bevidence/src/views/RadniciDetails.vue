@@ -36,12 +36,22 @@
           </div>
         </div>
         <hr />
-        <div class="information col-6">
+        <div class="information col-12">
           <h3><b>Slobodni dani</b></h3>
           <p></p>
-          <button class="btn btn-primary" @click="modalDaysOff()">
+          <button
+            style="width: 20%"
+            class="btn btn-primary"
+            @click="modalDaysOff()"
+          >
             Slobodni dani
           </button>
+          <v-data-table
+            :headers="headersDaysOff"
+            :items="daysOff"
+            class="elevation-1"
+            hide-default-footer
+          ></v-data-table>
         </div>
         <hr />
         <div class="information col-6">
@@ -49,7 +59,7 @@
         </div>
         <div class="information">
           <v-data-table
-            :headers="headers"
+            :headers="headersSalary"
             :items="totalSalary"
             class="elevation-1"
             hide-default-footer
@@ -354,7 +364,7 @@
               ></button>
             </div>
             <div class="modal-body">
-              <div class="novi-radnik">
+              <div class="days-off">
                 <div class="container">
                   <div class="row">
                     <div class="col-sm-12">
@@ -399,7 +409,7 @@
             <div class="modal-footer">
               <button
                 type="button"
-                @click.prevent="addNewDaysOff"
+                @click.prevent="addDaysOff"
                 class="btn btn-primary"
               >
                 Dodaj
@@ -438,7 +448,7 @@ export default {
       overtimeHoursSalary: 0,
       totalSalary: [],
       daysOff: [],
-      headers: [
+      headersSalary: [
         {
           text: "Mjesec",
           align: "start",
@@ -453,11 +463,23 @@ export default {
         { text: "Prekovremeni ukupno", value: "prekovremeniUkupno" },
         { text: "Sveukupni izračun", value: "izracun" },
       ],
+      headersDaysOff: [
+        {
+          text: "Početni datum",
+          align: "start",
+          value: "pocetniDatum",
+          width: "15%",
+        },
+        { text: "Završni datum", value: "zavrsniDatum", width: "15%" },
+
+        { text: "Razlog", sortable: false, value: "razlog", width: "70%" },
+      ],
     };
   },
   mounted() {
     this.getWorkerData();
     this.getWorkerSalaryData();
+    this.getWorkerDaysOffData();
   },
   methods: {
     getWorkerData() {
@@ -700,6 +722,93 @@ export default {
                   .delete();
                 this.$router.push({ name: "Poduzeca" });
               });
+            });
+        });
+    },
+    addDaysOff() {
+      var varijabla = this.$route.params.wURL;
+      var razlog = this.doReason;
+      var pocetniDatum = this.doDateBegin;
+      var zavrsniDatum = this.doDateEnd;
+      db.collection(
+        "user/" +
+          firebase.auth().currentUser.uid +
+          "/companies/" +
+          this.comp +
+          "/workers"
+      )
+        .where("username", "==", varijabla)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            this.worker_id = doc.id;
+            db.collection(
+              "user/" +
+                firebase.auth().currentUser.uid +
+                "/companies/" +
+                this.comp +
+                "/workers"
+            )
+              .doc(this.worker_id)
+              .update({
+                days_off: firebase.firestore.FieldValue.arrayUnion({
+                  razlog,
+                  pocetniDatum,
+                  zavrsniDatum,
+                }),
+              });
+          });
+        });
+      $("#addDaysOff").modal("toggle");
+    },
+    getWorkerDaysOffData() {
+      this.compURL = this.$route.params.compURL;
+      this.wURL = this.$route.params.wURL;
+      db.collection("user")
+        .get()
+        .then(() => {
+          db.collection(
+            "user/" + firebase.auth().currentUser.uid + "/companies"
+          )
+            .get()
+            .then(() => {
+              var varijabla = this.compURL;
+              db.collection(
+                "user/" + firebase.auth().currentUser.uid + "/companies"
+              )
+                .where("company_name", "==", varijabla)
+                .get()
+                .then((querySnapshot) => {
+                  querySnapshot.forEach((doc) => {
+                    this.comp = doc.id;
+                    db.collection(
+                      "user/" +
+                        firebase.auth().currentUser.uid +
+                        "/companies/" +
+                        this.comp +
+                        "/workers"
+                    )
+                      .get()
+                      .then(() => {
+                        var varijabla = this.$route.params.wURL;
+                        db.collection(
+                          "user/" +
+                            firebase.auth().currentUser.uid +
+                            "/companies/" +
+                            this.comp +
+                            "/workers"
+                        )
+                          .where("username", "==", varijabla)
+                          .get()
+                          .then((query) => {
+                            query.forEach((doc) => {
+                              const data = doc.data();
+                              this.daysOff = data.days_off;
+                            });
+                          });
+                      });
+                  });
+                });
             });
         });
     },

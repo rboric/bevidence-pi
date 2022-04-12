@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div v-if="show" class="preloader">
-      <div class="logo"><img src="../assets/B.svg" alt="" /></div>
+      <div class="logo"><img src="../assets/bevidence-logo.svg" alt="" /></div>
     </div>
   </transition>
 </template>
