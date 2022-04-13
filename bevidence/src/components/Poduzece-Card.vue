@@ -25,7 +25,6 @@
 export default {
   props: ["compCard"],
   name: "PoduzeceCard",
-
   data() {
     return {};
   },
@@ -40,16 +39,13 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
 .card {
   border: 1px solid#ff8080;
   padding: 2px;
 }
-
 .card-container {
   padding: 10px;
 }
-
 .btn-primary {
   color: #fff;
   background-color: #f84545 !important;
@@ -57,12 +53,10 @@ export default {
   font-size: 16px;
   font-weight: 400;
 }
-
 .btn-primary:hover {
   background-color: #d71818 !important;
   border-color: #d71818 !important;
 }
-
 .btn-secondary {
   color: #fff;
   background-color: #383838 !important;
@@ -70,13 +64,11 @@ export default {
   font-size: 16px;
   font-weight: 400;
 }
-
 .btn-secondary:hover {
   color: #fff;
   background-color: #161616 !important;
   border-color: #161616 !important;
 }
-
 .card p {
   margin: 0 0 10px !important;
 }

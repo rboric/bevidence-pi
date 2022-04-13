@@ -60,7 +60,6 @@ firebase.auth().onAuthStateChanged((user) => {
   const currentRoute = router.currentRoute;
 
   if (user) {
-    console.log(user.email);
     localuser.currentUser = user.email;
 
     if (!currentRoute.meta.needsUser) {
@@ -68,7 +67,6 @@ firebase.auth().onAuthStateChanged((user) => {
     }
   } else {
     localuser.currentUser = null;
-    console.log("No user");
 
     if (currentRoute.meta.needsUser) {
       router.push({ name: "Login" });

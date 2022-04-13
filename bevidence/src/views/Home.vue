@@ -47,7 +47,6 @@ export default {
                 this.userData.push({
                   Ime: data.Ime,
                 });
-                console.log(this.userData);
               });
             });
         });

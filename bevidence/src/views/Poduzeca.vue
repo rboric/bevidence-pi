@@ -169,7 +169,6 @@ import Preloader from "@/components/Preloader.vue";
 import { firebase } from "@/firebase";
 import { db } from "@/firebase";
 import localuser from "@/localuser";
-
 export default {
   name: "Poduzeca",
   data: function () {
@@ -206,7 +205,6 @@ export default {
               this.compCards = [];
               query.forEach((companies) => {
                 const data = companies.data();
-
                 this.compCards.push({
                   Naziv: data.name,
                   Djelatnost: data.business,
@@ -263,18 +261,15 @@ export default {
 .poduzeca {
   padding: 5px;
 }
-
 .add-div {
   padding: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .addCompanyButton {
   transition: 0.3s;
 }
-
 .addCompanyButton:hover {
   opacity: 0.8;
   transition: 0.3s;
@@ -282,7 +277,6 @@ export default {
 .card {
   padding: 5px;
 }
-
 .card-container {
   padding: 10px;
 }

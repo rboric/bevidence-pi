@@ -5,68 +5,81 @@
       <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-          <form @submit.prevent="addNewUser">
-            <div class="form-login">
+          <form class="form-register" @submit.prevent="addNewUser">
+            <div class="form">
               <div class="form-group">
-                <label for="exampleInputrName">Ime</label>
+                <label for="inputrIme">Ime</label>
                 <input
-                  v-model="rName"
+                  v-model="rIme"
                   type="text"
                   class="form-control"
-                  id="exampleInputrName"
-                  aria-describedby="emailHelp"
+                  id="inputrIme"
                   placeholder="Unesi ime"
+                  required
                 />
               </div>
               <div class="form-group">
-                <label for="exampleInputrSurname">Prezime</label>
+                <label for="inputrPrezime">Prezime</label>
                 <input
-                  v-model="rSurname"
+                  v-model="rPrezime"
                   type="text"
                   class="form-control"
-                  id="exampleInputrSurname"
-                  aria-describedby="emailHelp"
+                  id="inputrPrezime"
                   placeholder="Unesi prezime"
+                  required
                 />
               </div>
               <div class="form-group">
-                <label for="exampleInputrEmail">Email adresa</label>
+                <label for="inputrEmail">Email adresa</label>
                 <input
                   v-model="rEmail"
                   type="email"
                   class="form-control"
-                  id="exampleInputrEmail"
+                  id="inputrEmail"
                   aria-describedby="emailHelp"
                   placeholder="Unesi email"
+                  required
                 />
               </div>
               <div class="form-group">
-                <label for="exampleInputrPassword">Lozinka</label>
+                <label for="inputrPassword">Lozinka</label>
                 <input
                   v-model="rPassword"
                   type="password"
                   class="form-control"
-                  id="exampleInputrPassword"
+                  id="inputrPassword"
                   placeholder="Unesi lozinku"
+                  required
                 />
               </div>
               <div class="form-group">
-                <label for="exampleInputrRepeatPassword"
-                  >Ponovljena lozinka</label
-                >
+                <label for="inputrRepeatPassword">Ponovljena lozinka</label>
                 <input
                   v-model="rRepeatPassword"
                   type="password"
                   class="form-control"
-                  id="exampleInputrRepeatPassword"
+                  id="inputrRepeatPassword"
                   placeholder="Ponovi lozinku"
+                  required
                 />
               </div>
-
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckDefault"
+                  @click="showPassword()"
+                />
+                <label class="form-check-label" for="flexSwitchCheckDefault"
+                  >Prikaži lozinke</label
+                >
+              </div>
               <div class="submit-button">
                 <button class="btn btn-primary">Registriraj se</button>
               </div>
             </div>
+            <p class="error"></p>
           </form>
         </div>
         <div class="col-sm-4"></div>
@@ -77,14 +90,14 @@
 
 <script>
 import { firebase } from "@/firebase";
-import Preloader from "../components/Preloader.vue";
+import Preloader from "@/components/Preloader.vue";
 
 export default {
   name: "Register",
   data() {
     return {
-      rName: "",
-      rSurname: "",
+      rIme: "",
+      rPrezime: "",
       rEmail: "",
       rPassword: "",
       rRepeatPassword: "",
@@ -95,30 +108,56 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.rEmail, this.rPassword)
+        .catch((err) => {
+          document
+            .querySelector(".form-register")
+            .querySelector(".error").innerHTML = err.message;
+        })
         .then(() => {
-          firebase
-            .firestore()
-            .collection("user")
-            .doc(firebase.auth().currentUser.uid)
-            .set({
-              Ime: this.rName,
-              Prezime: this.rSurname,
-              Email: this.rEmail,
-            })
-            .catch((error) => {
-              console.log(
-                "Something went wrong with added user to firestore: ",
-                error
-              );
-            });
+          if (this.rPassword == this.rRepeatPassword) {
+            firebase
+              .firestore()
+              .collection("user")
+              .doc(firebase.auth().currentUser.uid)
+              .set({
+                Name: this.rIme,
+                Surname: this.rPrezime,
+                Email: this.rEmail,
+              });
+          } else {
+            document
+              .querySelector(".form-register")
+              .querySelector(".error").innerHTML =
+              "Lozinka i ponovljena lozinka se ne podudaraju";
+          }
         });
+    },
+    showPassword() {
+      var password = document.getElementById("inputrPassword");
+      var repeatPassword = document.getElementById("inputrRepeatPassword");
+
+      if (password.type === "password" && repeatPassword.type === "password") {
+        password.type = "text";
+        repeatPassword.type = "text";
+      } else {
+        password.type = "password";
+        repeatPassword.type = "password";
+      }
     },
   },
   components: { Preloader },
 };
 </script>
 
-<style>
+<style scoped>
+.error {
+  color: red;
+}
+
+.form-check {
+  padding-top: 10px;
+}
+
 .registration {
   padding: 25px;
 }

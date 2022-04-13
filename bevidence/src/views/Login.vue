@@ -5,28 +5,42 @@
       <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-          <form>
-            <div class="form-login">
+          <form class="form-login">
+            <div class="form">
               <div class="form-group">
-                <label for="exampleInputlEmail">E-mail</label>
+                <label for="inputlEmail">E-mail</label>
                 <input
                   v-model="lEmail"
                   type="email"
                   class="form-control"
-                  id="exampleInputlEmail"
+                  id="inputlEmail"
                   aria-describedby="emailHelp"
-                  placeholder="Enter email"
+                  placeholder="Email"
+                  required
                 />
               </div>
               <div class="form-group">
-                <label for="exampleInputlPassword">Lozinka</label>
+                <label for="inputlPassword">Lozinka</label>
                 <input
                   v-model="lPassword"
                   type="password"
                   class="form-control"
-                  id="exampleInputlPassword"
-                  placeholder="Password"
+                  id="inputlPassword"
+                  placeholder="Lozinka"
+                  required
                 />
+              </div>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckDefault"
+                  @click="showPassword()"
+                />
+                <label class="form-check-label" for="flexSwitchCheckDefault"
+                  >Prikaži lozinku</label
+                >
               </div>
               <div class="submit-button">
                 <button type="button" @click="login" class="btn btn-primary">
@@ -34,6 +48,7 @@
                 </button>
               </div>
             </div>
+            <p class="error"></p>
           </form>
         </div>
         <div class="col-sm-4"></div>
@@ -59,17 +74,41 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.lEmail, this.lPassword)
-        .then(() => {
-          this.$router.replace({ name: "Home" });
+        .catch((err) => {
+          document
+            .querySelector(".form-login")
+            .querySelector(".error").innerHTML = err.message;
+          var a = 1;
         })
-        .catch();
+        .then(() => {
+          if (a == 0) {
+            this.$router.replace({ name: "Home" });
+          }
+        });
+    },
+    showPassword() {
+      var password = document.getElementById("inputlPassword");
+
+      if (password.type === "password") {
+        password.type = "text";
+      } else {
+        password.type = "password";
+      }
     },
   },
   components: { Preloader },
 };
 </script>
 
-<style>
+<style scoped>
+.error {
+  color: red;
+}
+
+.form-check {
+  padding-top: 10px;
+}
+
 .login {
   padding: 25px;
 }
@@ -77,6 +116,7 @@ export default {
 .btn-primary {
   background: #f84545 !important;
   border-color: #f84545 !important;
+  color: white !important;
 }
 
 .submit-button {
