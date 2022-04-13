@@ -83,7 +83,10 @@
                 <div class="container">
                   <div class="row">
                     <div class="col-sm-12">
-                      <form @submit.prevent="addNewCompany" class="row g-3">
+                      <form
+                        class="form-editcompany row g-3"
+                        @submit.prevent="updateCompany"
+                      >
                         <div class="col-md-4">
                           <label for="companyName" class="form-label">
                             Naziv
@@ -93,6 +96,7 @@
                             type="text"
                             class="form-control"
                             id="companyName"
+                            required
                           />
                         </div>
                         <div class="col-md-4">
@@ -104,6 +108,7 @@
                             type="text"
                             class="form-control"
                             id="companyBusiness"
+                            required
                           />
                         </div>
                         <div class="col-md-4">
@@ -115,6 +120,7 @@
                             type="text"
                             class="form-control"
                             id="businessOwner"
+                            required
                           />
                         </div>
                         <div class="col-md-10">
@@ -126,7 +132,7 @@
                             type="string"
                             class="form-control"
                             id="inputAddress"
-                            placeholder=""
+                            required
                           />
                         </div>
                         <div class="col-md-2">
@@ -138,7 +144,7 @@
                             type="string"
                             class="form-control"
                             id="inputAddressNumber"
-                            placeholder=""
+                            required
                           />
                         </div>
                         <div class="col-md-4">
@@ -148,6 +154,7 @@
                             type="text"
                             class="form-control"
                             id="inputCity"
+                            required
                           />
                         </div>
                         <div class="col-md-4">
@@ -159,6 +166,7 @@
                             type="text"
                             class="form-control"
                             id="inputState"
+                            required
                           />
                         </div>
                         <div class="col-md-4">
@@ -170,30 +178,17 @@
                             type="number"
                             class="form-control"
                             id="inputZip"
+                            required
                           />
+                        </div>
+                        <div class="submit-button">
+                          <button class="btn btn-primary">Uredi</button>
                         </div>
                       </form>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                @click="modalCloseEditCompany()"
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Odustani
-              </button>
-              <button
-                type="button"
-                @click="updateCompany()"
-                class="btn btn-primary"
-              >
-                Spremi
-              </button>
             </div>
           </div>
         </div>
@@ -223,7 +218,10 @@
               <div class="container">
                 <div class="row">
                   <div class="col-sm-12">
-                    <form @submit.prevent="addWorker" class="row g-3">
+                    <form
+                      class="form-addworker row g-3"
+                      @submit.prevent="addWorker"
+                    >
                       <div class="col-md-6">
                         <label for="wName" class="form-label">Ime</label>
                         <input
@@ -231,6 +229,7 @@
                           type="string"
                           class="form-control"
                           id="wName"
+                          required
                         />
                       </div>
                       <div class="col-md-6">
@@ -240,6 +239,7 @@
                           type="string"
                           class="form-control"
                           id="wSurname"
+                          required
                         />
                       </div>
                       <div class="col-md-6">
@@ -249,6 +249,7 @@
                           type="string"
                           class="form-control"
                           id="wJob"
+                          required
                         />
                       </div>
                       <div class="col-md-6">
@@ -260,7 +261,7 @@
                           type="string"
                           class="form-control"
                           id="wCityOfLiving"
-                          placeholder=""
+                          required
                         />
                       </div>
                       <div class="col-md-6">
@@ -272,7 +273,7 @@
                           type="string"
                           class="form-control"
                           id="wJobCity"
-                          placeholder=""
+                          required
                         />
                       </div>
                       <div class="col-md-3">
@@ -284,6 +285,7 @@
                           type="string"
                           class="form-control"
                           id="wWorkHours"
+                          required
                         />
                       </div>
                       <div class="col-md-3">
@@ -295,29 +297,17 @@
                           type="string"
                           class="form-control"
                           id="wSalary"
+                          required
                         />
+                      </div>
+                      <div class="submit-button">
+                        <button class="btn btn-primary">Dodaj</button>
                       </div>
                     </form>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              @click.prevent="addWorker"
-              class="btn btn-primary"
-            >
-              Dodaj
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Odustani
-            </button>
           </div>
         </div>
       </div>
@@ -330,7 +320,7 @@ import { firebase } from "@/firebase";
 import { db } from "@/firebase";
 import Radnik from "@/components/Radnik.vue";
 import localuser from "@/localuser";
-import Preloader from "../components/Preloader.vue";
+import Preloader from "@/components/Preloader.vue";
 
 export default {
   data() {
@@ -351,15 +341,12 @@ export default {
     };
   },
   mounted() {
-    this.func();
+    this.getWorkerData();
     this.compGetData();
   },
   methods: {
     modalEditCompany() {
       $("#editPoduzece").modal("show");
-    },
-    modalCloseEditCompany() {
-      $("#editPoduzece").modal("toggle");
     },
     compGetData() {
       this.compURL = this.$route.params.compURL;
@@ -367,7 +354,6 @@ export default {
         .get()
         .then(() => {
           var varijabla = this.compURL;
-          console.log(varijabla);
           db.collection(
             "user/" + firebase.auth().currentUser.uid + "/companies"
           )
@@ -394,7 +380,7 @@ export default {
             });
         });
     },
-    func() {
+    getWorkerData() {
       this.compURL = this.$route.params.compURL;
       db.collection("user")
         .get()
@@ -460,13 +446,25 @@ export default {
           state: this.compCards[0].Drzava,
           zip: this.compCards[0].PostanskiBroj,
           employees: this.compCards[0].BrojZaposlenih,
+        })
+        .then(() => {
+          alert("Uspješno izvršene promjene na poduzeću");
+          location.reload();
         });
-      $("#editPoduzece").modal("toggle");
     },
     deleteCompany() {
-      db.collection("user/" + firebase.auth().currentUser.uid + "/companies")
-        .doc(this.comp)
-        .delete();
+      let confirmAction = confirm(
+        "Jeste li sigurni da želite obrisati poduzeće?"
+      );
+      if (confirmAction) {
+        db.collection("user/" + firebase.auth().currentUser.uid + "/companies")
+          .doc(this.comp)
+          .delete();
+        alert("Poduzeće je uspješno obrisano");
+        this.$router.push({ name: "Poduzeca" });
+      } else {
+        alert("Brisnje otkazano");
+      }
     },
     addWorkerModal() {
       $("#addWorker").modal("show");
@@ -498,6 +496,7 @@ export default {
           total_salary: this.wTotalSalary,
         })
         .then(() => {
+          alert("Uspješno ste dodali novog radnika");
           location.reload();
         });
     },
@@ -517,32 +516,26 @@ export var comp;
   justify-content: center;
   align-items: center;
 }
-
 .addButton img {
   transition: 0.3s;
 }
-
 .addButton:hover img {
   opacity: 0.7;
   transition: 0.3s;
 }
-
 .addButton {
   margin-bottom: 40px;
 }
-
 .h5margin {
   margin-top: 20px;
 }
-
 hr {
   background-color: #f84545;
 }
-
 .btn {
-  margin: 2px;
+  margin-top: 10px;
+  margin-right: 10px;
 }
-
 .btn-primary {
   color: #fff;
   background-color: #f84545 !important;
@@ -550,12 +543,10 @@ hr {
   font-size: 16px;
   font-weight: 400;
 }
-
 .btn-primary:hover {
   background-color: #d71818 !important;
   border-color: #d71818 !important;
 }
-
 .btn-secondary {
   color: #fff;
   background-color: #383838 !important;
@@ -563,7 +554,6 @@ hr {
   font-size: 16px;
   font-weight: 400;
 }
-
 .btn-secondary:hover {
   color: #fff;
   background-color: #161616 !important;

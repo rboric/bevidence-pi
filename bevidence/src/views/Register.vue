@@ -153,11 +153,9 @@ export default {
 .error {
   color: red;
 }
-
 .form-check {
   padding-top: 10px;
 }
-
 .registration {
   padding: 25px;
 }
@@ -165,7 +163,6 @@ export default {
   background: #f84545 !important;
   border-color: #f84545 !important;
 }
-
 .submit-button {
   padding: 10px;
 }

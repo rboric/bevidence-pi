@@ -90,7 +90,10 @@
                 <div class="container">
                   <div class="row">
                     <div class="col-sm-12">
-                      <form @submit.prevent="updateWorker" class="row g-3">
+                      <form
+                        class="form-editworker row g-3"
+                        @submit.prevent="updateWorker"
+                      >
                         <div class="col-md-6">
                           <label for="wName" class="form-label">Ime</label>
                           <input
@@ -98,6 +101,7 @@
                             type="string"
                             class="form-control"
                             id="wName"
+                            required
                           />
                         </div>
                         <div class="col-md-6">
@@ -109,6 +113,7 @@
                             type="string"
                             class="form-control"
                             id="wSurname"
+                            required
                           />
                         </div>
                         <div class="col-md-6">
@@ -118,6 +123,7 @@
                             type="string"
                             class="form-control"
                             id="wJob"
+                            required
                           />
                         </div>
                         <div class="col-md-6">
@@ -129,7 +135,7 @@
                             type="string"
                             class="form-control"
                             id="wCityOfLiving"
-                            placeholder=""
+                            required
                           />
                         </div>
                         <div class="col-md-6">
@@ -141,7 +147,7 @@
                             type="string"
                             class="form-control"
                             id="wCityOfJob"
-                            placeholder=""
+                            required
                           />
                         </div>
                         <div class="col-md-3">
@@ -153,6 +159,7 @@
                             type="string"
                             class="form-control"
                             id="wWorkHours"
+                            required
                           />
                         </div>
                         <div class="col-md-3">
@@ -164,7 +171,11 @@
                             type="string"
                             class="form-control"
                             id="wSalary"
+                            required
                           />
+                        </div>
+                        <div class="submit-button">
+                          <button class="btn btn-primary">Dodaj</button>
                         </div>
                       </form>
                     </div>
@@ -172,39 +183,21 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                @click.prevent="updateWorker"
-                class="btn btn-primary"
-              >
-                Spremi
-              </button>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Odustani
-              </button>
-            </div>
           </div>
         </div>
       </div>
-      <!-- MODAL NEW WORKER -->
+      <!-- MODAL NEW SALARY -->
       <div
         class="modal fade"
         id="zabPlaca"
         tabindex="-1"
-        aria-labelledby="addRadnikLabel"
+        aria-labelledby="zabPlacaLabel"
         aria-hidden="true"
       >
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="addRadnikLabel">
-                Novi zapis o plaći
-              </h5>
+              <h5 class="modal-title" id="zabPlacaLabel">Novi zapis o plaći</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -217,7 +210,10 @@
                 <div class="container">
                   <div class="row">
                     <div class="col-sm-12">
-                      <form @submit.prevent="addNewSalary" class="row g-3">
+                      <form
+                        class="form-newsalary row g-3"
+                        @submit.prevent="addNewSalary"
+                      >
                         <div class="col-md-6">
                           <label for="wWorkHours" class="form-label"
                             >Radni sati</label
@@ -227,6 +223,7 @@
                             type="string"
                             class="form-control"
                             id="wWorkHours"
+                            required
                           />
                         </div>
                         <div class="col-md-6">
@@ -238,6 +235,7 @@
                             type="string"
                             class="form-control"
                             id="wSalary"
+                            required
                           />
                         </div>
                         <div class="col-md-3">
@@ -249,6 +247,7 @@
                             type="string"
                             class="form-control"
                             id="overtimeHours"
+                            required
                           />
                         </div>
                         <div class="col-md-4">
@@ -260,6 +259,7 @@
                             type="string"
                             class="form-control"
                             id="overtimeHoursSalary"
+                            required
                           />
                         </div>
                         <div class="col-md-3">
@@ -271,6 +271,7 @@
                             type="string"
                             class="form-control"
                             id="salaryAddition"
+                            required
                           />
                         </div>
                         <div class="col-md-2">
@@ -282,6 +283,7 @@
                             type="string"
                             class="form-control"
                             id="salaryMonth"
+                            required
                           >
                             <option value="Siječanj">Siječanj</option>
                             <option value="Veljača">Veljača</option>
@@ -306,6 +308,7 @@
                             type="string"
                             class="form-control"
                             id="salaryYear"
+                            required
                           />
                         </div>
                         <div class="col-md-8">
@@ -317,27 +320,14 @@
                             id="result"
                           />
                         </div>
+                        <div class="submit-button">
+                          <button class="btn btn-primary">Dodaj</button>
+                        </div>
                       </form>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                @click.prevent="addNewSalary"
-                class="btn btn-primary"
-              >
-                Dodaj
-              </button>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Odustani
-              </button>
             </div>
           </div>
         </div>
@@ -368,7 +358,10 @@
                 <div class="container">
                   <div class="row">
                     <div class="col-sm-12">
-                      <form @submit.prevent="addNewDaysOff" class="row g-3">
+                      <form
+                        class="form-daysoff row g-3"
+                        @submit.prevent="addNewDaysOff"
+                      >
                         <div class="col-md-6">
                           <label for="doDateBegin" class="form-label"
                             >Početak</label
@@ -378,6 +371,7 @@
                             type="date"
                             class="form-control"
                             id="doDateBegin"
+                            required
                           />
                         </div>
                         <div class="col-md-6">
@@ -387,6 +381,7 @@
                             type="date"
                             class="form-control"
                             id="doDateEnd"
+                            required
                           />
                         </div>
                         <div class="col-md-12">
@@ -398,29 +393,17 @@
                             type="string"
                             class="form-control"
                             id="doReason"
+                            required
                           />
+                        </div>
+                        <div class="submit-button">
+                          <button class="btn btn-primary">Dodaj</button>
                         </div>
                       </form>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                @click.prevent="addDaysOff"
-                class="btn btn-primary"
-              >
-                Dodaj
-              </button>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Odustani
-              </button>
             </div>
           </div>
         </div>
@@ -430,8 +413,9 @@
 </template>
 
 <script>
-import { firebase, db } from "@/firebase";
-import Preloader from "../components/Preloader.vue";
+import { db } from "@/firebase";
+import { firebase } from "@/firebase";
+import Preloader from "@/components/Preloader.vue";
 
 export default {
   name: "RadniciDetails",
@@ -646,10 +630,18 @@ export default {
                   godina,
                   izracun,
                 }),
+              })
+              .then(() => {
+                alert(
+                  "Uspješno dodana novi zapis o plaći za mjesec " +
+                    mjesec +
+                    " " +
+                    godina
+                );
+                location.reload();
               });
           });
         });
-      $("#zabPlaca").modal("toggle");
     },
     updateWorker() {
       var varijabla = this.$route.params.wURL;
@@ -683,49 +675,58 @@ export default {
                 salary: this.wCards[0].Placa,
               })
               .then(() => {
+                alert("Uspješno su izvršene promjene na radniku");
                 location.reload();
               });
           });
         });
     },
     deleteWorker() {
-      db.collection(
-        "user/" +
-          firebase.auth().currentUser.uid +
-          "/companies/" +
-          this.comp +
-          "/workers"
-      )
-        .get()
-        .then(() => {
-          var varijabla = this.$route.params.wURL;
-          db.collection(
-            "user/" +
-              firebase.auth().currentUser.uid +
-              "/companies/" +
-              this.comp +
-              "/workers"
-          )
-            .where("username", "==", varijabla)
-            .get()
-            .then((querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                this.worker_id = doc.id;
-                db.collection(
-                  "user/" +
-                    firebase.auth().currentUser.uid +
-                    "/companies/" +
-                    this.comp +
-                    "/workers"
-                )
-                  .doc(this.worker_id)
-                  .delete();
-                this.$router.push({ name: "Poduzeca" });
+      let confirmAction = confirm(
+        "Jeste li sigurni da želite obrisati radnika?"
+      );
+      if (confirmAction) {
+        db.collection(
+          "user/" +
+            firebase.auth().currentUser.uid +
+            "/companies/" +
+            this.comp +
+            "/workers"
+        )
+          .get()
+          .then(() => {
+            var varijabla = this.$route.params.wURL;
+            db.collection(
+              "user/" +
+                firebase.auth().currentUser.uid +
+                "/companies/" +
+                this.comp +
+                "/workers"
+            )
+              .where("username", "==", varijabla)
+              .get()
+              .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                  this.worker_id = doc.id;
+                  db.collection(
+                    "user/" +
+                      firebase.auth().currentUser.uid +
+                      "/companies/" +
+                      this.comp +
+                      "/workers"
+                  )
+                    .doc(this.worker_id)
+                    .delete();
+                  alert("Radnik je uspješno obrisan");
+                  this.$router.push({ name: "PoduzecaDetails" });
+                });
               });
-            });
-        });
+          });
+      } else {
+        alert("Brisnje otkazano");
+      }
     },
-    addDaysOff() {
+    addNewDaysOff() {
       var varijabla = this.$route.params.wURL;
       var razlog = this.doReason;
       var pocetniDatum = this.doDateBegin;
@@ -756,10 +757,13 @@ export default {
                   pocetniDatum,
                   zavrsniDatum,
                 }),
+              })
+              .then(() => {
+                alert("Uspješno dodan novi zaspis o slobodnim danima");
+                location.reload();
               });
           });
         });
-      $("#addDaysOff").modal("toggle");
     },
     getWorkerDaysOffData() {
       this.compURL = this.$route.params.compURL;
@@ -829,7 +833,6 @@ export default {
 .information p {
   word-break: break-all;
 }
-
 .info-container {
   padding: 20px;
   width: 60%;
@@ -837,22 +840,19 @@ export default {
   border: 1px solid #f84545;
   border-radius: 5px;
 }
-
 .button-container {
   padding: 20px;
   width: 10%;
   margin: 20px auto auto auto;
 }
-
 .buttons-container button {
   width: 100%;
 }
-
 .btn {
   width: 100px;
-  margin: 2px;
+  margin-top: 10px;
+  margin-right: 10px;
 }
-
 .btn-primary {
   color: #fff;
   background-color: #f84545 !important;
@@ -860,12 +860,10 @@ export default {
   font-size: 16px;
   font-weight: 400;
 }
-
 .btn-primary:hover {
   background-color: #d71818 !important;
   border-color: #d71818 !important;
 }
-
 .btn-secondary {
   color: #fff;
   background-color: #383838 !important;
@@ -873,13 +871,11 @@ export default {
   font-size: 16px;
   font-weight: 400;
 }
-
 .btn-secondary:hover {
   color: #fff;
   background-color: #161616 !important;
   border-color: #161616 !important;
 }
-
 @media screen and (max-width: 1480px) {
   .info-container {
     width: 70%;
@@ -888,7 +884,6 @@ export default {
     width: 20%;
   }
 }
-
 @media screen and (max-width: 1080px) {
   .info-container {
     width: 70%;
@@ -897,7 +892,6 @@ export default {
     width: 20%;
   }
 }
-
 @media screen and (max-width: 700px) {
   .info-container {
     width: 70%;
@@ -906,7 +900,6 @@ export default {
     width: 50%;
   }
 }
-
 @media screen and (max-width: 600px) {
   .info-container {
     width: 100%;

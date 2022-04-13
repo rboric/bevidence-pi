@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-          <form class="form-login">
+          <form class="form-login" @submit.prevent="login">
             <div class="form">
               <div class="form-group">
                 <label for="inputlEmail">E-mail</label>
@@ -43,9 +43,7 @@
                 >
               </div>
               <div class="submit-button">
-                <button type="button" @click="login" class="btn btn-primary">
-                  Prijava
-                </button>
+                <button class="btn btn-primary">Prijava</button>
               </div>
             </div>
             <p class="error"></p>
@@ -59,7 +57,7 @@
 
 <script>
 import { firebase } from "@/firebase";
-import Preloader from "../components/Preloader.vue";
+import Preloader from "@/components/Preloader.vue";
 
 export default {
   name: "Login",
@@ -104,22 +102,18 @@ export default {
 .error {
   color: red;
 }
-
 .form-check {
   padding-top: 10px;
 }
-
 .login {
   padding: 25px;
 }
-
 .btn-primary {
   background: #f84545 !important;
   border-color: #f84545 !important;
   color: white !important;
 }
-
-.submit-button {
-  padding: 10px;
+.btn {
+  margin-top: 10px;
 }
 </style>

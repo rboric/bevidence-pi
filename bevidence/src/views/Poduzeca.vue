@@ -50,7 +50,10 @@
               <div class="container">
                 <div class="row">
                   <div class="col-sm-12">
-                    <form @submit.prevent="addCompany" class="row g-3">
+                    <form
+                      class="form-addcompany row g-3"
+                      @submit.prevent="addCompany"
+                    >
                       <div class="col-md-4">
                         <label for="compName" class="form-label">Naziv</label>
                         <input
@@ -58,9 +61,10 @@
                           type="text"
                           class="form-control"
                           id="compName"
+                          required
                         />
                       </div>
-                      <div class="col-md-4">
+                      <div class="form-group col-md-4">
                         <label for="compBusiness" class="form-label"
                           >Djelatnost</label
                         >
@@ -69,6 +73,7 @@
                           type="text"
                           class="form-control"
                           id="compBusiness"
+                          required
                         />
                       </div>
                       <div class="col-md-4">
@@ -80,6 +85,7 @@
                           type="text"
                           class="form-control"
                           id="compBusinessOwner"
+                          required
                         />
                       </div>
                       <div class="col-md-10">
@@ -91,7 +97,7 @@
                           type="string"
                           class="form-control"
                           id="compAddress"
-                          placeholder=""
+                          required
                         />
                       </div>
                       <div class="col-md-2">
@@ -103,7 +109,7 @@
                           type="string"
                           class="form-control"
                           id="compAddressNumber"
-                          placeholder=""
+                          required
                         />
                       </div>
                       <div class="col-md-4">
@@ -113,6 +119,7 @@
                           type="text"
                           class="form-control"
                           id="compCity"
+                          required
                         />
                       </div>
                       <div class="col-md-4">
@@ -122,6 +129,7 @@
                           type="text"
                           class="form-control"
                           id="compState"
+                          required
                         />
                       </div>
                       <div class="col-md-4">
@@ -133,29 +141,17 @@
                           type="number"
                           class="form-control"
                           id="compZip"
+                          required
                         />
+                      </div>
+                      <div class="submit-button">
+                        <button class="btn btn-primary">Dodaj</button>
                       </div>
                     </form>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              @click.prevent="addCompany"
-              class="btn btn-primary"
-            >
-              Dodaj
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Odustani
-            </button>
           </div>
         </div>
       </div>
@@ -240,13 +236,9 @@ export default {
             1,
           useradd: localuser.currentUser,
         })
-        .then((doc) => {
-          console.log("Uspješno dodano", doc);
-          alert("Dodano novo poduzeće");
+        .then(() => {
+          alert("Uspješno dodano novo poduzeće");
           location.reload();
-        })
-        .catch((e) => {
-          console.error(e);
         });
     },
   },
@@ -258,6 +250,9 @@ export default {
 </script>
 
 <style scoped>
+.error {
+  color: red;
+}
 .poduzeca {
   padding: 5px;
 }
@@ -279,5 +274,9 @@ export default {
 }
 .card-container {
   padding: 10px;
+}
+.btn {
+  margin-top: 10px;
+  margin-right: 10px;
 }
 </style>
