@@ -40,7 +40,7 @@ export default {
   align-items: center;
 }
 .card {
-  border: 1px solid#ff8080;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 2px 20px 0 rgba(0, 0, 0, 0.19);
   padding: 2px;
 }
 .card-container {

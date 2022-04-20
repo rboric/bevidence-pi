@@ -3,6 +3,7 @@
     <preloader />
     <div v-for="wCard in wCards" :key="wCard.id">
       <div class="info-container row">
+        <button class="backBtn" onclick="history.back()">&#8249;</button>
         <div class="col-12">
           <h3 style="word-break: break-all">
             <b>{{ wCard.Ime }} {{ wCard.Prezime }}</b>
@@ -44,7 +45,7 @@
             class="btn btn-primary"
             @click="modalDaysOff()"
           >
-            Slobodni dani
+            Uredi
           </button>
           <v-data-table
             :headers="headersDaysOff"
@@ -439,22 +440,40 @@ export default {
           sortable: false,
           value: "mjesec",
         },
-        { text: "Godina", value: "godina" },
-        { text: "Plaća", value: "placa" },
-        { text: "Dodatak na plaću", value: "dodatak" },
-        { text: "Prekovremeni sati", value: "prekovremeniSati" },
-        { text: "Prekovremeni satnica", value: "prekovremeniSatnica" },
-        { text: "Prekovremeni ukupno", value: "prekovremeniUkupno" },
-        { text: "Sveukupni izračun", value: "izracun" },
+        { text: "Godina", sortable: false, value: "godina" },
+        { text: "Plaća", sortable: false, value: "placa" },
+        { text: "Dodatak na plaću", sortable: false, value: "dodatak" },
+        {
+          text: "Prekovremeni sati",
+          sortable: false,
+          value: "prekovremeniSati",
+        },
+        {
+          text: "Prekovremeni satnica",
+          sortable: false,
+          value: "prekovremeniSatnica",
+        },
+        {
+          text: "Prekovremeni ukupno",
+          sortable: false,
+          value: "prekovremeniUkupno",
+        },
+        { text: "Sveukupni izračun", sortable: false, value: "izracun" },
       ],
       headersDaysOff: [
         {
           text: "Početni datum",
+          sortable: false,
           align: "start",
           value: "pocetniDatum",
           width: "15%",
         },
-        { text: "Završni datum", value: "zavrsniDatum", width: "15%" },
+        {
+          text: "Završni datum",
+          sortable: false,
+          value: "zavrsniDatum",
+          width: "15%",
+        },
 
         { text: "Razlog", sortable: false, value: "razlog", width: "70%" },
       ],
@@ -837,7 +856,7 @@ export default {
   padding: 20px;
   width: 60%;
   margin: 20px auto 20px auto;
-  border: 1px solid #f84545;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 2px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
 }
 .button-container {
@@ -876,9 +895,27 @@ export default {
   background-color: #161616 !important;
   border-color: #161616 !important;
 }
+
+.backBtn {
+  text-decoration: none;
+  display: inline-block;
+  background-color: #f84545;
+  width: 35px;
+  height: 35px;
+  margin-bottom: 10px;
+  border-radius: 50px;
+  color: white;
+  transition: 0.3s;
+  margin-left: 5px;
+}
+
+.backBtn:hover {
+  background-color: #d71818;
+  transition: 0.3s;
+}
 @media screen and (max-width: 1480px) {
   .info-container {
-    width: 70%;
+    width: 80%;
   }
   .button-container {
     width: 20%;
@@ -886,18 +923,19 @@ export default {
 }
 @media screen and (max-width: 1080px) {
   .info-container {
-    width: 70%;
+    width: 80%;
   }
   .button-container {
     width: 20%;
   }
-}
-@media screen and (max-width: 700px) {
-  .info-container {
-    width: 70%;
-  }
-  .button-container {
-    width: 50%;
+
+  @media screen and (max-width: 700px) {
+    .info-container {
+      width: 70%;
+    }
+    .button-container {
+      width: 50%;
+    }
   }
 }
 @media screen and (max-width: 600px) {
@@ -924,6 +962,12 @@ export default {
   }
   .buttons-container button {
     width: 110%;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .backBtn {
+    display: none;
   }
 }
 </style>

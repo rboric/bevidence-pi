@@ -1,6 +1,7 @@
 <template>
   <div class="Profile">
     <preloader />
+    <button class="backBtn" onclick="history.back()">&#8249;</button>
     <div v-for="user in userData" :key="user.id" :userData="userData">
       {{ user.Ime }} {{ user.Prezime }}
     </div>
@@ -52,4 +53,26 @@ export default {
 </script>
 
 <style>
+.backBtn {
+  text-decoration: none;
+  display: inline-block;
+  background-color: #f84545;
+  width: 35px;
+  height: 35px;
+  margin-top: 20px;
+  border-radius: 50px;
+  color: white;
+  transition: 0.3s;
+}
+
+.backBtn:hover {
+  background-color: #d71818;
+  transition: 0.3s;
+}
+
+@media screen and (min-width: 1080px) {
+  .backBtn {
+    display: none;
+  }
+}
 </style>

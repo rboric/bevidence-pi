@@ -2,6 +2,7 @@
   <div class="PoduzecaDetails">
     <preloader />
     <div class="container" v-for="compCard in compCards" :key="compCard.id">
+      <button class="backBtn" onclick="history.back()">&#8249;</button>
       <div class="row">
         <div class="col-12">
           <h5 class="h5margin">
@@ -510,6 +511,23 @@ export var comp;
 </script>
 
 <style scoped>
+.backBtn {
+  text-decoration: none;
+  display: inline-block;
+  background-color: #f84545;
+  width: 35px;
+  height: 35px;
+  margin-top: 20px;
+  border-radius: 50px;
+  color: white;
+  transition: 0.3s;
+}
+
+.backBtn:hover {
+  background-color: #d71818;
+  transition: 0.3s;
+}
+
 .add-div {
   padding: 5px;
   display: flex;
@@ -558,5 +576,11 @@ hr {
   color: #fff;
   background-color: #161616 !important;
   border-color: #161616 !important;
+}
+
+@media screen and (min-width: 1080px) {
+  .backBtn {
+    display: none;
+  }
 }
 </style>

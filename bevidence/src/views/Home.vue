@@ -63,7 +63,7 @@ export default {
 
 <style scoped>
 .home {
-  background-image: url("../assets/background-image.png");
+  /* background-image: url("../assets/background-image.png"); */
   height: 100vh;
 }
 
