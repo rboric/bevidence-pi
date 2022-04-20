@@ -494,7 +494,6 @@ export default {
             "." +
             Math.floor(Math.random() * 100) +
             1,
-          total_salary: this.wTotalSalary,
         })
         .then(() => {
           alert("Uspješno ste dodali novog radnika");

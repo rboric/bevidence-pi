@@ -76,7 +76,9 @@
                 >
               </div>
               <div class="submit-button">
-                <button class="btn btn-primary">Registriraj se</button>
+                <button class="btnRegister btn btn-primary">
+                  Registriraj se
+                </button>
               </div>
             </div>
             <p class="error"></p>
@@ -160,6 +162,7 @@ export default {
   padding: 25px;
 }
 .btn-primary {
+  width: 40%;
   background: #f84545 !important;
   border-color: #f84545 !important;
 }

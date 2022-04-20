@@ -176,7 +176,7 @@
                           />
                         </div>
                         <div class="submit-button">
-                          <button class="btn btn-primary">Dodaj</button>
+                          <button class="btn btn-primary">Spremi</button>
                         </div>
                       </form>
                     </div>
@@ -438,44 +438,44 @@ export default {
           text: "Mjesec",
           align: "start",
           sortable: false,
-          value: "mjesec",
+          value: "month",
         },
-        { text: "Godina", sortable: false, value: "godina" },
-        { text: "Plaća", sortable: false, value: "placa" },
-        { text: "Dodatak na plaću", sortable: false, value: "dodatak" },
+        { text: "Godina", sortable: false, value: "year" },
+        { text: "Plaća", sortable: false, value: "salary" },
+        { text: "Dodatak na plaću", sortable: false, value: "addition" },
         {
           text: "Prekovremeni sati",
           sortable: false,
-          value: "prekovremeniSati",
+          value: "overtimeHrs",
         },
         {
           text: "Prekovremeni satnica",
           sortable: false,
-          value: "prekovremeniSatnica",
+          value: "overtimeSlry",
         },
         {
           text: "Prekovremeni ukupno",
           sortable: false,
-          value: "prekovremeniUkupno",
+          value: "overtimeOverall",
         },
-        { text: "Sveukupni izračun", sortable: false, value: "izracun" },
+        { text: "Sveukupni izračun", sortable: false, value: "calculation" },
       ],
       headersDaysOff: [
         {
           text: "Početni datum",
           sortable: false,
           align: "start",
-          value: "pocetniDatum",
+          value: "startDate",
           width: "15%",
         },
         {
           text: "Završni datum",
           sortable: false,
-          value: "zavrsniDatum",
+          value: "endDate",
           width: "15%",
         },
 
-        { text: "Razlog", sortable: false, value: "razlog", width: "70%" },
+        { text: "Razlog", sortable: false, value: "reason", width: "70%" },
       ],
     };
   },
@@ -607,16 +607,16 @@ export default {
     },
     addNewSalary() {
       var varijabla = this.$route.params.wURL;
-      var placa = this.wCards[0].RadniSati * this.wCards[0].Placa;
+      var salary = this.wCards[0].RadniSati * this.wCards[0].Placa;
       var b = this.salaryAddition;
       var c = this.overtimeHours * this.overtimeHoursSalary;
-      var izracun = parseFloat(placa) + parseFloat(b) + parseFloat(c);
-      var mjesec = this.salaryMonth;
-      var godina = this.salaryYear;
-      var dodatak = this.salaryAddition;
-      var prekovremeniSati = this.overtimeHours;
-      var prekovremeniSatnica = this.overtimeHoursSalary;
-      var prekovremeniUkupno = prekovremeniSati * prekovremeniSatnica;
+      var calculation = parseFloat(salary) + parseFloat(b) + parseFloat(c);
+      var month = this.salaryMonth;
+      var year = this.salaryYear;
+      var addition = this.salaryAddition;
+      var overtimeHrs = this.overtimeHours;
+      var overtimeSlry = this.overtimeHoursSalary;
+      var overtimeOverall = overtimeHrs * overtimeSlry;
 
       db.collection(
         "user/" +
@@ -640,22 +640,22 @@ export default {
               .doc(this.worker_id)
               .update({
                 total_salary: firebase.firestore.FieldValue.arrayUnion({
-                  placa,
-                  dodatak,
-                  prekovremeniSati,
-                  prekovremeniSatnica,
-                  prekovremeniUkupno,
-                  mjesec,
-                  godina,
-                  izracun,
+                  salary,
+                  addition,
+                  overtimeHrs,
+                  overtimeSlry,
+                  overtimeOverall,
+                  month,
+                  year,
+                  calculation,
                 }),
               })
               .then(() => {
                 alert(
                   "Uspješno dodana novi zapis o plaći za mjesec " +
-                    mjesec +
+                    month +
                     " " +
-                    godina
+                    year
                 );
                 location.reload();
               });
@@ -747,9 +747,9 @@ export default {
     },
     addNewDaysOff() {
       var varijabla = this.$route.params.wURL;
-      var razlog = this.doReason;
-      var pocetniDatum = this.doDateBegin;
-      var zavrsniDatum = this.doDateEnd;
+      var reason = this.doReason;
+      var startDate = this.doDateBegin;
+      var endDate = this.doDateEnd;
       db.collection(
         "user/" +
           firebase.auth().currentUser.uid +
@@ -772,9 +772,9 @@ export default {
               .doc(this.worker_id)
               .update({
                 days_off: firebase.firestore.FieldValue.arrayUnion({
-                  razlog,
-                  pocetniDatum,
-                  zavrsniDatum,
+                  reason,
+                  startDate,
+                  endDate,
                 }),
               })
               .then(() => {
