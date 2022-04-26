@@ -354,4 +354,22 @@ div h2 {
     padding-right: 0px;
   }
 }
+
+@media screen and (max-width: 370px) {
+  .headline {
+    font-size: 45px;
+  }
+  .headline-2 {
+    margin: auto;
+    font-size: 45px;
+    padding-top: 130px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .footer-register button a {
+    padding: 15px;
+  }
+}
 </style>
