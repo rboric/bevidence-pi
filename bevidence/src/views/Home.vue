@@ -245,7 +245,7 @@ div h2 {
 .headline {
   padding: 50px;
   width: 40%;
-  margin: 50px auto 20px auto;
+  margin: 150px auto auto auto;
   text-align: center;
   color: #f84545;
   font-size: 4rem;
