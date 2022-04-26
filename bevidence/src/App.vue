@@ -107,7 +107,7 @@ body {
 }
 
 .white-logo {
-  width: 150px;
+  width: 200px;
   padding: 5px;
 }
 
