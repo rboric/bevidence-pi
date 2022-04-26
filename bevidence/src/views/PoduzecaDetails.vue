@@ -510,6 +510,9 @@ export var comp;
 </script>
 
 <style scoped>
+.PoduzecaDetails {
+  padding-top: 100px;
+}
 .backBtn {
   text-decoration: none;
   display: inline-block;

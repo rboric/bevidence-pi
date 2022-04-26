@@ -849,6 +849,9 @@ export default {
 </script>
 
 <style>
+.RadniciDetails {
+  padding-top: 100px;
+}
 .information p {
   word-break: break-all;
 }

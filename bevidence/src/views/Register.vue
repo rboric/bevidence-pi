@@ -160,6 +160,7 @@ export default {
 }
 .registration {
   padding: 25px;
+  padding-top: 100px;
 }
 .btn-primary {
   width: 40%;
