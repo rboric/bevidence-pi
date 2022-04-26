@@ -34,6 +34,7 @@ export default {
   align-items: center;
   justify-content: center;
   position: fixed;
+  top: 0;
   width: 100%;
   height: 100%;
   background-color: white;
@@ -42,7 +43,6 @@ export default {
 
 .logo {
   position: relative;
-  top: -500px;
   background-repeat: no-repeat;
 }
 

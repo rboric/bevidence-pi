@@ -105,6 +105,7 @@ body {
 .navbar {
   background-color: #f84545 !important;
   position: absolute;
+  top: 0;
   width: 100%;
   z-index: 10000;
 }
