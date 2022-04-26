@@ -107,6 +107,7 @@ export default {
 }
 .login {
   padding: 25px;
+  padding-top: 100px;
 }
 .btn-primary {
   background: #f84545 !important;

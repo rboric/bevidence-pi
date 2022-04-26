@@ -255,6 +255,7 @@ export default {
 }
 .poduzeca {
   padding: 5px;
+  padding-top: 100px;
 }
 .add-div {
   padding: 5px;

@@ -88,6 +88,9 @@ export default {
 </script>
 
 <style>
+.Profile {
+  padding-top: 100px;
+}
 .gradient-custom {
   background: #f84545;
 
