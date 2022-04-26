@@ -286,42 +286,72 @@ div h2 {
     width: 80%;
   }
   .headline-2 {
-    padding: 150px;
+    padding-top: 130px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
   }
 }
 
 @media screen and (max-width: 800px) {
   .headline {
     width: 100%;
+    font-size: 50px;
   }
   .headline-2 {
     margin: auto;
-    padding: 130px;
     font-size: 60px;
+    padding-top: 130px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
   }
 }
 
 @media screen and (max-width: 700px) {
   .headline-2 {
     margin: auto;
-    padding: 120px;
+
     font-size: 60px;
+    padding-top: 130px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
   }
 }
 
 @media screen and (max-width: 650px) {
   .headline-2 {
     margin: auto;
-    padding: 120px;
+
     font-size: 50px;
+    padding-top: 130px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
   }
 }
 
 @media screen and (max-width: 600px) {
   .headline-2 {
     margin: auto;
-    padding: 120px;
+
     font-size: 45px;
+    padding-top: 130px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .headline-2 {
+    margin: auto;
+    font-size: 50px;
+    padding-top: 130px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
   }
 }
 </style>
