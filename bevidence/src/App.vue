@@ -104,6 +104,9 @@ body {
 
 .navbar {
   background-color: #f84545 !important;
+  position: absolute;
+  width: 100%;
+  z-index: 10000;
 }
 
 .white-logo {

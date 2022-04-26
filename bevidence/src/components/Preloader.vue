@@ -33,10 +33,9 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: 0;
+  position: fixed;
   width: 100%;
-  height: 200vh;
+  height: 100%;
   background-color: white;
   z-index: 9999;
 }
