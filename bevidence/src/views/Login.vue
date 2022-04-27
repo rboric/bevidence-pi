@@ -47,6 +47,7 @@
               </div>
             </div>
             <p class="error"></p>
+            <a href="/passwordreset">Zaboravljena lozinka</a>
           </form>
         </div>
         <div class="col-sm-4"></div>
