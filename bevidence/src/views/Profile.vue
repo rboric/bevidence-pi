@@ -34,7 +34,13 @@
                           >
                             Promjena lozinke
                           </button>
-                          <button class="btn btn-primary">Kontakt</button>
+                          <button
+                            disabled
+                            class="btn btn-primary"
+                            @click="contactForm"
+                          >
+                            Kontakt
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -45,6 +51,83 @@
           </div>
         </div>
       </section>
+      <div
+        class="modal fade"
+        id="contact"
+        tabindex="-1"
+        aria-labelledby="contactLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="contactLabel">Kontakt</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="contact-form">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <form
+                        class="form-newContactForm row g-3"
+                        @submit.prevent="newContactForm"
+                      >
+                        <div class="col-md-6">
+                          <label for="userName" class="form-label"
+                            >Korisnik</label
+                          >
+                          <input
+                            v-model="user.Ime"
+                            type="text"
+                            class="form-control"
+                            id="userName"
+                            required
+                          />
+                        </div>
+                        <div class="col-md-6">
+                          <label for="userEmail" class="form-label"
+                            >Email</label
+                          >
+                          <input
+                            v-model="user.Email"
+                            type="text"
+                            class="form-control"
+                            id="userEmail"
+                            required
+                          />
+                        </div>
+                        <div class="col-md-12">
+                          <label for="userMessage" class="form-label"
+                            >Poruka</label
+                          >
+                          <textarea
+                            v-model="userMessage"
+                            type="text"
+                            class="form-control"
+                            id="userMessage"
+                            required
+                          />
+                        </div>
+                        <div class="submit-button">
+                          <button class="btn btn-primary">
+                            Pošalji poruku
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -61,6 +144,7 @@ export default {
     return {
       localuser,
       userData: [],
+      userMessage: "",
     };
   },
   mounted() {
@@ -97,12 +181,19 @@ export default {
         })
         .catch(() => {});
     },
+    contactForm() {
+      $("#contact").modal("show");
+    },
   },
   components: { Preloader },
 };
 </script>
 
 <style>
+.modal {
+  padding-top: 75px;
+}
+
 .Profile {
   padding-top: 100px;
 }
