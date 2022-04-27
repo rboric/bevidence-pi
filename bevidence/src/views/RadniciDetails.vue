@@ -849,6 +849,9 @@ export default {
 </script>
 
 <style>
+.modal {
+  padding-top: 75px;
+}
 .RadniciDetails {
   padding-top: 100px;
 }

@@ -510,6 +510,9 @@ export var comp;
 </script>
 
 <style scoped>
+.modal {
+  padding-top: 75px;
+}
 .PoduzecaDetails {
   padding-top: 100px;
 }

@@ -29,6 +29,15 @@
                           <h6>Email</h6>
                           <p class="text-muted">{{ user.Email }}</p>
                         </div>
+                        <div class="col-12 mb-12">
+                          <button
+                            class="btn btn-primary"
+                            @click="resetPassword"
+                          >
+                            Zahtjev za promjenu lozinke
+                          </button>
+                          <button class="btn btn-primary">Kontakt</button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -46,7 +55,7 @@
 import { db } from "@/firebase";
 import { firebase } from "@/firebase";
 import localuser from "@/localuser";
-import Preloader from "../components/Preloader.vue";
+import Preloader from "@/components/Preloader.vue";
 
 export default {
   name: "Home",
@@ -77,10 +86,18 @@ export default {
                   Prezime: data.Surname,
                   Email: data.Email,
                 });
-                console.log(this.userData);
               });
             });
         });
+    },
+    resetPassword() {
+      firebase
+        .auth()
+        .sendPasswordResetEmail(firebase.auth().currentUser.email)
+        .then(() => {
+          alert("Email je poslan");
+        })
+        .catch(() => {});
     },
   },
   components: { Preloader },
@@ -116,6 +133,15 @@ export default {
 .backBtn:hover {
   background-color: #d71818;
   transition: 0.3s;
+}
+.btn-primary {
+  background: #f84545 !important;
+  border-color: #f84545 !important;
+  color: white !important;
+}
+.btn {
+  margin-top: 10px;
+  margin-right: 10px;
 }
 
 @media screen and (min-width: 1080px) {

@@ -250,6 +250,9 @@ export default {
 </script>
 
 <style scoped>
+.modal {
+  padding-top: 75px;
+}
 .error {
   color: red;
 }
