@@ -3,7 +3,7 @@
     <preloader />
     <button class="backBtn" onclick="history.back()">&#8249;</button>
     <div v-for="user in userData" :key="user.id" :userData="userData">
-      <section class="vh-100" style="background-color: #f4f5f7">
+      <section class="vh-100">
         <div class="container py-5 h-100">
           <div
             class="row d-flex justify-content-center align-items-center h-100"
@@ -17,9 +17,7 @@
                       border-top-left-radius: 0.5rem;
                       border-bottom-left-radius: 0.5rem;
                     "
-                  >
-                    <i class="far fa-edit mb-5"></i>
-                  </div>
+                  ></div>
                   <div class="col-md-8">
                     <div class="card-body p-4">
                       <h6>{{ user.Ime }} {{ user.Prezime }}</h6>
@@ -34,7 +32,7 @@
                             class="btn btn-primary"
                             @click="resetPassword"
                           >
-                            Zahtjev za promjenu lozinke
+                            Promjena lozinke
                           </button>
                           <button class="btn btn-primary">Kontakt</button>
                         </div>
@@ -110,11 +108,7 @@ export default {
 }
 .gradient-custom {
   background: #f84545;
-
-  /* Chrome 10-25, Safari 5.1-6 */
   background: -webkit-linear-gradient(to right bottom, #f84545 #d71818);
-
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background: linear-gradient(to right bottom, #f84545 #d71818);
 }
 
@@ -125,6 +119,7 @@ export default {
   width: 35px;
   height: 35px;
   margin-top: 20px;
+  margin-left: 10px;
   border-radius: 50px;
   color: white;
   transition: 0.3s;
