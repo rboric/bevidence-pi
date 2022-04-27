@@ -171,7 +171,7 @@ export default {
 .h1-text h1 {
   color: white;
   padding-top: 10%;
-  font-size: 200px;
+  font-size: 170px;
   width: 100%;
 }
 
