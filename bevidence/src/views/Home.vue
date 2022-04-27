@@ -3,10 +3,12 @@
     <preloader />
     <div v-if="localuser.currentUser">
       <div v-for="user in userData" :key="user.id" :userData="userData">
-        <div class="h1-text">
-          <h1>
-            <b>Dobrodošao/la {{ user.Ime }}.</b>
-          </h1>
+        <div class="bg-image">
+          <div class="h1-text">
+            <h1>
+              <b>Dobrodošao/la {{ user.Ime }}.</b>
+            </h1>
+          </div>
         </div>
       </div>
     </div>
@@ -166,6 +168,19 @@ export default {
 </script>
 
 <style scoped>
+.h1-text h1 {
+  color: white;
+  padding-top: 10%;
+  font-size: 200px;
+  width: 100%;
+}
+
+.bg-image {
+  height: 100vh;
+  background-image: url("../assets/mesh.png");
+  background-size: 100% 100%;
+}
+
 .footer-headline {
   background-color: rgb(43, 43, 43);
   height: 150px;
@@ -174,7 +189,9 @@ export default {
 }
 
 .footer-register {
-  background-color: #f84545;
+  background-image: url("../assets/mesh.png");
+  background-size: 100% 100%;
+  /* background-color: #f84545; */
   padding: 80px;
 }
 
@@ -196,10 +213,6 @@ export default {
   background-color: white;
   color: #f84545;
   transition: 0.4s;
-}
-
-.footer-pic {
-  margin-top: 0px;
 }
 
 .rights {
@@ -278,10 +291,15 @@ div h2 {
 
 .footer-pic {
   height: 500px;
-  background-image: url("../assets/footerpic.png");
   width: 100%;
+  background-image: url("../assets/footerpic.png");
+  background-size: 100% 100%;
 }
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1500px) {
+  .h1-text h1 {
+    padding-top: 20%;
+    font-size: 100px;
+  }
   .headline {
     width: 80%;
   }
@@ -294,6 +312,10 @@ div h2 {
 }
 
 @media screen and (max-width: 800px) {
+  .h1-text h1 {
+    padding-top: 30%;
+    font-size: 70px;
+  }
   .headline {
     width: 100%;
     font-size: 50px;
@@ -309,6 +331,10 @@ div h2 {
 }
 
 @media screen and (max-width: 700px) {
+  .h1-text h1 {
+    padding-top: 50%;
+    font-size: 50px;
+  }
   .headline-2 {
     margin: auto;
 
@@ -321,6 +347,11 @@ div h2 {
 }
 
 @media screen and (max-width: 650px) {
+  .h1-text h1 {
+    padding-top: 60%;
+    padding-left: 10px;
+    font-size: 40px;
+  }
   .headline-2 {
     margin: auto;
 
@@ -333,6 +364,11 @@ div h2 {
 }
 
 @media screen and (max-width: 600px) {
+  .h1-text h1 {
+    padding-top: 60%;
+    padding-left: 10px;
+    font-size: 35px;
+  }
   .headline-2 {
     margin: auto;
 
