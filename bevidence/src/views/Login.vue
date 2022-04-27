@@ -41,13 +41,15 @@
                 <label class="form-check-label" for="flexSwitchCheckDefault"
                   >Prikaži lozinku</label
                 >
+                <a class="passwordreset" href="/passwordreset"
+                  >Zaboravili ste lozinku?</a
+                >
               </div>
               <div class="submit-button">
                 <button class="btn btn-primary">Prijava</button>
               </div>
             </div>
             <p class="error"></p>
-            <a href="/passwordreset">Zaboravljena lozinka</a>
           </form>
         </div>
         <div class="col-sm-4"></div>
@@ -100,6 +102,10 @@ export default {
 </script>
 
 <style scoped>
+.passwordreset {
+  float: right;
+  color: #f84545;
+}
 .error {
   color: red;
 }
