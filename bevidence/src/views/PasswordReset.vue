@@ -7,6 +7,7 @@
         <div class="col-sm-4">
           <form class="form-resetPassword" @submit.prevent="resetPassword">
             <div class="form">
+              <h5>Promjena lozinke</h5>
               <div class="form-group">
                 <label for="inputResetEmail">E-mail</label>
                 <input
@@ -20,7 +21,7 @@
                 />
               </div>
               <div class="submit-button">
-                <button class="btn btn-primary">Pošalji mail</button>
+                <button class="btn btn-primary">Pošalji email</button>
               </div>
             </div>
             <p class="error"></p>
@@ -49,7 +50,7 @@ export default {
         .auth()
         .sendPasswordResetEmail(this.resetEmail)
         .then(() => {
-          alert("Email je poslan");
+          alert("Email s linkom za promjenu lozinke je poslan");
           this.$router.push({ name: "Login" });
         })
         .catch((err) => {

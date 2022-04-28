@@ -76,46 +76,60 @@
                     <div class="col-sm-12">
                       <form
                         class="form-newContactForm row g-3"
-                        @submit.prevent="newContactForm"
+                        id="contact-form"
                       >
                         <div class="col-md-6">
+                          <label for="userEmail" class="form-label"
+                            >Korisnik</label
+                          >
+                          <input
+                            disabled
+                            v-model="user.Email"
+                            type="text"
+                            class="form-control"
+                            id="userEmail"
+                            name="userEmail"
+                            required
+                          />
+                        </div>
+                        <!--                         <div class="col-md-6">
                           <label for="userName" class="form-label"
                             >Korisnik</label
                           >
                           <input
-                            v-model="user.Ime"
                             type="text"
                             class="form-control"
                             id="userName"
                             required
                           />
-                        </div>
-                        <div class="col-md-6">
-                          <label for="userEmail" class="form-label"
-                            >Email</label
-                          >
-                          <input
-                            v-model="user.Email"
-                            type="text"
-                            class="form-control"
-                            id="userEmail"
-                            required
-                          />
-                        </div>
+                        </div> -->
                         <div class="col-md-12">
                           <label for="userMessage" class="form-label"
                             >Poruka</label
                           >
+                          <ul>
+                            <li>Detaljno opisati problem</li>
+                            <li>
+                              Navesti ime firme ili radnika na kojima se
+                              izvršavaju promjene
+                            </li>
+                            <li>
+                              Ako se radi o izmjenama na slobodnim danima ili
+                              plaćama navesti mjesec i godinu te promjene koje
+                              je potrbno izvršiti
+                            </li>
+                          </ul>
                           <textarea
                             v-model="userMessage"
                             type="text"
                             class="form-control"
                             id="userMessage"
+                            name="userMessage"
                             required
                           />
                         </div>
                         <div class="submit-button">
-                          <button class="btn btn-primary">
+                          <button type="submit" class="btn btn-primary">
                             Pošalji poruku
                           </button>
                         </div>
@@ -177,7 +191,7 @@ export default {
         .auth()
         .sendPasswordResetEmail(firebase.auth().currentUser.email)
         .then(() => {
-          alert("Email je poslan");
+          alert("Email s linkom za promjenu lozinke je poslan");
         })
         .catch(() => {});
     },
