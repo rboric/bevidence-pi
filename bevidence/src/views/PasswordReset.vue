@@ -46,18 +46,25 @@ export default {
   },
   methods: {
     resetPassword() {
-      firebase
-        .auth()
-        .sendPasswordResetEmail(this.resetEmail)
-        .then(() => {
-          alert("Email s linkom za promjenu lozinke je poslan");
-          this.$router.push({ name: "Login" });
-        })
-        .catch((err) => {
-          document
-            .querySelector(".form-resetPassword")
-            .querySelector(".error").innerHTML = err.message;
-        });
+      let confirmAction = confirm(
+        "Jeste li sigurni da želite promjeniti lozinku?"
+      );
+      if (confirmAction) {
+        firebase
+          .auth()
+          .sendPasswordResetEmail(this.resetEmail)
+          .then(() => {
+            alert("Email s linkom za promjenu lozinke je poslan");
+            this.$router.push({ name: "Login" });
+          })
+          .catch((err) => {
+            document
+              .querySelector(".form-resetPassword")
+              .querySelector(".error").innerHTML = err.message;
+          });
+      } else {
+        alert("Promjena lozinke otkazana");
+      }
     },
   },
   components: { Preloader },

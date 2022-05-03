@@ -34,13 +34,6 @@
                           >
                             Promjena lozinke
                           </button>
-                          <button
-                            disabled
-                            class="btn btn-primary"
-                            @click="contactForm"
-                          >
-                            Kontakt
-                          </button>
                         </div>
                       </div>
                     </div>
@@ -51,97 +44,6 @@
           </div>
         </div>
       </section>
-      <div
-        class="modal fade"
-        id="contact"
-        tabindex="-1"
-        aria-labelledby="contactLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="contactLabel">Kontakt</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <div class="contact-form">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <form
-                        class="form-newContactForm row g-3"
-                        id="contact-form"
-                      >
-                        <div class="col-md-6">
-                          <label for="userEmail" class="form-label"
-                            >Korisnik</label
-                          >
-                          <input
-                            disabled
-                            v-model="user.Email"
-                            type="text"
-                            class="form-control"
-                            id="userEmail"
-                            name="userEmail"
-                            required
-                          />
-                        </div>
-                        <!--                         <div class="col-md-6">
-                          <label for="userName" class="form-label"
-                            >Korisnik</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="userName"
-                            required
-                          />
-                        </div> -->
-                        <div class="col-md-12">
-                          <label for="userMessage" class="form-label"
-                            >Poruka</label
-                          >
-                          <ul>
-                            <li>Detaljno opisati problem</li>
-                            <li>
-                              Navesti ime firme ili radnika na kojima se
-                              izvršavaju promjene
-                            </li>
-                            <li>
-                              Ako se radi o izmjenama na slobodnim danima ili
-                              plaćama navesti mjesec i godinu te promjene koje
-                              je potrbno izvršiti
-                            </li>
-                          </ul>
-                          <textarea
-                            v-model="userMessage"
-                            type="text"
-                            class="form-control"
-                            id="userMessage"
-                            name="userMessage"
-                            required
-                          />
-                        </div>
-                        <div class="submit-button">
-                          <button type="submit" class="btn btn-primary">
-                            Pošalji poruku
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -187,16 +89,20 @@ export default {
         });
     },
     resetPassword() {
-      firebase
-        .auth()
-        .sendPasswordResetEmail(firebase.auth().currentUser.email)
-        .then(() => {
-          alert("Email s linkom za promjenu lozinke je poslan");
-        })
-        .catch(() => {});
-    },
-    contactForm() {
-      $("#contact").modal("show");
+      let confirmAction = confirm(
+        "Jeste li sigurni da želite promjeniti lozinku?"
+      );
+      if (confirmAction) {
+        firebase
+          .auth()
+          .sendPasswordResetEmail(firebase.auth().currentUser.email)
+          .then(() => {
+            alert("Email s linkom za promjenu lozinke je poslan");
+          })
+          .catch(() => {});
+      } else {
+        alert("Promjena lozinke otkazana");
+      }
     },
   },
   components: { Preloader },
